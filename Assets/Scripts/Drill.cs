@@ -61,4 +61,14 @@ public class Drill : MonoBehaviour {
            //change colors incrementally
         }
     }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        target = other.gameObject;
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        target = null;
+    }
 }
