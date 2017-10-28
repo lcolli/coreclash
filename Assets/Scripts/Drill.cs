@@ -17,7 +17,7 @@ public class Drill : MonoBehaviour {
     public bool __________________________________________________________________________;
     //values set dynamically
     public GameObject[] leftDrills,rightDrills;
-    public GameObject target;
+    public Block target;
     
 
     // Use this for initialization
@@ -56,15 +56,31 @@ public class Drill : MonoBehaviour {
         }
        if(Input.GetButton("Down Arrow"))
         {
-           //increase angular velocity of left drills
+           //increase angular if of left drills
            //increase angular velocity of right drills
            //change colors incrementally
         }
     }
 
+    public void gravitySwitch()
+    {
+        if(S.GetComponent<Rigidbody>().useGravity)
+            S.GetComponent<Rigidbody>().useGravity = false;
+        else
+            S.GetComponent<Rigidbody>().useGravity = true;
+    }
+
+    public void kinematicSwitch()
+    {
+        if (S.GetComponent<Rigidbody>().isKinematic)
+            S.GetComponent<Rigidbody>().isKinematic = false;
+        else
+            S.GetComponent<Rigidbody>().isKinematic = true;
+    }
+
     public void OnTriggerEnter(Collider other)
     {
-        target = other.gameObject;
+        target=other.gameObject.GetComponent<Block>();
     }
 
     public void OnTriggerExit(Collider other)
