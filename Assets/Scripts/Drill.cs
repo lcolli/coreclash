@@ -36,15 +36,17 @@ public class Drill : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        foreach (GameObject drill in leftDrills)
+        //will attack when you release the spacebar
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            drill.GetComponent<Rigidbody>().angularVelocity.Set(0, drill.GetComponent<Rigidbody>().angularVelocity.magnitude + drillACC * Time.deltaTime, 0);
+            if (target != null)
+            {
+                target.GetComponent<Block>().attack(damage);
+            }
+
+            damage = 0f;
         }
-        //increase angular velocity of right 
-        foreach (GameObject drill in rightDrills)
-        {
-            drill.GetComponent<Rigidbody>().angularVelocity.Set(0, drill.GetComponent<Rigidbody>().angularVelocity.magnitude - drillACC * Time.deltaTime, 0);
-        }
+        
 
     }
 
@@ -55,6 +57,16 @@ public class Drill : MonoBehaviour {
         if(Input.GetKey(KeyCode.Space))
         {
             damage += drillDmgRamp;
+
+            /*foreach (GameObject drill in leftDrills)
+            {
+                drill.GetComponent<Rigidbody>().angularVelocity.Set(0, drill.GetComponent<Rigidbody>().angularVelocity.magnitude + drillACC * Time.deltaTime, 0);
+            }
+            //increase angular velocity of right 
+            foreach (GameObject drill in rightDrills)
+            {
+                drill.GetComponent<Rigidbody>().angularVelocity.Set(0, drill.GetComponent<Rigidbody>().angularVelocity.magnitude - drillACC * Time.deltaTime, 0);
+            }*/
         }
 
         //will reset if rig gets too hot
@@ -63,16 +75,9 @@ public class Drill : MonoBehaviour {
             damage = 0;
         }
 
-        //will attack when you release the spacebar
-       if(Input.GetKeyUp(KeyCode.Space))
-        {            
-            if(target!=null) target.GetComponent<Block>().attack(damage);
-           
-            
-            damage = 0f;
-        }
 
-       
+        
+
     }
 
 

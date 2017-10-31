@@ -12,7 +12,7 @@ public class Block : MonoBehaviour
     {
 
         //takes the name of the game object and applies its functions and stats
-        switch(this.name)
+        switch(this.tag)
         {
             case "Dirt":
                 health = 1;
