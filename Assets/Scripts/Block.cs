@@ -5,11 +5,13 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
 
-    public int health;
+    public int health; //the ammount of damage a block can take before it breaks
 
     // Use this for initialization
     void Start()
     {
+
+        //takes the name of the game object and applies its functions and stats
         switch(this.name)
         {
             case "Dirt":
@@ -28,11 +30,13 @@ public class Block : MonoBehaviour
 
     }
 
+
+    //takes the damage from the drill and destroys this gameobject if the damage is more than health
     public void attack(float damage)
     {
         if(damage>health)
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 }

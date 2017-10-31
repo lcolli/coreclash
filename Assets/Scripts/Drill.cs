@@ -8,7 +8,8 @@ public class Drill : MonoBehaviour {
 
     //set in game engine
     public float drillACC = .1f;        //acceleration of the drills angular momentum
-    public float drillDmgMult = .1f;    //how fast damage builds per fixed update    
+    public float drillDmgRamp = .1f;    //how fast damage builds per fixed update  
+    public float overheatdmg = 2f;      //variable that determines when the rig overheats
     public Color defaultColor = new Color(200, 200, 200, 255); //normal color of drill
     public Color buildUp = new Color(200, 200, 200, 255);      //color of build up
     public Color ideal = new Color(200, 200, 200, 255);         //final color before overheat
@@ -16,9 +17,10 @@ public class Drill : MonoBehaviour {
 
     public bool __________________________________________________________________________;
     //values set dynamically
-    public GameObject[] leftDrills,rightDrills;
-    public Block target;
-    
+    GameObject[] leftDrills,rightDrills;
+    public GameObject target;
+    public float damage;
+
 
     // Use this for initialization
     void Start ()
@@ -28,7 +30,7 @@ public class Drill : MonoBehaviour {
         //so the drills rotate in opposite direction
         leftDrills = GameObject.FindGameObjectsWithTag("Left");
         rightDrills = GameObject.FindGameObjectsWithTag("Right");
-        
+        damage = 0f;
     }
 	
 	// Update is called once per frame
@@ -48,20 +50,33 @@ public class Drill : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if(Input.GetButtonUp("Down Arrow"))
+
+        //will charge as long as you're holding spacebar. increases the damage 
+        if(Input.GetKey(KeyCode.Space))
         {
-            //attack the block
-            //reset damage back to zero
-            //move piece
+            damage += drillDmgRamp;
         }
-       if(Input.GetButton("Down Arrow"))
+
+        //will reset if rig gets too hot
+        if (damage >= overheatdmg)
         {
-           //increase angular if of left drills
-           //increase angular velocity of right drills
-           //change colors incrementally
+            damage = 0;
         }
+
+        //will attack when you release the spacebar
+       if(Input.GetKeyUp(KeyCode.Space))
+        {            
+            if(target!=null) target.GetComponent<Block>().attack(damage);
+           
+            
+            damage = 0f;
+        }
+
+       
     }
 
+
+    //this will turn the gravity on and off for the drill. will change it from true to false or false to true
     public void gravitySwitch()
     {
         if(S.GetComponent<Rigidbody>().useGravity)
@@ -70,6 +85,7 @@ public class Drill : MonoBehaviour {
             S.GetComponent<Rigidbody>().useGravity = true;
     }
 
+    //same as above but with kinematic boolean
     public void kinematicSwitch()
     {
         if (S.GetComponent<Rigidbody>().isKinematic)
@@ -78,11 +94,14 @@ public class Drill : MonoBehaviour {
             S.GetComponent<Rigidbody>().isKinematic = true;
     }
 
+
+    //takes the sphere collider that's 1m away. will set the gameobject that it touches to target
     public void OnTriggerEnter(Collider other)
     {
-        target=other.gameObject.GetComponent<Block>();
+        target = other.gameObject;
     }
 
+    //if the drill is no longer facing a game object it will set the target to null
     public void OnTriggerExit(Collider other)
     {
         target = null;

@@ -157,6 +157,11 @@ Prefab:
       propertyPath: m_IsKinematic
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
+        type: 2}
+      propertyPath: drillDmgRamp
+      value: 0.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06f2195741219b44d956018602270e16, type: 2}
   m_IsPrefabParent: 0
