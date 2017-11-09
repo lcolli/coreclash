@@ -10,33 +10,95 @@ public class Block : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        health = 1;
         //takes the name of the game object and applies its functions and stats
-        switch(this.tag)
+        switch (this.tag)
         {
-            case "Dirt":
-                health = 1;
+            case "Dirt":                
                 break;
 
-           default:
+            case "Diamond":
+                //daimond stats
+                health += 2;
                 break;
-            
+
+            case "Gold":
+                //gold stats
+                health += 1;
+                break;
+
+            case "Magma":
+                //magma stats
+                health += 1;
+                break;
+
+            case "Metal":
+                //metal stats
+                health += 2;
+                break;
+
+            case "Sand":
+                this.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                break;
+
+            case "Stone":
+                //stone stats
+                health += 1;
+                break;
+
+            case "Treasure":
+                //treasure stats
+                health += 1;
+                break;
+
+            case "Water":
+                //water stats
+                break;
+
+            default:
+                break;
+
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
 
     //takes the damage from the drill and destroys this gameobject if the damage is more than health
     public void attack(float damage)
     {
-        if(damage>health)
+        if (damage > health)
         {
+            blockFunction();
             Destroy(this.gameObject);
         }
     }
+
+    public void blockFunction()
+    {
+        switch (this.tag)
+        {
+          
+            case "Diamond":
+                //diamond stats
+                break;
+
+            case "Gold":
+                //gold stats
+                break;
+
+            case "Magma":
+                //magma stats
+                break;             
+            case "Treasure":
+                //treasure stats
+                break;
+            case "Water":
+                //water stats
+                break;
+
+            default:
+                break;
+
+        }
+    }
+   
 }

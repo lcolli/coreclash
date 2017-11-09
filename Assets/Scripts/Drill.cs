@@ -9,7 +9,7 @@ public class Drill : MonoBehaviour {
     //set in game engine
     public float drillACC = .1f;        //acceleration of the drills angular momentum
     public float drillDmgRamp = .1f;    //how fast damage builds per fixed update  
-    public float overheatdmg = 2f;      //variable that determines when the rig overheats
+    public float overheatdmg = 4f;      //variable that determines when the rig overheats
     public Color defaultColor = new Color(200, 200, 200, 255); //normal color of drill
     public Color buildUp = new Color(200, 200, 200, 255);      //color of build up
     public Color ideal = new Color(200, 200, 200, 255);         //final color before overheat
