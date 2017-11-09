@@ -8,6 +8,7 @@ TagManager:
   - Right
   - Block
   - Dirt
+  - DrillPart
   layers:
   - Default
   - TransparentFX

@@ -648,6 +648,7 @@ MonoBehaviour:
   drillACC: 5
   drillDmgRamp: 0.01
   overheatdmg: 2
+  movementSpeed: 2
   defaultColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
   buildUp: {r: 0.88235295, g: 0.49019608, b: 0.49019608, a: 1}
   ideal: {r: 1, g: 0.19607843, b: 0.19607843, a: 1}
@@ -655,6 +656,9 @@ MonoBehaviour:
   __________________________________________________________________________: 0
   target: {fileID: 0}
   damage: 0
+  rend: []
+  originalDrillMat: {fileID: 0}
+  drillState: {fileID: 0}
 --- !u!135 &135098517214522700
 SphereCollider:
   m_ObjectHideFlags: 1

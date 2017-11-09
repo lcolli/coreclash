@@ -10,6 +10,7 @@ public class Drill : MonoBehaviour {
     public float drillACC = .1f;        //acceleration of the drills angular momentum
     public float drillDmgRamp = .1f;    //how fast damage builds per fixed update  
     public float overheatdmg = 2f;      //variable that determines when the rig overheats
+	public float movementSpeed = 2f;
     public Color defaultColor = new Color(200, 200, 200, 255); //normal color of drill
     public Color buildUp = new Color(200, 200, 200, 255);      //color of build up
     public Color ideal = new Color(200, 200, 200, 255);         //final color before overheat
@@ -19,12 +20,18 @@ public class Drill : MonoBehaviour {
     //values set dynamically
     GameObject[] leftDrills,rightDrills;
     public GameObject target;
+
     public float damage;
 
+	public MeshRenderer[] rend;
+	public Material originalDrillMat;
+	public Material drillState;
 
     // Use this for initialization
     void Start ()
     {
+		originalDrillMat = GetComponent<MeshRenderer> ().material;
+		resetDrillState ();
         S = this;
 
         //so the drills rotate in opposite direction
@@ -37,17 +44,30 @@ public class Drill : MonoBehaviour {
 	void Update () {
 
         //will attack when you release the spacebar
-        if (Input.GetKeyUp(KeyCode.Space))
-        {
-            if (target != null)
-            {
-                target.GetComponent<Block>().attack(damage);
-            }
+		if (Input.GetKeyUp (KeyCode.Space)) {
+			if (target != null) {
+				target.GetComponent<Block> ().attack (damage);
+			}
 
-            damage = 0f;
-        }
+			damage = 0f;
+
+			resetDrillState ();
+				
+//			foreach (MeshRenderer mr in rend) {
+//				mr.material = originalDrillMat;
+//			}
+		}
+
+		if (Input.GetKey (KeyCode.DownArrow)) {
+			moveDown ();
+		}
+		else if(Input.GetKey(KeyCode.UpArrow))
+			moveUp ();
+		else if(Input.GetKey(KeyCode.LeftArrow))
+			moveLeft ();
+		else if(Input.GetKey(KeyCode.RightArrow))
+			moveRight ();
         
-
     }
 
     void FixedUpdate()
@@ -67,6 +87,21 @@ public class Drill : MonoBehaviour {
             {
                 drill.GetComponent<Rigidbody>().angularVelocity.Set(0, drill.GetComponent<Rigidbody>().angularVelocity.magnitude - drillACC * Time.deltaTime, 0);
             }*/
+			if (damage < 0.5f)
+				resetDrillState ();
+			else if (damage > 0.5f && damage < 1.25f)
+				drillState.color = buildUp;
+			else if (damage > 1.25f && damage < 2.0f)
+				drillState.color = ideal;
+			else if (damage > 2.0f)
+				drillState.color = overHeatColor;
+
+			//Material newMaterial = new Material (Shader.Find ("Specular"));
+			//newMaterial.color = overHeatColor;
+
+			foreach (MeshRenderer mr in rend) {
+				mr.material = drillState;
+			}
         }
 
         //will reset if rig gets too hot
@@ -74,13 +109,38 @@ public class Drill : MonoBehaviour {
         {
             damage = 0;
         }
-
-
-        
-
+			
     }
 
+	void moveDown(){
+		var destination = transform.position + new Vector3 (0, -1, 0);
+		Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
+		transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,0));
+	}
 
+	void moveUp(){
+		var destination = transform.position + new Vector3 (0, 1, 0);
+
+		Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
+		transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,180));
+	}
+
+	void moveLeft(){
+		var destination = transform.position + new Vector3 (-1, 0, 0);
+		Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
+		transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,-90));
+	}
+
+	void moveRight(){
+		var destination = transform.position + new Vector3 (1, 0, 0);
+		Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
+		transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,90));
+	}
+
+	void resetDrillState(){
+		drillState.color = defaultColor;
+	}
+		
     //this will turn the gravity on and off for the drill. will change it from true to false or false to true
     public void gravitySwitch()
     {
