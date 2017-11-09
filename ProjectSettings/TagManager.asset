@@ -8,6 +8,14 @@ TagManager:
   - Right
   - Block
   - Dirt
+  - Diamond
+  - Gold
+  - Magma
+  - Metal
+  - Sand
+  - Stone
+  - Treasure
+  - Water
   layers:
   - Default
   - TransparentFX

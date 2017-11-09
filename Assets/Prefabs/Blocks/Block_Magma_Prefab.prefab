@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23440015815224546}
   m_Layer: 0
   m_Name: Block_Magma_Prefab
-  m_TagString: Untagged
+  m_TagString: Magma
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
