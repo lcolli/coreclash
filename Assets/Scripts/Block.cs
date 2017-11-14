@@ -63,13 +63,15 @@ public class Block : MonoBehaviour
 
 
     //takes the damage from the drill and destroys this gameobject if the damage is more than health
-    public void attack(float damage)
+    public bool attack(float damage)
     {
         if (damage > health)
         {
             blockFunction();
-            Destroy(this.gameObject);
+            Destroy(this.gameObject);            
+            return true;
         }
+        return false;
     }
 
     public void blockFunction()

@@ -43,6 +43,7 @@ public class Drill : MonoBehaviour {
         leftDrills = GameObject.FindGameObjectsWithTag("Left");
         rightDrills = GameObject.FindGameObjectsWithTag("Right");
         damage = 0f;
+        
     }
 	
 	// Update is called once per frame
@@ -55,7 +56,12 @@ public class Drill : MonoBehaviour {
         {
             if (target != null)
             {
-                target.GetComponent<Block>().attack(damage);
+
+                if (target.GetComponent<Block>().attack(damage))
+                {
+                    target = null;
+                    GetComponent<Rigidbody>().useGravity = true;
+                }
             }
 
             damage = 0f;
@@ -66,8 +72,8 @@ public class Drill : MonoBehaviour {
             overheat();
         
         if(!overheated){
-            //if (Input.GetKey (KeyCode.DownArrow)) 
-               // moveDown ();            
+            if (Input.GetKey (KeyCode.DownArrow)) 
+                moveDown ();            
             //if(Input.GetKey(KeyCode.UpArrow))
                // moveUp ();
             if(Input.GetKey(KeyCode.LeftArrow))
@@ -109,14 +115,15 @@ public class Drill : MonoBehaviour {
     }
 
     void moveDown(){
-        var destination = transform.position + new Vector3 (0, -1, 0);
-        Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
-        transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,0));
+        // var destination = transform.position + new Vector3 (0, -1, 0);
+        //Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
+        //transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,0));
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+
     }
 
     void moveUp(){
         var destination = transform.position + new Vector3 (0, 1, 0);
-
         Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
         transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,180));
     }
@@ -170,11 +177,18 @@ public class Drill : MonoBehaviour {
             S.GetComponent<Rigidbody>().isKinematic = true;
     }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        GameObject collidedWith = collision.gameObject;
+        GetComponent<Rigidbody>().useGravity = false;
+    }
+
 
     //takes the sphere collider that's 1m away. will set the gameobject that it touches to target
     public void OnTriggerEnter(Collider other)
     {
-        target = other.gameObject;
+        if(other.gameObject.GetComponent<BoxCollider>().isTrigger)
+            target = other.gameObject;
     }
 
     //if the drill is no longer facing a game object it will set the target to null

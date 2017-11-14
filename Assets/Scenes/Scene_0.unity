@@ -108,38 +108,6 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
---- !u!23 &562424384 stripped
-MeshRenderer:
-  m_PrefabParentObject: {fileID: 23052495928226288, guid: 06f2195741219b44d956018602270e16,
-    type: 2}
-  m_PrefabInternal: {fileID: 1188812495}
---- !u!1 &799005874 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1469963225872288, guid: 06f2195741219b44d956018602270e16,
-    type: 2}
-  m_PrefabInternal: {fileID: 1188812495}
---- !u!65 &799005876
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 799005874}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1053755710 stripped
-MeshRenderer:
-  m_PrefabParentObject: {fileID: 23515692679636078, guid: 06f2195741219b44d956018602270e16,
-    type: 2}
-  m_PrefabInternal: {fileID: 1188812495}
---- !u!23 &1171424636 stripped
-MeshRenderer:
-  m_PrefabParentObject: {fileID: 23659192673889048, guid: 06f2195741219b44d956018602270e16,
-    type: 2}
-  m_PrefabInternal: {fileID: 1188812495}
 --- !u!1001 &1188812495
 Prefab:
   m_ObjectHideFlags: 0
@@ -147,16 +115,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rend.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rendDrill.Array.size
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 4023361020935418, guid: 06f2195741219b44d956018602270e16, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -189,180 +147,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 54528516122981396, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 135098517214522700, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: drillState
-      value: 
-      objectReference: {fileID: 2100000, guid: 69008b92b81b61f4792bc630a1c5b7d5, type: 2}
-    - target: {fileID: 54528516122981396, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: m_UseGravity
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rend.Array.data[0]
-      value: 
-      objectReference: {fileID: 562424384}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rend.Array.data[1]
-      value: 
-      objectReference: {fileID: 1882013711}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rend.Array.data[2]
-      value: 
-      objectReference: {fileID: 1053755710}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rend.Array.data[3]
-      value: 
-      objectReference: {fileID: 1480541432}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rend.Array.data[4]
-      value: 
-      objectReference: {fileID: 1171424636}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: cockpitState
-      value: 
-      objectReference: {fileID: 2100000, guid: 218d2d437cb759d42b2def6dcb6f3911, type: 2}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rendDrill.Array.data[0]
-      value: 
-      objectReference: {fileID: 562424384}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rendDrill.Array.data[1]
-      value: 
-      objectReference: {fileID: 1882013711}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rendDrill.Array.data[2]
-      value: 
-      objectReference: {fileID: 1053755710}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rendDrill.Array.data[3]
-      value: 
-      objectReference: {fileID: 1480541432}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rendDrill.Array.data[4]
-      value: 
-      objectReference: {fileID: 1171424636}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultColor.r
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultColor.g
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultColor.b
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultDrillColor.r
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultDrillColor.g
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultDrillColor.b
-      value: 0.78431374
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultDrillColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultCockpitColor.r
-      value: 0.02745098
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultCockpitColor.g
-      value: 0.101960786
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultCockpitColor.b
-      value: 0.22745098
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: defaultCockpitColor.a
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rendCockpit
-      value: 
-      objectReference: {fileID: 1784741101}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: ideal.r
-      value: 0.56078434
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: overHeatColor.r
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: overHeatColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: overHeatColor.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114190113686505170, guid: 06f2195741219b44d956018602270e16,
-        type: 2}
-      propertyPath: rig
-      value: 
-      objectReference: {fileID: 1866547618}
-    m_RemovedComponents:
-    - {fileID: 65801279384493570, guid: 06f2195741219b44d956018602270e16, type: 2}
-    - {fileID: 136681621701554480, guid: 06f2195741219b44d956018602270e16, type: 2}
-    - {fileID: 136603734627937472, guid: 06f2195741219b44d956018602270e16, type: 2}
-    - {fileID: 136000764641861494, guid: 06f2195741219b44d956018602270e16, type: 2}
-    - {fileID: 136052137684369690, guid: 06f2195741219b44d956018602270e16, type: 2}
-    - {fileID: 136690313803108206, guid: 06f2195741219b44d956018602270e16, type: 2}
-    - {fileID: 135098517214522700, guid: 06f2195741219b44d956018602270e16, type: 2}
-    - {fileID: 65135569414545388, guid: 06f2195741219b44d956018602270e16, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 06f2195741219b44d956018602270e16, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1227148724
@@ -500,11 +285,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab6722f0f6946104baccd8c437c85754, type: 2}
   m_IsPrefabParent: 0
---- !u!23 &1480541432 stripped
-MeshRenderer:
-  m_PrefabParentObject: {fileID: 23278725349173922, guid: 06f2195741219b44d956018602270e16,
-    type: 2}
-  m_PrefabInternal: {fileID: 1188812495}
 --- !u!1001 &1545605676
 Prefab:
   m_ObjectHideFlags: 0
@@ -547,33 +327,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ab6722f0f6946104baccd8c437c85754, type: 2}
   m_IsPrefabParent: 0
---- !u!23 &1784741101 stripped
-MeshRenderer:
-  m_PrefabParentObject: {fileID: 23918896095235572, guid: 06f2195741219b44d956018602270e16,
-    type: 2}
-  m_PrefabInternal: {fileID: 1188812495}
---- !u!1 &1866547618 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1634065254252066, guid: 06f2195741219b44d956018602270e16,
-    type: 2}
-  m_PrefabInternal: {fileID: 1188812495}
---- !u!135 &1866547619
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1866547618}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: -2, z: 0}
---- !u!23 &1882013711 stripped
-MeshRenderer:
-  m_PrefabParentObject: {fileID: 23559983888400008, guid: 06f2195741219b44d956018602270e16,
-    type: 2}
-  m_PrefabInternal: {fileID: 1188812495}
 --- !u!1 &2036923106
 GameObject:
   m_ObjectHideFlags: 0
