@@ -10,21 +10,33 @@ public class Drill : MonoBehaviour {
     public float drillACC = .1f;        //acceleration of the drills angular momentum
     public float drillDmgRamp = .1f;    //how fast damage builds per fixed update  
     public float overheatdmg = 4f;      //variable that determines when the rig overheats
-    public Color defaultColor = new Color(200, 200, 200, 255); //normal color of drill
+    public Color defaultCockpitColor; //= new Color(114, 162, 242, 255);
+    public Color defaultDrillColor = new Color(200, 200, 200, 255); //normal color of drill
     public Color buildUp = new Color(200, 200, 200, 255);      //color of build up
     public Color ideal = new Color(200, 200, 200, 255);         //final color before overheat
     public Color overHeatColor = new Color(255, 150, 150, 255); //overheated color
 
+    public float movementSpeed = 2f;
+    public float overheatTime = 3f;
+
+    public MeshRenderer[] rendDrill;
+    public MeshRenderer rendCockpit;
+    public Material drillState;
+    public Material cockpitState;
+
     public bool __________________________________________________________________________;
+
     //values set dynamically
     GameObject[] leftDrills,rightDrills;
     public GameObject target;
     public float damage;
 
+    public bool overheated;
 
     // Use this for initialization
     void Start ()
     {
+        resetDrillState();
         S = this;
 
         //so the drills rotate in opposite direction
@@ -36,8 +48,12 @@ public class Drill : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        // if(damage >= 2.0f){
+        //     overheat();
+        // }
+
         //will attack when you release the spacebar
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space) && !overheated)
         {
             if (target != null)
             {
@@ -45,16 +61,30 @@ public class Drill : MonoBehaviour {
             }
 
             damage = 0f;
-        }
-        
 
+            resetDrillState ();
+        }
+        else if(Input.GetKeyUp(KeyCode.Space) && overheated == true)
+            overheat();
+        
+        if(!overheated){
+            if (Input.GetKey (KeyCode.DownArrow)) {
+                moveDown ();
+            }
+            else if(Input.GetKey(KeyCode.UpArrow))
+                moveUp ();
+            else if(Input.GetKey(KeyCode.LeftArrow))
+                moveLeft ();
+            else if(Input.GetKey(KeyCode.RightArrow))
+                moveRight ();
+        }
     }
 
     void FixedUpdate()
     {
 
         //will charge as long as you're holding spacebar. increases the damage 
-        if(Input.GetKey(KeyCode.Space))
+        if(Input.GetKey(KeyCode.Space) && !overheated)
         {
             damage += drillDmgRamp;
 
@@ -67,19 +97,75 @@ public class Drill : MonoBehaviour {
             {
                 drill.GetComponent<Rigidbody>().angularVelocity.Set(0, drill.GetComponent<Rigidbody>().angularVelocity.magnitude - drillACC * Time.deltaTime, 0);
             }*/
+
+            if (damage < 0.5f)
+                resetDrillState ();
+            else if (damage > 0.5f && damage < 1.25f)
+                drillState.color = buildUp;
+            else if (damage > 1.25f && damage < 2.0f)
+                drillState.color = ideal;
+            else if (damage > 2.0f)
+                StartCoroutine(overheat());
+
+            //Material newMaterial = new Material (Shader.Find ("Specular"));
+            //newMaterial.color = overHeatColor;
+
+            foreach (MeshRenderer mr in rendDrill) {
+                mr.material = drillState;
+            }
         }
 
         //will reset if rig gets too hot
-        if (damage >= overheatdmg)
-        {
-            damage = 0;
-        }
-
-
-        
+        // if (damage >= overheatdmg)
+        // {
+        //     damage = 0;
+        // }
 
     }
 
+    void moveDown(){
+        var destination = transform.position + new Vector3 (0, -1, 0);
+        Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
+        transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,0));
+    }
+
+    void moveUp(){
+        var destination = transform.position + new Vector3 (0, 1, 0);
+
+        Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
+        transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,180));
+    }
+
+    void moveLeft(){
+        var destination = transform.position + new Vector3 (-1, 0, 0);
+        Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
+        transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,-90));
+    }
+
+    void moveRight(){
+        var destination = transform.position + new Vector3 (1, 0, 0);
+        Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
+        transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,90));
+    }
+
+    IEnumerator overheat(){
+        var time = 0f;
+
+        overheated = true;
+        drillState.color = overHeatColor;
+        cockpitState.color = overHeatColor;
+
+        yield return new WaitForSeconds(3);
+        
+        overheated = false;
+        resetDrillState();
+        damage = 0f;
+    }
+
+    void resetDrillState(){
+        drillState.color = defaultDrillColor;
+        cockpitState.color = defaultCockpitColor;
+    }
 
     //this will turn the gravity on and off for the drill. will change it from true to false or false to true
     public void gravitySwitch()
