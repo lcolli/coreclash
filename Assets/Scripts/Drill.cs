@@ -48,9 +48,7 @@ public class Drill : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        // if(damage >= 2.0f){
-        //     overheat();
-        // }
+       
 
         //will attack when you release the spacebar
         if (Input.GetKeyUp(KeyCode.Space) && !overheated)
@@ -68,14 +66,13 @@ public class Drill : MonoBehaviour {
             overheat();
         
         if(!overheated){
-            if (Input.GetKey (KeyCode.DownArrow)) {
-                moveDown ();
-            }
-            else if(Input.GetKey(KeyCode.UpArrow))
-                moveUp ();
-            else if(Input.GetKey(KeyCode.LeftArrow))
+            //if (Input.GetKey (KeyCode.DownArrow)) 
+               // moveDown ();            
+            //if(Input.GetKey(KeyCode.UpArrow))
+               // moveUp ();
+            if(Input.GetKey(KeyCode.LeftArrow))
                 moveLeft ();
-            else if(Input.GetKey(KeyCode.RightArrow))
+           if(Input.GetKey(KeyCode.RightArrow))
                 moveRight ();
         }
     }
@@ -88,15 +85,7 @@ public class Drill : MonoBehaviour {
         {
             damage += drillDmgRamp;
 
-            /*foreach (GameObject drill in leftDrills)
-            {
-                drill.GetComponent<Rigidbody>().angularVelocity.Set(0, drill.GetComponent<Rigidbody>().angularVelocity.magnitude + drillACC * Time.deltaTime, 0);
-            }
-            //increase angular velocity of right 
-            foreach (GameObject drill in rightDrills)
-            {
-                drill.GetComponent<Rigidbody>().angularVelocity.Set(0, drill.GetComponent<Rigidbody>().angularVelocity.magnitude - drillACC * Time.deltaTime, 0);
-            }*/
+            
 
             if (damage < 0.5f)
                 resetDrillState ();
@@ -115,11 +104,7 @@ public class Drill : MonoBehaviour {
             }
         }
 
-        //will reset if rig gets too hot
-        // if (damage >= overheatdmg)
-        // {
-        //     damage = 0;
-        // }
+        
 
     }
 
