@@ -16,6 +16,7 @@ TagManager:
   - Stone
   - Treasure
   - Water
+  - Rig
   layers:
   - Default
   - TransparentFX
