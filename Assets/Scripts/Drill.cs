@@ -23,6 +23,7 @@ public class Drill : MonoBehaviour {
     public MeshRenderer rendCockpit;
     public Material drillState;
     public Material cockpitState;
+    
 
     public bool __________________________________________________________________________;
 
@@ -30,14 +31,50 @@ public class Drill : MonoBehaviour {
     //GameObject[] leftDrills,rightDrills;
     public GameObject target;
     public float damage;
+    public bool isPlayer1;
+    public GameObject playerGO;
+    public bool pointingDown;
+    public GameObject left, Right, Down, Up;
+    
+   
+
 
     public bool overheated;
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<BoxCollider>().isTrigger)
+            target = other.gameObject;
+    }
+
+    //if the drill is no longer facing a game object it will set the target to null
+    public void OnTriggerExit(Collider other)
+    {
+        target = null;
+    }
+
 
     // Use this for initialization
     void Start ()
     {
+        
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        
+        foreach (GameObject player in players)
+        {
+            if (this.transform.IsChildOf(player.gameObject.transform))
+            {
+                playerGO = player;
+                if (player.gameObject.name == "Player 1") 
+                    isPlayer1 = true;                
+                else                
+                    isPlayer1 = false;
+                
+            }
+        }
+
         resetDrillState();
-        S = this;      
+        S = this;   
         
     }
 	
@@ -55,7 +92,14 @@ public class Drill : MonoBehaviour {
                
                 if (target.GetComponent<Block>().attack(damage))
                 {
-                    
+                    if (pointingDown)
+                    {
+                        if (isPlayer1)
+                            playerGO.GetComponent<Player1>().destroyedBelow();
+                        //else
+                            //playerGO.GetComponent<Player2>().destroyedBelow();
+
+                    }
                     target = null;
                    
                 }
@@ -100,34 +144,58 @@ public class Drill : MonoBehaviour {
     public void PointDown()
     {
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 0));
+        pointingDown = true;
     }
     public void PointLeft()
     {
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, -90));
+        pointingDown = false;
     }
 
     public void PointRight()
     {
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 90));
+        pointingDown = false;
+    }
+    public void PointUp()
+    {
+        transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 180));
+        pointingDown = false;
     }
 
-    void moveDown(){
-        // var destination = transform.position + new Vector3 (0, -1, 0);
-        //Vector3 movement = Vector3.Lerp (transform.position, destination, movementSpeed * Time.deltaTime);
-        //transform.SetPositionAndRotation (movement, Quaternion.Euler(0,0,0));
-        transform.rotation = Quaternion.Euler(0, 0, 0);
-
-    }   
+    public void getTargets()
+    {
+        Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
+        List<GameObject> gos = new List<GameObject>();
+        foreach(Collider collide in cols)
+        {
+            if(collide.gameObject.layer==LayerMask.NameToLayer("Playing field"))
+            {
+                gos.Add(collide.gameObject);
+                print(collide.gameObject.name);
+            }
+        }
+        foreach(GameObject GO in gos)
+        {
+            if (GO.transform.position.x < transform.position.x - .5)
+                Right = GO;
+            else if (GO.transform.position.x < transform.position.x - .5) ;
+        }
+    }
+       
 
     IEnumerator overheat(){
-        var time = 0f;
-
+        
         overheated = true;
         drillState.color = overHeatColor;
         cockpitState.color = overHeatColor;
+        if(isPlayer1)
+            playerGO.GetComponent<Player1>().S.State = state.overheat;
 
         yield return new WaitForSeconds(overheatTime);
-        
+
+        if (isPlayer1)
+            playerGO.GetComponent<Player1>().S.State = state.idle;
         overheated = false;
         resetDrillState();
         
@@ -162,18 +230,9 @@ public class Drill : MonoBehaviour {
         GameObject collidedWith = collision.gameObject;
         GetComponent<Rigidbody>().useGravity = false;
     }*/
-
+    
+    
 
     //takes the sphere collider that's 1m away. will set the gameobject that it touches to target
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.GetComponent<BoxCollider>().isTrigger)
-            target = other.gameObject;
-    }
-
-    //if the drill is no longer facing a game object it will set the target to null
-    public void OnTriggerExit(Collider other)
-    {
-        target = null;
-    }
+   
 }

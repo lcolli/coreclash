@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33329487916688102}
   - component: {fileID: 136273216240596320}
   - component: {fileID: 23269759709205292}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_BotSmallWheelBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 33205003091358082}
   - component: {fileID: 136676055095368592}
   - component: {fileID: 23832615397212000}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Drill
   m_TagString: Left
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 33020961807618820}
   - component: {fileID: 65989026823779608}
   - component: {fileID: 23152366094142554}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_BarLeftBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 4986675945070558}
   - component: {fileID: 54403472635656744}
   - component: {fileID: 114342316490510016}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_Vehicle_Prefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -90,7 +90,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4211174308561068}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_DrillConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 33027686664523874}
   - component: {fileID: 136931596136680212}
   - component: {fileID: 23034603739735206}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_Wheel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 33803083721660462}
   - component: {fileID: 136769780837549922}
   - component: {fileID: 23105971786599564}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_BotBigWheelFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 33112525160728612}
   - component: {fileID: 136773128129184292}
   - component: {fileID: 23888153423538730}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Drill (3)
   m_TagString: Right
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 33879721777966680}
   - component: {fileID: 65603784738599130}
   - component: {fileID: 23490308467633610}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_BarLeftFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 33078491825233646}
   - component: {fileID: 65270869767920406}
   - component: {fileID: 23522011158558500}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cockpit
   m_TagString: Left
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4735118116671730}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_RockerArms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 33337857869951920}
   - component: {fileID: 136736170922042388}
   - component: {fileID: 23694019606792640}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_DrillRod
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 33693061644624060}
   - component: {fileID: 136154166336884514}
   - component: {fileID: 23306722457892410}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_BotSmallWheelFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,7 +249,7 @@ GameObject:
   - component: {fileID: 33704096038745722}
   - component: {fileID: 136175505778264262}
   - component: {fileID: 23564385381540350}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_Wheel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 33481365081502582}
   - component: {fileID: 136493521846794722}
   - component: {fileID: 23781227110461862}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Drill (4)
   m_TagString: Left
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   - component: {fileID: 33478377681928288}
   - component: {fileID: 65454713706898938}
   - component: {fileID: 23070469159547860}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_Cockpit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 4957063589736770}
   - component: {fileID: 114280392463712608}
   - component: {fileID: 135226080226611452}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Rig
   m_TagString: Rig
   m_Icon: {fileID: 0}
@@ -320,7 +320,7 @@ GameObject:
   - component: {fileID: 33389280744759520}
   - component: {fileID: 65521447794458578}
   - component: {fileID: 23547855446064138}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_BarLeftBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -338,7 +338,7 @@ GameObject:
   - component: {fileID: 33820740314360838}
   - component: {fileID: 136820009545797024}
   - component: {fileID: 23389398962438244}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_Wheel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,8 +356,38 @@ GameObject:
   - component: {fileID: 33879512123872976}
   - component: {fileID: 65008246571596294}
   - component: {fileID: 23446969429433976}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_BarRightFront
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1747809746605792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4710363203801482}
+  m_Layer: 8
+  m_Name: Right Target
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1753841567630138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4519871641786880}
+  m_Layer: 8
+  m_Name: Left Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -374,7 +404,7 @@ GameObject:
   - component: {fileID: 33941627529566340}
   - component: {fileID: 65280405015870614}
   - component: {fileID: 23200571523411752}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_Chassis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -392,7 +422,7 @@ GameObject:
   - component: {fileID: 33643851264942456}
   - component: {fileID: 136007682182794768}
   - component: {fileID: 23835332442829432}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_TopBigWheelBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +440,7 @@ GameObject:
   - component: {fileID: 33934717113670142}
   - component: {fileID: 136374496744615868}
   - component: {fileID: 23753572439929454}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_BotBigWheelBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +458,7 @@ GameObject:
   - component: {fileID: 33886749286275560}
   - component: {fileID: 136930473068093614}
   - component: {fileID: 23038874917854338}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Drill (2)
   m_TagString: Left
   m_Icon: {fileID: 0}
@@ -446,7 +476,7 @@ GameObject:
   - component: {fileID: 33850542753788798}
   - component: {fileID: 136655291734145788}
   - component: {fileID: 23476859711747164}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Char_TopBigWheelFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -464,7 +494,7 @@ GameObject:
   - component: {fileID: 33555285251271708}
   - component: {fileID: 136238286820409392}
   - component: {fileID: 23947966647963184}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Drill (1)
   m_TagString: Right
   m_Icon: {fileID: 0}
@@ -618,6 +648,19 @@ Transform:
   m_Father: {fileID: 4957063589736770}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4519871641786880
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1753841567630138}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4986675945070558}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4531467670811660
 Transform:
   m_ObjectHideFlags: 1
@@ -696,6 +739,19 @@ Transform:
   m_Father: {fileID: 4735118116671730}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!4 &4710363203801482
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1747809746605792}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.99999994, y: 0.99999774, z: 0.9999989}
+  m_Children: []
+  m_Father: {fileID: 4986675945070558}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4735118116671730
 Transform:
   m_ObjectHideFlags: 1
@@ -716,7 +772,7 @@ Transform:
   - {fileID: 4332984894715976}
   - {fileID: 4211174308561068}
   m_Father: {fileID: 4986675945070558}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4740303008095514
 Transform:
@@ -809,7 +865,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1211802217484010}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 7, y: 0.5, z: 0}
+  m_LocalPosition: {x: 7.3, y: 0.5, z: 0}
   m_LocalScale: {x: 0.35, y: 0.20000055, z: 0.35000047}
   m_Children:
   - {fileID: 4903443355183408}
@@ -817,6 +873,8 @@ Transform:
   - {fileID: 4660630805475826}
   - {fileID: 4030902527281572}
   - {fileID: 4740303008095514}
+  - {fileID: 4519871641786880}
+  - {fileID: 4710363203801482}
   - {fileID: 4735118116671730}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1814,11 +1872,14 @@ MonoBehaviour:
   overheatTime: 3
   rendDrill: []
   rendCockpit: {fileID: 0}
-  drillState: {fileID: 0}
-  cockpitState: {fileID: 0}
+  drillState: {fileID: 2100000, guid: 69008b92b81b61f4792bc630a1c5b7d5, type: 2}
+  cockpitState: {fileID: 2100000, guid: 218d2d437cb759d42b2def6dcb6f3911, type: 2}
   __________________________________________________________________________: 0
   target: {fileID: 0}
   damage: 0
+  isPlayer1: 0
+  playerGO: {fileID: 0}
+  pointingDown: 0
   overheated: 0
 --- !u!114 &114342316490510016
 MonoBehaviour:
@@ -1831,9 +1892,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e0b61257e7e86408edad396a1a1026, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  S: {fileID: 0}
   movementSpeed: 2
+  FramesBeforeMove: 8
   rig: {fileID: 0}
   drill: {fileID: 0}
+  framesTilMove: 0
+  State: 0
+  canGoLeft: 0
+  canGoRight: 0
 --- !u!135 &135226080226611452
 SphereCollider:
   m_ObjectHideFlags: 1
