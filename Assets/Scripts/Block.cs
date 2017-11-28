@@ -5,10 +5,10 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     [Header("Set in Inspector")]
-    float waterOverheatTime = 3f;
-    float lavaOverheatTime = 5f;
+    float waterOverheatTime = 3f;   //the time that a water block will overheat the rig
+    float lavaOverheatTime = 5f;    //time that the lava block will overheat the rig
     [Header("Set Dynamically")]
-    public int health; //the ammount of damage a block can take before it breaks
+    public int health;              //the ammount of damage a block can take before it breaks
 
     // Use this for initialization
     void Start()
@@ -17,7 +17,7 @@ public class Block : MonoBehaviour
         //takes the name of the game object and applies its functions and stats
         switch (this.tag)
         {
-            case "Dirt":                
+            case "Dirt":             
                 break;
 
             case "Diamond":
@@ -68,6 +68,18 @@ public class Block : MonoBehaviour
     //takes the damage from the drill and destroys this gameobject if the damage is more than health
     public bool attack(float damage, Drill drill)
     {
+        if (this.tag=="Stone")
+        {
+            if (damage >= 2)
+            {                
+                Destroy(this.gameObject);
+                return true;
+            }
+            else if(damage>=1)
+            {
+                turntodirt();
+            }
+        }
         if (damage > health)
         {
             blockFunction(drill);
@@ -77,6 +89,15 @@ public class Block : MonoBehaviour
         return false;
     }
 
+
+    //stone can turn to dirt if you don't do full damage
+    void turntodirt()
+    {
+
+    }
+
+
+    //the functions of the blocks depending on the type of this block
     public void blockFunction(Drill drill)
     {
         switch (this.tag)
@@ -92,15 +113,18 @@ public class Block : MonoBehaviour
 
             case "Magma":
                 //magma stats
-                StartCoroutine(drill.overheat(lavaOverheatTime));
+                if (!drill.useShield())
+                    StartCoroutine(drill.overheat(lavaOverheatTime));
                 break;             
             case "Treasure":
                 //treasure stats
+                
                 drill.addPowerUp();
                 break;
             case "Water":
                 //water stats
-                StartCoroutine(drill.overheat(waterOverheatTime));
+                if (!drill.useShield())
+                    StartCoroutine(drill.overheat(waterOverheatTime));
                 break;
 
             default:

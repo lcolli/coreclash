@@ -6,7 +6,7 @@ public class Drill : MonoBehaviour {
 
     public Drill S; // Singleton instance
 
-    //set in game engine
+    [Header("Set in inspector")]
     public float drillACC = .1f;        //acceleration of the drills angular momentum
     public float drillDmgRamp = .1f;    //how fast damage builds per fixed update  
     public float overheatdmg = 4f;      //variable that determines when the rig overheats
@@ -17,7 +17,7 @@ public class Drill : MonoBehaviour {
     public Color overHeatColor = new Color(255, 150, 150, 255); //overheated color
 
     
-    public float overheatTime = 3f;
+    public float overheatTime = 3f;     //the standard downtime when you overheat
 
     public MeshRenderer[] rendDrill;
     public MeshRenderer rendCockpit;
@@ -25,23 +25,25 @@ public class Drill : MonoBehaviour {
     public Material cockpitState;
     
 
-    public bool __________________________________________________________________________;
-
-    //values set dynamically
-    //GameObject[] leftDrills,rightDrills;
-    public GameObject target;
-    public float damage;
-    public bool isPlayer1;
-    public GameObject playerGO;
-    public bool pointingDown;
-    public GameObject left, Right, Down, Up;
-    public KeyCode drilluse=KeyCode.Space;
+    
+    [Header("Set Dynamically")]
+    
+    public GameObject target;                       //the block the drill is facint
+    public float damage;                            //the damage charge of the 
+    public bool isPlayer1;  
+    public GameObject playerGO;                     //the player object attached to this game
+    public bool pointingDown, shielded;             //if the drill is pointing down and if it currently has a shield
+    public GameObject left, Right, Down, Up;        //the blocks in the specified direction
+    public KeyCode drilluse=KeyCode.Space;          // the key that is used to operate the drill
+    
    
 
 
-    public bool overheated;
+    public bool overheated; //wheter or not the drill is overheated
 
-    public void OnTriggerEnter(Collider other)
+
+    //finds the target in front of the drill
+    public void OnTriggerEnter(Collider other) 
     {
         if (other.gameObject.GetComponent<BoxCollider>().isTrigger)
             target = other.gameObject;
@@ -52,12 +54,28 @@ public class Drill : MonoBehaviour {
     {
         target = null;
     }
+    
+    //if the player is shielded it will use the shield and return true else it will return false
+    public bool useShield()
+    {
+        if (!shielded)
+            return false;
+        else
+        {
+            if (isPlayer1)
+            {
+                playerGO.GetComponent<Player1>().usePowerup();
+                
+            }
+            return true;
+        }
+    }
 
 
-    // Use this for initialization
+    
     void Start ()
     {
-        
+           //finds the player object this drill is attached to    
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
         
         foreach (GameObject player in players)
@@ -74,10 +92,12 @@ public class Drill : MonoBehaviour {
         }
 
         resetDrillState();
-        S = this;   
+        S = this;
+        shielded = false;
         
     }
 
+    //gets the power up. just a middle function between block and the player
     public void addPowerUp()
     {
         if (isPlayer1)
@@ -93,25 +113,18 @@ public class Drill : MonoBehaviour {
 
         //will attack when you release the spacebar
         if (Input.GetKeyUp(drilluse) && !overheated)
-        {
-           
+        {           
             if (target != null)
-            {
-               
-                if (target.GetComponent<Block>().attack(damage,this))
-                {
-                   
-                    if (pointingDown)
-                    {
+            {               
+                if (target.GetComponent<Block>().attack(damage,this) && pointingDown)
+                {                    
                         if (isPlayer1)
                             playerGO.GetComponent<Player1>().destroyedBelow();
                         //else
-                            //playerGO.GetComponent<Player2>().destroyedBelow();
-
-                    }
-                    target = null;
+                            //playerGO.GetComponent<Player2>().destroyedBelow();                                   
                    
                 }
+                target = null;
             }
             
             resetDrillState ();
@@ -123,7 +136,7 @@ public class Drill : MonoBehaviour {
     void FixedUpdate()
     {
 
-        //will charge as long as you're holding spacebar. increases the damage 
+        //will charge as long as you're holding the correct button. increases the damage 
         if(Input.GetKey(drilluse) && !overheated)
         {
             damage += drillDmgRamp;          
@@ -150,6 +163,7 @@ public class Drill : MonoBehaviour {
 
     }
 
+    //the next set of functions change the way the drill is facing
     public void PointDown()
     {
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 0));
@@ -172,6 +186,9 @@ public class Drill : MonoBehaviour {
         pointingDown = false;
     }
 
+
+
+    //finds the targets in each direction and sets them to the appropriate variable
     public void getTargets()
     {
        
@@ -202,6 +219,7 @@ public class Drill : MonoBehaviour {
     }
        
 
+    //the enumerator function overheats the drill then waits until the overheat is done then goes back to idle
     public IEnumerator overheat(float overheatTime){
         
         overheated = true;
@@ -219,39 +237,12 @@ public class Drill : MonoBehaviour {
         
     }
 
+    //resets the drill back to 0 damage finds the new targets and changes its color back
     void resetDrillState(){
         drillState.color = defaultDrillColor;
         cockpitState.color = defaultCockpitColor;
         damage = 0;
         getTargets();
     }
-    /*
-    //this will turn the gravity on and off for the drill. will change it from true to false or false to true
-    public void gravitySwitch()
-    {
-        if(S.GetComponent<Rigidbody>().useGravity)
-            S.GetComponent<Rigidbody>().useGravity = false;
-        else
-            S.GetComponent<Rigidbody>().useGravity = true;
-    }
     
-    //same as above but with kinematic boolean
-    public void kinematicSwitch()
-    {
-        if (S.GetComponent<Rigidbody>().isKinematic)
-            S.GetComponent<Rigidbody>().isKinematic = false;
-        else
-            S.GetComponent<Rigidbody>().isKinematic = true;
-    }
-    */
-    /*public void OnCollisionEnter(Collision collision)
-    {
-        GameObject collidedWith = collision.gameObject;
-        GetComponent<Rigidbody>().useGravity = false;
-    }*/
-    
-    
-
-    //takes the sphere collider that's 1m away. will set the gameobject that it touches to target
-   
 }
