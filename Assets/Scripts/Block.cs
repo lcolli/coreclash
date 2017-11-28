@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-
+    [Header("Set in Inspector")]
+    float waterOverheatTime = 3f;
+    float lavaOverheatTime = 5f;
+    [Header("Set Dynamically")]
     public int health; //the ammount of damage a block can take before it breaks
 
     // Use this for initialization
@@ -63,18 +66,18 @@ public class Block : MonoBehaviour
 
 
     //takes the damage from the drill and destroys this gameobject if the damage is more than health
-    public bool attack(float damage)
+    public bool attack(float damage, Drill drill)
     {
         if (damage > health)
         {
-            blockFunction();
+            blockFunction(drill);
             Destroy(this.gameObject);            
             return true;
         }
         return false;
     }
 
-    public void blockFunction()
+    public void blockFunction(Drill drill)
     {
         switch (this.tag)
         {
@@ -89,12 +92,15 @@ public class Block : MonoBehaviour
 
             case "Magma":
                 //magma stats
+                StartCoroutine(drill.overheat(lavaOverheatTime));
                 break;             
             case "Treasure":
                 //treasure stats
+                drill.addPowerUp();
                 break;
             case "Water":
                 //water stats
+                StartCoroutine(drill.overheat(waterOverheatTime));
                 break;
 
             default:

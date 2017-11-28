@@ -35,7 +35,7 @@ public class Drill : MonoBehaviour {
     public GameObject playerGO;
     public bool pointingDown;
     public GameObject left, Right, Down, Up;
-    
+    public KeyCode drilluse=KeyCode.Space;
    
 
 
@@ -77,6 +77,14 @@ public class Drill : MonoBehaviour {
         S = this;   
         
     }
+
+    public void addPowerUp()
+    {
+        if (isPlayer1)
+            playerGO.GetComponent<Player1>().getPowerup();
+    }
+
+    
 	
 	// Update is called once per frame
 	void Update () {
@@ -84,14 +92,15 @@ public class Drill : MonoBehaviour {
        
 
         //will attack when you release the spacebar
-        if (Input.GetKeyUp(KeyCode.Space) && !overheated)
+        if (Input.GetKeyUp(drilluse) && !overheated)
         {
            
             if (target != null)
             {
                
-                if (target.GetComponent<Block>().attack(damage))
+                if (target.GetComponent<Block>().attack(damage,this))
                 {
+                   
                     if (pointingDown)
                     {
                         if (isPlayer1)
@@ -115,7 +124,7 @@ public class Drill : MonoBehaviour {
     {
 
         //will charge as long as you're holding spacebar. increases the damage 
-        if(Input.GetKey(KeyCode.Space) && !overheated)
+        if(Input.GetKey(drilluse) && !overheated)
         {
             damage += drillDmgRamp;          
 
@@ -126,7 +135,7 @@ public class Drill : MonoBehaviour {
             else if (damage > 1.25f && damage < 3f)
                 drillState.color = ideal;
             else if (damage > 4f)
-                StartCoroutine(overheat());
+                StartCoroutine(overheat(overheatTime));
 
             Material newMaterial = new Material (Shader.Find ("Specular"));
             newMaterial.color = overHeatColor;
@@ -165,26 +174,35 @@ public class Drill : MonoBehaviour {
 
     public void getTargets()
     {
+       
         Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
         List<GameObject> gos = new List<GameObject>();
         foreach(Collider collide in cols)
         {
             if(collide.gameObject.layer==LayerMask.NameToLayer("Playing field"))
             {
-                gos.Add(collide.gameObject);
-                print(collide.gameObject.name);
+                gos.Add(collide.gameObject);               
             }
         }
+        left = null;
+        Right = null;
+        Up = null;
+        Down = null;
         foreach(GameObject GO in gos)
         {
             if (GO.transform.position.x < transform.position.x - .5)
+                left = GO;
+            else if (GO.transform.position.x > transform.position.x + .5)
                 Right = GO;
-            else if (GO.transform.position.x < transform.position.x - .5) ;
+            else if (GO.transform.position.y > transform.position.y + .5)
+                Up = GO;
+            else if (GO.transform.position.y < transform.position.y - .5)
+                Down = GO;
         }
     }
        
 
-    IEnumerator overheat(){
+    public IEnumerator overheat(float overheatTime){
         
         overheated = true;
         drillState.color = overHeatColor;
@@ -205,6 +223,7 @@ public class Drill : MonoBehaviour {
         drillState.color = defaultDrillColor;
         cockpitState.color = defaultCockpitColor;
         damage = 0;
+        getTargets();
     }
     /*
     //this will turn the gravity on and off for the drill. will change it from true to false or false to true
