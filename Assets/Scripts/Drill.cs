@@ -35,11 +35,7 @@ public class Drill : MonoBehaviour {
     public bool pointingDown, shielded;             //if the drill is pointing down and if it currently has a shield
     public GameObject left, Right, Down, Up;        //the blocks in the specified direction
     public KeyCode drilluse=KeyCode.Space;          // the key that is used to operate the drill
-    
-   
-
-
-    public bool overheated; //wheter or not the drill is overheated
+    public bool overheated;                         //wheter or not the drill is overheated
 
 
     //finds the target in front of the drill
@@ -64,8 +60,11 @@ public class Drill : MonoBehaviour {
         {
             if (isPlayer1)
             {
-                playerGO.GetComponent<Player1>().usePowerup();
-                
+                playerGO.GetComponent<Player1>().usePowerup();                
+            }
+            else
+            {
+                playerGO.GetComponent<Player2>().usePowerup();
             }
             return true;
         }
@@ -102,6 +101,8 @@ public class Drill : MonoBehaviour {
     {
         if (isPlayer1)
             playerGO.GetComponent<Player1>().getPowerup();
+        else
+            playerGO.GetComponent<Player2>().getPowerup();
     }
 
     
@@ -120,8 +121,8 @@ public class Drill : MonoBehaviour {
                 {                    
                         if (isPlayer1)
                             playerGO.GetComponent<Player1>().destroyedBelow();
-                        //else
-                            //playerGO.GetComponent<Player2>().destroyedBelow();                                   
+                        else
+                            playerGO.GetComponent<Player2>().destroyedBelow();                                   
                    
                 }
                 target = null;
@@ -227,11 +228,15 @@ public class Drill : MonoBehaviour {
         cockpitState.color = overHeatColor;
         if(isPlayer1)
             playerGO.GetComponent<Player1>().S.State = state.overheat;
+        else
+            playerGO.GetComponent<Player2>().S.State = state.overheat;
 
         yield return new WaitForSeconds(overheatTime);
 
         if (isPlayer1)
             playerGO.GetComponent<Player1>().S.State = state.idle;
+        else
+            playerGO.GetComponent<Player2>().S.State = state.idle;
         overheated = false;
         resetDrillState();
         

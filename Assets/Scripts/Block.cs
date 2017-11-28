@@ -117,8 +117,7 @@ public class Block : MonoBehaviour
                     StartCoroutine(drill.overheat(lavaOverheatTime));
                 break;             
             case "Treasure":
-                //treasure stats
-                
+                //treasure stats                
                 drill.addPowerUp();
                 break;
             case "Water":
