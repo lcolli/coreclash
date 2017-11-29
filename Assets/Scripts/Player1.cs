@@ -188,8 +188,7 @@ public class Player1 : MonoBehaviour {
     public void  usePowerup()
     {
         powerup.use(this);
-        powerup.Name="none";
-        drill.shielded = false;
+        
     }
 
     //changes the power up from none to whatever value it is
@@ -200,5 +199,28 @@ public class Player1 : MonoBehaviour {
         if (powerup.Name == "Shield")
             drill.shielded=true;
     }
-    
+
+    public void DynamiteBlast()
+    {
+        Vector3 half = transform.position + new Vector3(1.5f, 0, 0);
+
+        Collider[] cols = Physics.OverlapBox(transform.position, half);
+        List<GameObject> gos = new List<GameObject>();
+        foreach (Collider collide in cols)
+        {
+            if (collide.gameObject.layer == LayerMask.NameToLayer("Playing field"))
+            {
+                gos.Add(collide.gameObject);
+            }
+        }
+
+        foreach (GameObject GO in gos)
+        {
+            if (GO.name != "rig")
+            {
+                GO.GetComponent<Block>().attack(3f, drill);
+            }
+        }
+    }
+
 }
