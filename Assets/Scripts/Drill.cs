@@ -33,7 +33,7 @@ public class Drill : MonoBehaviour {
     public bool isPlayer1;  
     public GameObject playerGO;                     //the player object attached to this game
     public bool pointingDown, shielded;             //if the drill is pointing down and if it currently has a shield
-    public bool daimond, overclocked;
+    public bool diamond, overclocked;
     public GameObject left, Right, Down, Up;        //the blocks in the specified direction
     public KeyCode drilluse=KeyCode.Space;          // the key that is used to operate the drill
     public bool overheated;                         //wheter or not the drill is overheated
@@ -65,6 +65,7 @@ public class Drill : MonoBehaviour {
             }
             else
             {
+                
                 playerGO.GetComponent<Player2>().usePowerup();
             }
             return true;
@@ -94,7 +95,7 @@ public class Drill : MonoBehaviour {
         resetDrillState();
         S = this;
         shielded = false;
-        daimond = false;
+        diamond = false;
         overclocked = false;
         
     }

@@ -80,7 +80,7 @@ public class Block : MonoBehaviour
                 turntodirt();
             }
         }
-        if (damage > health)
+        if (damage >= health)
         {
             blockFunction(drill);
             Destroy(this.gameObject);            

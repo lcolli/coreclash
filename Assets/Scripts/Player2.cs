@@ -25,7 +25,7 @@ public class Player2 : MonoBehaviour {
     public int framesTilMove;                           //timer to delay movement while holding down move left/right
     public state State;                                 //the state of the player, moving idle falling overheat
     public position pos;                                // the position on the track, left right or middle
-    public Powerup powerup;               //the power up slot for this player
+    public Powerup powerup;                             //the power up slot for this player
 
 
     private void Awake()
@@ -38,6 +38,9 @@ public class Player2 : MonoBehaviour {
         State = state.falling;
         pos = position.middle;
         framesTilMove = 0;
+        powerup = this.GetComponent<Powerup>();
+        powerup.Name = "Sheild";
+        
 
         //this is going to find the drill that is a child of this player
         GameObject[] rigs = GameObject.FindGameObjectsWithTag("Rig");
@@ -51,6 +54,7 @@ public class Player2 : MonoBehaviour {
 
             }
         }
+        drill.shielded = true;
 
     }
     public void FixedUpdate()
@@ -183,24 +187,29 @@ public class Player2 : MonoBehaviour {
 
     public void DynamiteBlast()
     {
-        Vector3 half = transform.position + new Vector3(1.5f,0,0);
-        
-        Collider[] cols = Physics.OverlapBox(transform.position,half);
+        Vector3 half = new Vector3(1.5f, 1.5f, 0.1f);
+        Vector3 centeroffset = new Vector3(0f, .5f, 0f);
+
+        Collider[] cols = Physics.OverlapBox(transform.position + centeroffset, half);
+
         List<GameObject> gos = new List<GameObject>();
         foreach (Collider collide in cols)
         {
             if (collide.gameObject.layer == LayerMask.NameToLayer("Playing field"))
             {
+
                 gos.Add(collide.gameObject);
             }
         }
 
-        foreach(GameObject GO in gos)
+        foreach (GameObject GO in gos)
         {
-            if(GO.name!="rig")
+            if (GO.name != "Rig")
             {
+                
                 GO.GetComponent<Block>().attack(3f, drill);
             }
         }
     }
 }
+

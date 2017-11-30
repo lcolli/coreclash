@@ -58,6 +58,7 @@ public class Player1 : MonoBehaviour {
         State = state.falling;
         pos = position.middle;
         framesTilMove = 0;
+        powerup = this.GetComponent<Powerup>();
                 
         //this is going to find the drill that is a child of this player
         GameObject[] rigs = GameObject.FindGameObjectsWithTag("Rig");
@@ -82,6 +83,12 @@ public class Player1 : MonoBehaviour {
 
     public void Update()
     {
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            powerup.Name = "Grapple";
+            usePowerup();
+        }
 
         //overrides the movement counter if players press an input again
         if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
@@ -202,25 +209,31 @@ public class Player1 : MonoBehaviour {
 
     public void DynamiteBlast()
     {
-        Vector3 half = transform.position + new Vector3(1.5f, 0, 0);
+        
+        Vector3 half = new Vector3(1.5f, 1.5f,0.1f);
+        Vector3 centeroffset = new Vector3(0f, .5f, 0f);
 
-        Collider[] cols = Physics.OverlapBox(transform.position, half);
+        Collider[] cols = Physics.OverlapBox(transform.position+centeroffset, half);
+        
         List<GameObject> gos = new List<GameObject>();
         foreach (Collider collide in cols)
         {
             if (collide.gameObject.layer == LayerMask.NameToLayer("Playing field"))
             {
+                   
                 gos.Add(collide.gameObject);
             }
         }
 
         foreach (GameObject GO in gos)
         {
-            if (GO.name != "rig")
+            if (GO.name != "Rig")
             {
+                
                 GO.GetComponent<Block>().attack(3f, drill);
             }
         }
+        State = state.falling;
     }
 
 }
