@@ -15,6 +15,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     y: 43
     width: 1536
     height: 781
@@ -23,6 +24,8 @@ MonoBehaviour:
   m_RootView: {fileID: 7}
   m_MinSize: {x: 950, y: 300}
 =======
+=======
+>>>>>>> Evan
     y: 42
     width: 1920
     height: 998
@@ -30,6 +33,9 @@ MonoBehaviour:
   m_Title: 
   m_RootView: {fileID: 2}
   m_MinSize: {x: 950, y: 542}
+<<<<<<< HEAD
+>>>>>>> Evan
+=======
 >>>>>>> Evan
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
@@ -105,6 +111,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     y: 460
     width: 937
     height: 271
@@ -117,6 +124,8 @@ MonoBehaviour:
   m_Selected: 0
   m_LastSelected: 1
 =======
+=======
+>>>>>>> Evan
     y: 978
     width: 1920
     height: 20
@@ -153,10 +162,17 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 948
+<<<<<<< HEAD
   m_MinSize: {x: 709, y: 492}
   m_MaxSize: {x: 18004, y: 14042}
   vertical: 0
   controlID: 49
+>>>>>>> Evan
+=======
+  m_MinSize: {x: 713, y: 492}
+  m_MaxSize: {x: 18008, y: 14042}
+  vertical: 0
+  controlID: 9
 >>>>>>> Evan
 --- !u!114 &6
 MonoBehaviour:
@@ -182,8 +198,13 @@ MonoBehaviour:
 =======
     width: 302
     height: 948
+<<<<<<< HEAD
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 4000, y: 4000}
+>>>>>>> Evan
+=======
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
 >>>>>>> Evan
   m_ActualView: {fileID: 12}
   m_Panes:
@@ -220,7 +241,11 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 492}
   m_MaxSize: {x: 10004, y: 14042}
   vertical: 1
+<<<<<<< HEAD
   controlID: 50
+>>>>>>> Evan
+=======
+  controlID: 10
 >>>>>>> Evan
 --- !u!114 &8
 MonoBehaviour:
@@ -255,6 +280,9 @@ MonoBehaviour:
   - {fileID: 11}
   m_Selected: 0
   m_LastSelected: 1
+<<<<<<< HEAD
+>>>>>>> Evan
+=======
 >>>>>>> Evan
 --- !u!114 &9
 MonoBehaviour:
@@ -272,12 +300,15 @@ MonoBehaviour:
     serializedVersion: 2
     x: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     y: 761
     width: 1536
     height: 20
   m_MinSize: {x: 0, y: 0}
   m_MaxSize: {x: 0, y: 0}
 =======
+=======
+>>>>>>> Evan
     y: 545
     width: 1163
     height: 403
@@ -315,8 +346,13 @@ MonoBehaviour:
 =======
     width: 455
     height: 948
+<<<<<<< HEAD
   m_MinSize: {x: 275, y: 50}
   m_MaxSize: {x: 4000, y: 4000}
+=======
+  m_MinSize: {x: 277, y: 71}
+  m_MaxSize: {x: 4002, y: 4021}
+>>>>>>> Evan
   m_ActualView: {fileID: 16}
 >>>>>>> Evan
   m_Panes:
@@ -430,9 +466,15 @@ MonoBehaviour:
     height: 927
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: a2270000
     m_LastClickedID: 0
     m_ExpandedIDs: a628fdff3efbffff92fbffff9efbffffa0fbffff00000000
+=======
+    m_SelectedIDs: 6c290000
+    m_LastClickedID: 0
+    m_ExpandedIDs: 80faffff0000000086290000
+>>>>>>> Evan
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -451,7 +493,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 6}
     m_SearchString: 
   m_ExpandedScenes:
-  - _Scene_MainGame
+  - Scene_Evan
   m_CurrenRootInstanceID: 0
   m_Locked: 0
   m_CurrentSortingName: TransformSorting
@@ -563,6 +605,9 @@ MonoBehaviour:
     y: 636
     width: 1159
     height: 382
+<<<<<<< HEAD
+>>>>>>> Evan
+=======
 >>>>>>> Evan
   m_SearchFilter:
     m_NameFilter: 
@@ -576,6 +621,7 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
+<<<<<<< HEAD
     - Assets/Prefabs/Blocks
   m_ViewMode: 1
   m_StartGridSize: 64
@@ -591,13 +637,27 @@ MonoBehaviour:
     m_LastClickedID: 11378
     m_ExpandedIDs: 00000000b02b0000e42b00001c2c00005e2c0000722c0000762c00009c2c0000b22c0000f42d000000ca9a3bffffff7f
 =======
+=======
+    - Assets/Scenes
+  m_ViewMode: 1
+  m_StartGridSize: 64
+  m_LastFolders:
+  - Assets/Scenes
+  m_LastFoldersGridSize: -1
+>>>>>>> Evan
   m_LastProjectPath: C:\Users\Evan\Documents\Unity\coreclash
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: 8c270000
     m_LastClickedID: 10124
     m_ExpandedIDs: 000000003a2700002028000000ca9a3bffffff7f
+>>>>>>> Evan
+=======
+    m_SelectedIDs: 78280000
+    m_LastClickedID: 10360
+    m_ExpandedIDs: 00000000682800003e29000000ca9a3bffffff7f
 >>>>>>> Evan
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -627,9 +687,13 @@ MonoBehaviour:
     m_SelectedIDs: 1c2b0000
     m_LastClickedID: 11036
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 00000000b02b0000e42b00001c2c00005e2c0000722c0000762c00009c2c0000b22c0000f42d000000ca9a3bffffff7f
 =======
     m_ExpandedIDs: 000000003a270000
+>>>>>>> Evan
+=======
+    m_ExpandedIDs: 00000000682800003e290000
 >>>>>>> Evan
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -658,8 +722,13 @@ MonoBehaviour:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000000000000e2b0000
+=======
+    m_HadKeyboardFocusLastEvent: 1
+    m_ExpandedInstanceIDs: c6230000000000000e2b0000702600002c2700006e270000522700005a2700006027000040270000
+>>>>>>> Evan
 =======
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000000000000e2b0000702600002c2700006e270000522700005a2700006027000040270000
