@@ -8,7 +8,7 @@ public class Powerup : MonoBehaviour {
     public float overclockTime = 5f;
     public float overclockdowntime = 3f;
     //the list of powerups
-     string[] PUList = new string[] {"Diamond Drill","Dynamite","EMP",
+     string[] PUList = new string[] {"Diamond","Dynamite","EMP",
                                     "Grapple","Overclock","Shield" };
 
     [Header("Set Dynamically")]
@@ -43,7 +43,7 @@ public class Powerup : MonoBehaviour {
     {
         switch (Name)
         {
-            case "Diamond Drill":
+            case "Diamond":
                 player.drill.diamond = true;
                 Name = "none";
                 break;
@@ -61,7 +61,12 @@ public class Powerup : MonoBehaviour {
                 {
                     Name = p2.powerup.Name;
                     p2.powerup.Name = "none";
-                }                
+                }
+                else
+                {
+                    Name = "none";
+                        
+                }
                 break;
             case "Overclock":
                 StartCoroutine(Overclock(player.drill));
@@ -78,7 +83,7 @@ public class Powerup : MonoBehaviour {
     {
         switch (Name)
         {
-            case "Diamond Drill":
+            case "Diamond":
                 player.drill.diamond = true;
                 Name = "none";
                 break;
@@ -96,6 +101,11 @@ public class Powerup : MonoBehaviour {
                 {
                     Name = p1.powerup.Name;
                     p1.powerup.Name = "none";
+                }
+                else
+                {
+                    Name = "none";
+
                 }
                 break;
             case "Overclock":
