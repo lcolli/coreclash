@@ -33,24 +33,13 @@ public class Drill : MonoBehaviour {
     public bool isPlayer1;  
     public GameObject playerGO;                     //the player object attached to this game
     public bool pointingDown, shielded;             //if the drill is pointing down and if it currently has a shield
-    public bool daimond, overclocked;
+    public bool diamond, overclocked;
     public GameObject left, Right, Down, Up;        //the blocks in the specified direction
     public KeyCode drilluse=KeyCode.Space;          // the key that is used to operate the drill
     public bool overheated;                         //wheter or not the drill is overheated
 
 
-    //finds the target in front of the drill
-    public void OnTriggerEnter(Collider other) 
-    {
-        if (other.gameObject.GetComponent<BoxCollider>().isTrigger)
-            target = other.gameObject;
-    }
-
-    //if the drill is no longer facing a game object it will set the target to null
-    public void OnTriggerExit(Collider other)
-    {
-        target = null;
-    }
+    
     
     //if the player is shielded it will use the shield and return true else it will return false
     public bool useShield()
@@ -65,8 +54,10 @@ public class Drill : MonoBehaviour {
             }
             else
             {
+                
                 playerGO.GetComponent<Player2>().usePowerup();
             }
+            
             return true;
         }
     }
@@ -94,7 +85,7 @@ public class Drill : MonoBehaviour {
         resetDrillState();
         S = this;
         shielded = false;
-        daimond = false;
+        diamond = false;
         overclocked = false;
         
     }
@@ -112,15 +103,42 @@ public class Drill : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        getTargets();
        
 
         //will attack when you release the spacebar
         if (Input.GetKeyUp(drilluse) && !overheated)
         {           
             if (target != null)
-            {               
-                if (target.GetComponent<Block>().attack(damage,this) && pointingDown)
+            {
+                
+                if (diamond)
+                {
+                    
+                    Vector3 start = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+                    Vector3 direction = target.transform.position;
+                    Vector3 length = (direction - start) * 2;
+                    Collider[] cols = Physics.OverlapCapsule(start, start + length,.1f); List<GameObject> gos = new List<GameObject>();
+                    foreach (Collider collide in cols)
+                    {
+                        if (collide.gameObject.layer == LayerMask.NameToLayer("Playing field"))
+                        {
+                            
+                            gos.Add(collide.gameObject);
+                        }
+                    }
+
+                    foreach (GameObject GO in gos)
+                    {
+                        if (GO.name != "Rig")
+                        {
+
+                           GO.GetComponent<Block>().attack(damage, this);
+                        }
+                    }
+                    diamond = false;
+                }
+                else if (target.GetComponent<Block>().attack(damage,this) && pointingDown)
                 {                    
                         if (isPlayer1)
                             playerGO.GetComponent<Player1>().destroyedBelow();
@@ -170,22 +188,26 @@ public class Drill : MonoBehaviour {
     //the next set of functions change the way the drill is facing
     public void PointDown()
     {
+        target = Down;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 0));
         pointingDown = true;
     }
     public void PointLeft()
     {
+        target = left ;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, -90));
         pointingDown = false;
     }
 
     public void PointRight()
     {
+        target = Right;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 90));
         pointingDown = false;
     }
     public void PointUp()
     {
+        target = Up;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 180));
         pointingDown = false;
     }
@@ -195,8 +217,10 @@ public class Drill : MonoBehaviour {
     //finds the targets in each direction and sets them to the appropriate variable
     public void getTargets()
     {
-       
-        Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
+
+        Vector3 offset = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+        offset += new Vector3(0, -.5f, 0);
+        Collider[] cols = Physics.OverlapSphere(offset, 1.1f);
         List<GameObject> gos = new List<GameObject>();
         foreach(Collider collide in cols)
         {
@@ -227,9 +251,10 @@ public class Drill : MonoBehaviour {
     public IEnumerator overheat(float overheatTime){
         if (!overclocked)
         {
-            overheated = true;
-            drillState.color = overHeatColor;
-            cockpitState.color = overHeatColor;
+            S.overheated = true;
+            S.drillState.color = overHeatColor;
+            S.cockpitState.color = overHeatColor;
+            
             if (isPlayer1)
                 playerGO.GetComponent<Player1>().S.State = state.overheat;
             else
@@ -241,18 +266,21 @@ public class Drill : MonoBehaviour {
                 playerGO.GetComponent<Player1>().S.State = state.idle;
             else
                 playerGO.GetComponent<Player2>().S.State = state.idle;
-            overheated = false;
+            S.overheated = false;
             resetDrillState();
         }
         
     }
+
+    
+   
 
     //resets the drill back to 0 damage finds the new targets and changes its color back
     void resetDrillState(){
         drillState.color = defaultDrillColor;
         cockpitState.color = defaultCockpitColor;
         damage = 0;
-        getTargets();
+        
     }
     
 }

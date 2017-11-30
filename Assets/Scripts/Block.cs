@@ -5,8 +5,10 @@ using UnityEngine;
 public class Block : MonoBehaviour
 {
     [Header("Set in Inspector")]
-    float waterOverheatTime = 3f;   //the time that a water block will overheat the rig
-    float lavaOverheatTime = 5f;    //time that the lava block will overheat the rig
+    public float waterOverheatTime = 3f;   //the time that a water block will overheat the rig
+    public float lavaOverheatTime = 5f;    //time that the lava block will overheat the rig
+    public GameObject transformPrefab;
+
     [Header("Set Dynamically")]
     public int health;              //the ammount of damage a block can take before it breaks
 
@@ -71,16 +73,17 @@ public class Block : MonoBehaviour
         if (this.tag=="Stone")
         {
             if (damage >= 2)
-            {                
+            {
+                blockFunction(drill);
                 Destroy(this.gameObject);
                 return true;
             }
             else if(damage>=1)
             {
-                turntodirt();
+                transformBlock(transformPrefab);
             }
         }
-        if (damage > health)
+        if (damage >= health)
         {
             blockFunction(drill);
             Destroy(this.gameObject);            
@@ -91,9 +94,11 @@ public class Block : MonoBehaviour
 
 
     //stone can turn to dirt if you don't do full damage
-    void turntodirt()
+    void transformBlock(GameObject transformPrefab)
     {
-
+        transformPrefab.transform.position = transform.position;
+        Destroy(this.gameObject);
+        Instantiate(transformPrefab);
     }
 
 
@@ -125,11 +130,34 @@ public class Block : MonoBehaviour
                 if (!drill.useShield())
                     StartCoroutine(drill.overheat(waterOverheatTime));
                 break;
-
             default:
                 break;
 
         }
+
+        Vector3 above =transform.position + new Vector3(0, 1.5f, 0);
+        Collider[] cols = Physics.OverlapCapsule(transform.position, above,.1f);
+        List<GameObject> gos = new List<GameObject>();
+        foreach (Collider collide in cols)
+        {
+            if (collide.gameObject.layer == LayerMask.NameToLayer("Playing field"))
+            {
+                gos.Add(collide.gameObject);
+            }
+        }
+
+        foreach (GameObject GO in gos)
+        {
+            if (GO.tag == "Sand")
+            {
+                GO.transform.position = this.transform.position;
+            }
+        }
+
+
+
     }
-   
+
+    
+
 }
