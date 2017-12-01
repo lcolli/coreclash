@@ -43,7 +43,7 @@ public class Block : MonoBehaviour
                 break;
 
             case "Sand":
-                this.gameObject.GetComponent<Rigidbody>().useGravity = true;
+                
                 break;
 
             case "Stone":
