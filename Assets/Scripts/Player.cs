@@ -44,8 +44,8 @@ public class Player : MonoBehaviour {
     public state State;                                 //the state of the player, moving idle falling overheat
     public position pos;                                // the position on the track, left right or middle
     public Powerup powerup;                             //the power up slot for this player
-
-
+    public bool playing;
+    public Camera playerCam;
 
     private void Start()
     {
@@ -76,6 +76,9 @@ public class Player : MonoBehaviour {
         //overrides the movement counter if players press an input again
         if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
             framesTilMove = FramesBeforeMove;
+
+        if (State != state.overheat && Input.GetKeyDown(usePU)) ;
+            usePowerup();
 
         //if countdown isn't done it won't do anything but check until
         if (State == state.moving)
@@ -129,6 +132,11 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void usePowerup()
+    {
+        
+    }
+
 
 
     private void Move()
@@ -153,11 +161,13 @@ public class Player : MonoBehaviour {
         drill.getTargets();                 //gets the drill to find the possible targets around it
         State = state.moving;               // changes the state to moving to add a delay
         framesTilMove = 0;                  //resets the counter
+       
     }
 
     //if something below is destroyed the rig will fall. updates the state
     public void destroyedBelow()
     {
+        playerCam.GetComponent<FollowCam>().moveCam();
         State = state.falling;
     }
 

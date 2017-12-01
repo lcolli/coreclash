@@ -1916,8 +1916,9 @@ MonoBehaviour:
   drill: {fileID: 0}
   framesTilMove: 0
   State: 0
-  pos: 0
+  pos: 2
   powerup: {fileID: 0}
+  playing: 0
   S: {fileID: 0}
 --- !u!135 &135211745952945404
 SphereCollider:

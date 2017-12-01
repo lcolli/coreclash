@@ -17,7 +17,7 @@ public class Player2 : Player {
     
 
     //uses the power up that is attached to this player if it has one
-    public void usePowerup()
+    public new void usePowerup()
     {
         powerup.use(this);
         

@@ -8,6 +8,7 @@ public class Block : MonoBehaviour
     public float waterOverheatTime = 3f;   //the time that a water block will overheat the rig
     public float lavaOverheatTime = 5f;    //time that the lava block will overheat the rig
     public GameObject transformPrefab;
+    
 
     [Header("Set Dynamically")]
     public int health;              //the ammount of damage a block can take before it breaks

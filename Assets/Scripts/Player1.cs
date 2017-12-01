@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Player1 : Player {
 
-    public Player1 S;       
+    public Player1 S;
+    
 
     private void Awake()
     {
@@ -13,7 +14,7 @@ public class Player1 : Player {
     }
 
 
-    public void usePowerup()
+    public new void usePowerup()
     {
         powerup.use(this);
 
