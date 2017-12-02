@@ -34,7 +34,7 @@ public class Player : MonoBehaviour {
     public KeyCode moveright = KeyCode.RightArrow;
     public KeyCode lookup = KeyCode.UpArrow;
     public KeyCode drilluse = KeyCode.Space;
-    public KeyCode usePU = KeyCode.LeftAlt;
+    public KeyCode usePU = KeyCode.G;
 
 
     [Header("Set Dynamically")]
@@ -77,8 +77,7 @@ public class Player : MonoBehaviour {
         if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
             framesTilMove = FramesBeforeMove;
 
-        if (State != state.overheat && Input.GetKeyDown(usePU)) ;
-            usePowerup();
+       
 
         //if countdown isn't done it won't do anything but check until
         if (State == state.moving)
@@ -132,7 +131,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void usePowerup()
+    public void UsePowerup()
     {
         
     }
@@ -168,7 +167,8 @@ public class Player : MonoBehaviour {
     public void destroyedBelow()
     {
         playerCam.GetComponent<FollowCam>().moveCam();
-        State = state.falling;
+        if(State!=state.overheat)
+            State = state.falling;
     }
 
     //for when the block stops falling turns state back to idle
@@ -195,9 +195,35 @@ public class Player : MonoBehaviour {
             drill.shielded = true;
     }
 
+    public void Shift()
+    {
+        
+        switch(pos)
+        {
+            case position.left:
+               
+                pos = position.middle;
+                Move();
+                break;
+            case position.right:
+                
+                pos = position.middle;
+                Move();
+                break;
+            case position.middle:
+               
+                if (drill.left == null)
+                    pos = position.left;
+                else
+                    pos = position.right;
+                Move();
+                break;
+        }
+    }
+
     public void DynamiteBlast()
     {
-
+        
         Vector3 half = new Vector3(1.5f, 1.5f, 0.1f);
         Vector3 centeroffset = new Vector3(0f, .5f, 0f);
 
@@ -218,7 +244,7 @@ public class Player : MonoBehaviour {
             if (GO.name != "Rig")
             {
 
-                GO.GetComponent<Block>().attack(3f, drill);
+                GO.GetComponent<Block>().attack(3f, drill,"up");
             }
         }
         State = state.falling;
@@ -230,6 +256,11 @@ public class Player : MonoBehaviour {
         //will give a delay so players can stop at middle
         if (framesTilMove <= FramesBeforeMove)
             framesTilMove++;
-    }  
+    } 
+    
+   public bool isBelow(Vector3 blockPos)
+    {
+        return true;
+    }
 
 }

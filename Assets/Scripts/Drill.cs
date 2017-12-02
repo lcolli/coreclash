@@ -15,6 +15,8 @@ public class Drill : MonoBehaviour {
     public Color buildUp = new Color(200, 200, 200, 255);      //color of build up
     public Color ideal = new Color(200, 200, 200, 255);         //final color before overheat
     public Color overHeatColor = new Color(255, 150, 150, 255); //overheated color
+    public float overclockMult = 2;
+    
 
     
     public float overheatTime = 3f;     //the standard downtime when you overheat
@@ -23,24 +25,29 @@ public class Drill : MonoBehaviour {
     public MeshRenderer rendCockpit;
     public Material drillState;
     public Material cockpitState;
-    
+   
 
-    
+
+
     [Header("Set Dynamically")]
     
     public GameObject target;                       //the block the drill is facint
     public float damage;                            //the damage charge of the 
     public bool isPlayer1;  
     public GameObject playerGO;                     //the player object attached to this game
-    public bool pointingDown, shielded;             //if the drill is pointing down and if it currently has a shield
+    public bool  shielded;                          //if the drill currently has a shield
     public bool diamond, overclocked;
     public GameObject left, Right, Down, Up;        //the blocks in the specified direction
     public KeyCode drilluse=KeyCode.Space;          // the key that is used to operate the drill
     public bool overheated;                         //wheter or not the drill is overheated
+    public int overclockCount=0, overClockLimit=0;
+    float overclockDown=0f;
+    float drillDmgMem;
+    string pointing;
 
 
-    
-    
+
+
     //if the player is shielded it will use the shield and return true else it will return false
     public bool useShield()
     {
@@ -50,12 +57,12 @@ public class Drill : MonoBehaviour {
         {
             if (isPlayer1)
             {
-                playerGO.GetComponent<Player1>().usePowerup();                
+                playerGO.GetComponent<Player1>().UsePowerup();                
             }
             else
             {
                 
-                playerGO.GetComponent<Player2>().usePowerup();
+                playerGO.GetComponent<Player2>().UsePowerup();
             }
             
             return true;
@@ -87,16 +94,16 @@ public class Drill : MonoBehaviour {
         shielded = false;
         diamond = false;
         overclocked = false;
+        drillDmgMem = drillDmgRamp;
         
     }
 
     //gets the power up. just a middle function between block and the player
     public void addPowerUp()
     {
-        if (isPlayer1)
-            playerGO.GetComponent<Player1>().getPowerup();
-        else
-            playerGO.GetComponent<Player2>().getPowerup();
+        
+            playerGO.GetComponent<Player>().getPowerup();
+        
     }
 
     
@@ -133,19 +140,19 @@ public class Drill : MonoBehaviour {
                         if (GO.name != "Rig")
                         {
 
-                           GO.GetComponent<Block>().attack(damage, this);
+                           GO.GetComponent<Block>().attack(damage, this,pointing);
                         }
                     }
                     diamond = false;
                 }
-                else if (target.GetComponent<Block>().attack(damage,this) && pointingDown)
-                {                    
-                        if (isPlayer1)
-                            playerGO.GetComponent<Player1>().destroyedBelow();
-                        else
-                            playerGO.GetComponent<Player2>().destroyedBelow();                                   
+                else if (target.GetComponent<Block>().attack(damage,this,pointing) && pointing=="down")
+                {    
+                        
+                        playerGO.GetComponent<Player>().destroyedBelow();
+                                                           
                    
                 }
+                getTargets();
                 target = null;
             }
             
@@ -157,6 +164,18 @@ public class Drill : MonoBehaviour {
 
     void FixedUpdate()
     {
+        if(overclockCount>overClockLimit)
+        {
+            overClockLimit = 0;
+            overclockCount = 0;
+            StartCoroutine(overheat(overclockDown));
+            overclockDown = 0;
+            overclocked = false;
+            drillDmgRamp = drillDmgMem;
+        }
+
+        if (overclocked)
+            overclockCount++;
 
         //will charge as long as you're holding the correct button. increases the damage 
         if(Input.GetKey(drilluse) && !overheated)
@@ -190,26 +209,26 @@ public class Drill : MonoBehaviour {
     {
         target = Down;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 0));
-        pointingDown = true;
+        pointing = "down";
     }
     public void PointLeft()
     {
         target = left ;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, -90));
-        pointingDown = false;
+        pointing = "left";
     }
 
     public void PointRight()
     {
         target = Right;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 90));
-        pointingDown = false;
+        pointing = "right";
     }
     public void PointUp()
     {
         target = Up;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 180));
-        pointingDown = false;
+        pointing = "up";
     }
 
 
@@ -217,7 +236,10 @@ public class Drill : MonoBehaviour {
     //finds the targets in each direction and sets them to the appropriate variable
     public void getTargets()
     {
-
+        left = null;
+        Right = null;
+        Up = null;
+        Down = null;
         Vector3 offset = new Vector3(transform.position.x,transform.position.y,transform.position.z);
         offset += new Vector3(0, -.5f, 0);
         Collider[] cols = Physics.OverlapSphere(offset, 1.1f);
@@ -229,10 +251,7 @@ public class Drill : MonoBehaviour {
                 gos.Add(collide.gameObject);               
             }
         }
-        left = null;
-        Right = null;
-        Up = null;
-        Down = null;
+        
         foreach(GameObject GO in gos)
         {
             if (GO.transform.position.x < transform.position.x - .5)
@@ -247,6 +266,19 @@ public class Drill : MonoBehaviour {
     }
        
 
+    public void OverheatLink(float overHeatTime)
+    {
+        StartCoroutine(overheat(overHeatTime));
+    }
+
+    public void Overclock(int time,float downtime)
+    {
+        overclockDown += downtime;
+        overClockLimit += time;
+        drillDmgRamp *= overclockMult;
+        overclocked = true;
+    }
+
     //the enumerator function overheats the drill then waits until the overheat is done then goes back to idle
     public IEnumerator overheat(float overheatTime){
         if (!overclocked)
@@ -255,23 +287,19 @@ public class Drill : MonoBehaviour {
             S.drillState.color = overHeatColor;
             S.cockpitState.color = overHeatColor;
             
-            if (isPlayer1)
-                playerGO.GetComponent<Player1>().S.State = state.overheat;
-            else
-                playerGO.GetComponent<Player2>().S.State = state.overheat;
+           
+            playerGO.GetComponent<Player>().State = state.overheat;
 
             yield return new WaitForSeconds(overheatTime);
-
-            if (isPlayer1)
-                playerGO.GetComponent<Player1>().S.State = state.idle;
-            else
-                playerGO.GetComponent<Player2>().S.State = state.idle;
+            
+            playerGO.GetComponent<Player>().State = state.idle;
             S.overheated = false;
             resetDrillState();
         }
         
     }
 
+    
     
    
 

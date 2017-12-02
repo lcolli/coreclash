@@ -151,6 +151,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterOverheatTime: 3
   lavaOverheatTime: 5
-  transformPrefab: {fileID: 1179226090938212, guid: 864cd92576029df43ad96a35abd5e932,
+  transformPrefab: {fileID: 1736849229682790, guid: 864cd92576029df43ad96a35abd5e932,
     type: 2}
   health: 0

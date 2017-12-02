@@ -5,7 +5,17 @@ using UnityEngine;
 public class Player1 : Player {
 
     public Player1 S;
-    
+
+
+    private new void Update()
+    {
+        if (Input.GetKeyDown(usePU))
+        {
+           
+            UsePowerup();
+        }
+        base.Update();
+    }
 
     private void Awake()
     {
@@ -14,8 +24,9 @@ public class Player1 : Player {
     }
 
 
-    public new void usePowerup()
+    public new void UsePowerup()
     {
+        
         powerup.use(this);
 
     }

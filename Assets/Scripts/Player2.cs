@@ -13,11 +13,21 @@ public class Player2 : Player {
         this.gameObject.name = "Player 2";
         S = this;
     }
-   
-    
+
+    private new void Update()
+    {
+        if (Input.GetKeyDown(usePU))
+        {
+           
+            UsePowerup();
+        }
+        base.Update();
+    }
+
+
 
     //uses the power up that is attached to this player if it has one
-    public new void usePowerup()
+    public new void UsePowerup()
     {
         powerup.use(this);
         

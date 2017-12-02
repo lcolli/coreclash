@@ -14,8 +14,7 @@ public class FollowCam : MonoBehaviour {
 
 	public void moveCam()
     {
-        print("hit");
-        destination += new Vector3(0, -2, 0);
+      destination += new Vector3(0, -2, 0);
     }
 
     private void FixedUpdate()
