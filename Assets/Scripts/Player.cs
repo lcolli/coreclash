@@ -64,6 +64,8 @@ public class Player : MonoBehaviour {
         framesTilMove = 0;
         powerup = this.GetComponent<Powerup>();
 
+        Time.timeScale = 1;
+
 
         //this is going to find the drill that is a child of this player
         GameObject[] rigs = GameObject.FindGameObjectsWithTag("Rig");
@@ -81,8 +83,15 @@ public class Player : MonoBehaviour {
 
     public void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PauseGame();
+        }
 
-
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            ContinueGame();
+        }
         //overrides the movement counter if players press an input again
         //if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
         //framesTilMove = FramesBeforeMove;
@@ -95,6 +104,8 @@ public class Player : MonoBehaviour {
         {
             StartMoveRight();
         }
+
+
 
        
 
@@ -145,7 +156,8 @@ public class Player : MonoBehaviour {
         }
     }
 
-    void StartMoveLeft(){
+    void StartMoveLeft()
+    {
         isMoving = true;
         drill.PointLeft();
         timeStartedMoving = Time.time;
@@ -317,6 +329,15 @@ public class Player : MonoBehaviour {
    public bool isBelow(Vector3 blockPos)
     {
         return true;
+    }
+
+    private void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+    private void ContinueGame()
+    {
+        Time.timeScale = 1;
     }
 
 }
