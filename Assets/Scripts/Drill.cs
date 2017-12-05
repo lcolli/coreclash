@@ -15,6 +15,8 @@ public class Drill : MonoBehaviour {
     public Color buildUp = new Color(200, 200, 200, 255);      //color of build up
     public Color ideal = new Color(200, 200, 200, 255);         //final color before overheat
     public Color overHeatColor = new Color(255, 150, 150, 255); //overheated color
+    public float overclockMult = 2;
+    
 
     
     public float overheatTime = 3f;     //the standard downtime when you overheat
@@ -23,35 +25,30 @@ public class Drill : MonoBehaviour {
     public MeshRenderer rendCockpit;
     public Material drillState;
     public Material cockpitState;
-    
+   
 
-    
+
+
     [Header("Set Dynamically")]
     
     public GameObject target;                       //the block the drill is facint
     public float damage;                            //the damage charge of the 
     public bool isPlayer1;  
     public GameObject playerGO;                     //the player object attached to this game
-    public bool pointingDown, shielded;             //if the drill is pointing down and if it currently has a shield
+    public bool  shielded;                          //if the drill currently has a shield
     public bool diamond, overclocked;
     public GameObject left, Right, Down, Up;        //the blocks in the specified direction
     public KeyCode drilluse=KeyCode.Space;          // the key that is used to operate the drill
     public bool overheated;                         //wheter or not the drill is overheated
+    public int overclockCount=0, overClockLimit=0;  //the overclock mechanic, count is how many frames its been overclocked
+                                                    //and limit is maximum fixed frames
+    float overclockDown=0f;                         //the amount of time the player overheats after an overclock
+    float drillDmgMem;                              //place holder for the drill damage ramp
+    string pointing;                                //the direction the drill is pointing
 
 
-    //finds the target in front of the drill
-    public void OnTriggerEnter(Collider other) 
-    {
-        if (other.gameObject.GetComponent<BoxCollider>().isTrigger)
-            target = other.gameObject;
-    }
 
-    //if the drill is no longer facing a game object it will set the target to null
-    public void OnTriggerExit(Collider other)
-    {
-        target = null;
-    }
-    
+
     //if the player is shielded it will use the shield and return true else it will return false
     public bool useShield()
     {
@@ -61,13 +58,14 @@ public class Drill : MonoBehaviour {
         {
             if (isPlayer1)
             {
-                playerGO.GetComponent<Player1>().usePowerup();                
+                playerGO.GetComponent<Player1>().UsePowerup();                
             }
             else
             {
                 
-                playerGO.GetComponent<Player2>().usePowerup();
+                playerGO.GetComponent<Player2>().UsePowerup();
             }
+            
             return true;
         }
     }
@@ -97,38 +95,65 @@ public class Drill : MonoBehaviour {
         shielded = false;
         diamond = false;
         overclocked = false;
+        drillDmgMem = drillDmgRamp;
         
     }
 
     //gets the power up. just a middle function between block and the player
     public void addPowerUp()
     {
-        if (isPlayer1)
-            playerGO.GetComponent<Player1>().getPowerup();
-        else
-            playerGO.GetComponent<Player2>().getPowerup();
+        
+            playerGO.GetComponent<Player>().getPowerup();
+        
     }
 
     
 	
 	// Update is called once per frame
 	void Update () {
-
+        getTargets();//figures out the blocks around the player
        
 
         //will attack when you release the spacebar
         if (Input.GetKeyUp(drilluse) && !overheated)
         {           
             if (target != null)
-            {               
-                if (target.GetComponent<Block>().attack(damage,this) && pointingDown)
-                {                    
-                        if (isPlayer1)
-                            playerGO.GetComponent<Player1>().destroyedBelow();
-                        else
-                            playerGO.GetComponent<Player2>().destroyedBelow();                                   
+            {
+                
+                if (diamond)//if the diamond drill is activated it will attack the target and the one behind it
+                {
+                    
+                    Vector3 start = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+                    Vector3 direction = target.transform.position;
+                    Vector3 length = (direction - start) * 2;
+                    Collider[] cols = Physics.OverlapCapsule(start, start + length,.1f); List<GameObject> gos = new List<GameObject>();
+                    foreach (Collider collide in cols)
+                    {
+                        if (collide.gameObject.layer == LayerMask.NameToLayer("Playing field"))
+                        {
+                            
+                            gos.Add(collide.gameObject);
+                        }
+                    }
+
+                    foreach (GameObject GO in gos)
+                    {
+                        if (GO.name != "Rig")
+                        {
+
+                           GO.GetComponent<Block>().attack(damage, this,pointing);
+                        }
+                    }
+                    diamond = false;
+                }
+                else if (target.GetComponent<Block>().attack(damage,this,pointing) && pointing=="down")
+                {    
+                        
+                        playerGO.GetComponent<Player>().destroyedBelow();
+                                                           
                    
                 }
+                getTargets();
                 target = null;
             }
             
@@ -140,6 +165,19 @@ public class Drill : MonoBehaviour {
 
     void FixedUpdate()
     {
+        //ends the overclock
+        if(overclockCount>overClockLimit)
+        {
+            overClockLimit = 0;
+            overclockCount = 0;
+            StartCoroutine(overheat(overclockDown));
+            overclockDown = 0;
+            overclocked = false;
+            drillDmgRamp = drillDmgMem;
+        }
+        //if its overclocked will add 1 more frame tot he overclock count
+        if (overclocked)
+            overclockCount++;
 
         //will charge as long as you're holding the correct button. increases the damage 
         if(Input.GetKey(drilluse) && !overheated)
@@ -171,24 +209,28 @@ public class Drill : MonoBehaviour {
     //the next set of functions change the way the drill is facing
     public void PointDown()
     {
+        target = Down;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 0));
-        pointingDown = true;
+        pointing = "down";
     }
     public void PointLeft()
     {
+        target = left ;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, -90));
-        pointingDown = false;
+        pointing = "left";
     }
 
     public void PointRight()
     {
+        target = Right;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 90));
-        pointingDown = false;
+        pointing = "right";
     }
     public void PointUp()
     {
+        target = Up;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 180));
-        pointingDown = false;
+        pointing = "up";
     }
 
 
@@ -196,8 +238,13 @@ public class Drill : MonoBehaviour {
     //finds the targets in each direction and sets them to the appropriate variable
     public void getTargets()
     {
-       
-        Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
+        left = null;
+        Right = null;
+        Up = null;
+        Down = null;
+        Vector3 offset = new Vector3(transform.position.x,transform.position.y,transform.position.z);
+        offset += new Vector3(0, -.5f, 0);
+        Collider[] cols = Physics.OverlapSphere(offset, 1.1f);
         List<GameObject> gos = new List<GameObject>();
         foreach(Collider collide in cols)
         {
@@ -206,10 +253,7 @@ public class Drill : MonoBehaviour {
                 gos.Add(collide.gameObject);               
             }
         }
-        left = null;
-        Right = null;
-        Up = null;
-        Down = null;
+        
         foreach(GameObject GO in gos)
         {
             if (GO.transform.position.x < transform.position.x - .5)
@@ -223,37 +267,53 @@ public class Drill : MonoBehaviour {
         }
     }
        
+    //a method other objects can call to overheat this player
+    public void OverheatLink(float overHeatTime)
+    {
+        StartCoroutine(overheat(overHeatTime));
+    }
+
+    //starts the overclock, takes a time in frames for length and a float in seconds for how long it will overheat after
+    //will then add these values to the current limit and downtime
+    public void Overclock(int time,float downtime)
+    {
+        overclockDown += downtime;
+        overClockLimit += time;
+        if(!overclocked)
+            drillDmgRamp *= overclockMult;
+        overclocked = true;
+    }
 
     //the enumerator function overheats the drill then waits until the overheat is done then goes back to idle
     public IEnumerator overheat(float overheatTime){
         if (!overclocked)
         {
-            overheated = true;
-            drillState.color = overHeatColor;
-            cockpitState.color = overHeatColor;
-            if (isPlayer1)
-                playerGO.GetComponent<Player1>().S.State = state.overheat;
-            else
-                playerGO.GetComponent<Player2>().S.State = state.overheat;
+            S.overheated = true;
+            S.drillState.color = overHeatColor;
+            S.cockpitState.color = overHeatColor;
+            
+           
+            playerGO.GetComponent<Player>().State = state.overheat;
 
             yield return new WaitForSeconds(overheatTime);
-
-            if (isPlayer1)
-                playerGO.GetComponent<Player1>().S.State = state.idle;
-            else
-                playerGO.GetComponent<Player2>().S.State = state.idle;
-            overheated = false;
+            
+            playerGO.GetComponent<Player>().State = state.idle;
+            S.overheated = false;
             resetDrillState();
         }
         
     }
+
+    
+    
+   
 
     //resets the drill back to 0 damage finds the new targets and changes its color back
     void resetDrillState(){
         drillState.color = defaultDrillColor;
         cockpitState.color = defaultCockpitColor;
         damage = 0;
-        getTargets();
+        
     }
     
 }

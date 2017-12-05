@@ -1829,6 +1829,7 @@ MonoBehaviour:
   buildUp: {r: 0.88235295, g: 0.49019608, b: 0.49019608, a: 1}
   ideal: {r: 1, g: 0.19607843, b: 0.19607843, a: 1}
   overHeatColor: {r: 0.559, g: 0.19607843, b: 0.19607843, a: 1}
+  overclockMult: 2
   overheatTime: 3
   rendDrill: []
   rendCockpit: {fileID: 0}
@@ -1838,9 +1839,8 @@ MonoBehaviour:
   damage: 0
   isPlayer1: 0
   playerGO: {fileID: 0}
-  pointingDown: 0
   shielded: 0
-  daimond: 0
+  diamond: 0
   overclocked: 0
   left: {fileID: 0}
   Right: {fileID: 0}
@@ -1848,6 +1848,8 @@ MonoBehaviour:
   Up: {fileID: 0}
   drilluse: 32
   overheated: 0
+  overclockCount: 0
+  overClockLimit: 0
 --- !u!114 &114583712265599404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1859,9 +1861,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562a17b2a0293c04db1d609c55250e94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  S: {fileID: 0}
-  movementSpeed: 2
-  FramesBeforeMove: 5
   left: {x: -8.7, y: 0, z: 0}
   right: {x: -4.7, y: 0, z: 0}
   middle: {x: -6.7, y: 0, z: 0}
@@ -1870,11 +1869,15 @@ MonoBehaviour:
   lookup: 119
   drilluse: 115
   usePU: 308
+  pause: 112
   drill: {fileID: 0}
-  framesTilMove: 0
   State: 0
-  pos: 0
+  pos: 2
   powerup: {fileID: 0}
+  playing: 0
+  playerCam: {fileID: 0}
+  movementTime: 0.2
+  S: {fileID: 0}
 --- !u!135 &135211745952945404
 SphereCollider:
   m_ObjectHideFlags: 1

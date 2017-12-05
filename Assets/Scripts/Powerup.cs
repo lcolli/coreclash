@@ -5,11 +5,13 @@ using UnityEngine;
 public class Powerup : MonoBehaviour {
     [Header("Set in Inspector")]
     public float empoverheat = 3f;
-    public float overclockTime = 5f;
+    public int overclockTime = 250;
     public float overclockdowntime = 3f;
     //the list of powerups
-     string[] PUList = new string[] {"Diamond Drill","Dynamite","EMP",
+     string[] PUList = new string[] {"Diamond","Dynamite","EMP",
                                     "Grapple","Overclock","Shield" };
+    public Sprite[] image;
+    public Sprite current;
 
     [Header("Set Dynamically")]
     //the name of this powerup
@@ -34,6 +36,7 @@ public class Powerup : MonoBehaviour {
     public void getPowerup()
     {
         int num = Random.Range(0,PUList.Length-1);
+        
         Name = PUList[num];
         
 	}   
@@ -41,34 +44,40 @@ public class Powerup : MonoBehaviour {
     //uses the function based on the power up, this is if player1 uses it
     public void use(Player1 player)
     {
+       
         switch (Name)
         {
-            case "Diamond Drill":
+            case "Diamond":
                 player.drill.diamond = true;
-                Name = "none";
+                Reset();
                 break;
             case "Dynamite":
+               
                 player.DynamiteBlast();
-                Name = "none";
+                Reset();
                 break;
             case "EMP":
                 if(!p2.drill.useShield())
                   StartCoroutine(p2.drill.overheat(empoverheat));
-                Name = "none";
+                Reset();
                 break;
             case "Grapple":
                 if (!p2.drill.useShield())
                 {
                     Name = p2.powerup.Name;
                     p2.powerup.Name = "none";
-                }                
+                }
+                else
+                {
+                    Reset();                        
+                }
                 break;
             case "Overclock":
-                StartCoroutine(Overclock(player.drill));
-                Name = "none";
+                player.drill.Overclock(overclockTime,overclockdowntime);
+                Reset();
                 break;
             case "Shield":
-                Name = "none";
+                Reset();
                 player.drill.shielded = false;
                 break;
         }
@@ -78,18 +87,18 @@ public class Powerup : MonoBehaviour {
     {
         switch (Name)
         {
-            case "Diamond Drill":
+            case "Diamond":
                 player.drill.diamond = true;
-                Name = "none";
+                Reset();
                 break;
             case "Dynamite":
                 player.DynamiteBlast();
-                Name = "none";
+                Reset();
                 break;
             case "EMP":
                 if (!p1.drill.useShield())
                     StartCoroutine(p1.drill.overheat(empoverheat));
-                Name = "none";
+                Reset();
                 break;
             case "Grapple":
                 if (!p1.drill.useShield())
@@ -97,27 +106,29 @@ public class Powerup : MonoBehaviour {
                     Name = p1.powerup.Name;
                     p1.powerup.Name = "none";
                 }
+                else
+                {
+                    Reset();
+
+                }
                 break;
             case "Overclock":
-                StartCoroutine(Overclock(player.drill));
-                Name = "none";
+                player.drill.Overclock(overclockTime, overclockdowntime);
+                Reset(); 
                 break;
             case "Shield":
                 player.drill.shielded = false;
-                Name = "none";
+                Reset();
                 break;
         }
     }
 
-
-    public IEnumerator Overclock(Drill drill)
+    public void Reset()
     {
-        drill.overclocked = true;
-        float temp = drill.drillDmgRamp;
-        drill.drillDmgRamp *= 2;
-        yield return new WaitForSeconds(overclockTime);
-        drill.drillDmgRamp = temp;
-        drill.overclocked = false;
-        drill.overheat(overclockdowntime);
+        current = image[6];
+        Name = "none";
     }
+
+
+
 }
