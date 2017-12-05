@@ -28,7 +28,8 @@ public class CoreClash : MonoBehaviour {
     public GameObject player1, player2;
 
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
 
         State = gamestate.countdown;
 
@@ -39,6 +40,14 @@ public class CoreClash : MonoBehaviour {
         //initiate countdown to start
 
 	}
+
+    private void Countdown()
+    {
+        player1
+        //time loops
+        //display numbers
+        //reactivate scripts
+    }
 
     public void setCameras()
     {
@@ -56,4 +65,6 @@ public class CoreClash : MonoBehaviour {
         player1.transform.position = p1Start;
         player2.transform.position = p2Start;
     }
+
+    
 }

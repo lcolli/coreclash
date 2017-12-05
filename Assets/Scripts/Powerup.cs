@@ -10,6 +10,8 @@ public class Powerup : MonoBehaviour {
     //the list of powerups
      string[] PUList = new string[] {"Diamond","Dynamite","EMP",
                                     "Grapple","Overclock","Shield" };
+    public Sprite[] image;
+    public Sprite current;
 
     [Header("Set Dynamically")]
     //the name of this powerup
@@ -47,17 +49,17 @@ public class Powerup : MonoBehaviour {
         {
             case "Diamond":
                 player.drill.diamond = true;
-                Name = "none";
+                Reset();
                 break;
             case "Dynamite":
                
                 player.DynamiteBlast();
-                Name = "none";
+                Reset();
                 break;
             case "EMP":
                 if(!p2.drill.useShield())
                   StartCoroutine(p2.drill.overheat(empoverheat));
-                Name = "none";
+                Reset();
                 break;
             case "Grapple":
                 if (!p2.drill.useShield())
@@ -67,16 +69,15 @@ public class Powerup : MonoBehaviour {
                 }
                 else
                 {
-                    Name = "none";
-                        
+                    Reset();                        
                 }
                 break;
             case "Overclock":
                 player.drill.Overclock(overclockTime,overclockdowntime);
-                Name = "none";
+                Reset();
                 break;
             case "Shield":
-                Name = "none";
+                Reset();
                 player.drill.shielded = false;
                 break;
         }
@@ -88,16 +89,16 @@ public class Powerup : MonoBehaviour {
         {
             case "Diamond":
                 player.drill.diamond = true;
-                Name = "none";
+                Reset();
                 break;
             case "Dynamite":
                 player.DynamiteBlast();
-                Name = "none";
+                Reset();
                 break;
             case "EMP":
                 if (!p1.drill.useShield())
                     StartCoroutine(p1.drill.overheat(empoverheat));
-                Name = "none";
+                Reset();
                 break;
             case "Grapple":
                 if (!p1.drill.useShield())
@@ -107,21 +108,27 @@ public class Powerup : MonoBehaviour {
                 }
                 else
                 {
-                    Name = "none";
+                    Reset();
 
                 }
                 break;
             case "Overclock":
                 player.drill.Overclock(overclockTime, overclockdowntime);
-                Name = "none";
+                Reset(); 
                 break;
             case "Shield":
                 player.drill.shielded = false;
-                Name = "none";
+                Reset();
                 break;
         }
     }
 
+    public void Reset()
+    {
+        current = image[6];
+        Name = "none";
+    }
 
-    
+
+
 }

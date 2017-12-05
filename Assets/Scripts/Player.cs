@@ -11,8 +11,6 @@ public enum state
     overheat,
     moving
 }
-
-
 //shows if the player is in which column
 public enum position
 {
@@ -25,8 +23,8 @@ public enum position
 public class Player : MonoBehaviour {
 
     [Header("Set In Unity")]
-    public float movementSpeed = 2f;                    //how fast the drill moves
-    public int FramesBeforeMove = 5;                    //the delay in time from when the player moves to when they can move again
+    //public float movementSpeed = 4f;                    //how fast the drill moves
+    //public int FramesBeforeMove = 5;                    //the delay in time from when the player moves to when they can move again
     public Vector3 left = new Vector3(5.3f, 0, 0);      //the left position
     public Vector3 right = new Vector3(9.3f, 0, 0);     //the right position
     public Vector3 middle = new Vector3(7.3f, 0, 0);    //the middle position
@@ -34,23 +32,25 @@ public class Player : MonoBehaviour {
     public KeyCode moveright = KeyCode.RightArrow;
     public KeyCode lookup = KeyCode.UpArrow;
     public KeyCode drilluse = KeyCode.Space;
-    public KeyCode usePU = KeyCode.G;
+    public KeyCode usePU = KeyCode.G;                   //powerup usage
+    public KeyCode pause = KeyCode.P;                   //the pause button
 
 
     [Header("Set Dynamically")]
 
     public Drill drill;                                 //link to the drill script attached to player1
-    public int framesTilMove;                           //timer to delay movement while holding down move left/right
+    //public int framesTilMove;                           //timer to delay movement while holding down move left/right
     public state State;                                 //the state of the player, moving idle falling overheat
     public position pos;                                // the position on the track, left right or middle
     public Powerup powerup;                             //the power up slot for this player
     public bool playing;
     public Camera playerCam;
+    bool paused = false;
 
-    private float movementTime = 1.0f;
-    private float moveDistance = 2.0f;
+    public float movementTime = .2f;
+    //private float moveDistance = 2.0f;
 
-    private bool isMoving;
+    //private bool isMoving;
 
     private Vector3 startPos;
     private Vector3 endPos;
@@ -59,9 +59,9 @@ public class Player : MonoBehaviour {
 
     private void Start()
     {
-        State = state.falling;
-        pos = position.middle;
-        framesTilMove = 0;
+        State = state.falling;                  //is currently starting in the air
+        pos = position.middle;                  //and in the middle
+        //framesTilMove = 0;
         powerup = this.GetComponent<Powerup>();
 
         Time.timeScale = 1;
@@ -83,19 +83,16 @@ public class Player : MonoBehaviour {
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(pause))
         {
             PauseGame();
         }
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            ContinueGame();
-        }
+        
         //overrides the movement counter if players press an input again
         //if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
         //framesTilMove = FramesBeforeMove;
-        if (Input.GetKey(moveleft) && (transform.position.x > left.x + 1) && !isMoving)
+        /*if (Input.GetKey(moveleft) && (transform.position.x > left.x + 1) && !isMoving)
         {
             StartMoveLeft();
         }
@@ -103,30 +100,26 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(moveright) && (transform.position.x < right.x - 1) && !isMoving)
         {
             StartMoveRight();
-        }
+        }*/
 
 
 
        
 
-        //if countdown isn't done it won't do anything but check until
-        //if (State == state.moving)
-        //{
-        //    if (framesTilMove >= FramesBeforeMove)
-        //        State = state.idle;
-        //}
-        //else if (State != state.overheat)
-        //{
-        //    if (Input.GetKey(lookup))
-        //        drill.PointUp();
-        //    else if (Input.GetKey(moveleft))
-        //        moveLeft();
-        //    else if (Input.GetKey(moveright))
-        //        moveRight();
-        //    else
-        //        drill.PointDown();
+        //if falling or idle you can change the direction of the drill but wil only move if idle
+        //defaults to the drill pointing down if nothing is pressed
+        if (State != state.overheat && State!=state.moving)
+        {
+            if (Input.GetKey(lookup))
+                drill.PointUp();
+           else if (Input.GetKey(moveleft))
+                moveLeft();
+            else if (Input.GetKey(moveright))
+                moveRight();
+            else
+               drill.PointDown();
 
-        //}
+        }
     }
 
     public void FixedUpdate(){
@@ -134,110 +127,134 @@ public class Player : MonoBehaviour {
         //countdown until player can move again if holding down left or right
         //will give a delay so players can stop at middle
         //if (framesTilMove <= FramesBeforeMove)
-            //framesTilMove++;
-        
-        if (isMoving)
+        //framesTilMove++;
+
+
+        //if the state is moving, will move to endpos over the set time in the beginning
+        if (!paused)
         {
-            //finding the current percentage of the total movement time has been completed
-            float timeSinceStarted = Time.time - timeStartedMoving;
-            float percentageComplete = timeSinceStarted / movementTime;
-
-            //lerp
-            transform.position = Vector3.Lerp(startPos, endPos, percentageComplete);
-
-            //lerping ends
-            //if(transform.position.x >= endPos.x){
-            //    isMoving = false;
-            //}
-            if (percentageComplete > 1.0f)
+            if (State == state.moving)
             {
-                isMoving = false;
+                //finding the current percentage of the total movement time has been completed
+                float timeSinceStarted = Time.time - timeStartedMoving;
+                float percentageComplete = timeSinceStarted / movementTime;
+
+                //lerp
+                transform.position = Vector3.Lerp(startPos, endPos, percentageComplete);
+
+                //lerping ends
+                //if(transform.position.x >= endPos.x){
+                //    isMoving = false;
+                //}
+
+                if (timeSinceStarted >= movementTime)
+                {
+                    EndMove(); //this sets the x value to a specific x value;
+                }
             }
         }
     }
 
-    void StartMoveLeft()
+
+
+    //sets the start position the end position and starts the moving state
+    void StartMove(Vector3 dest)
     {
-        isMoving = true;
-        drill.PointLeft();
+        State = state.moving;
+       //drill.PointLeft();
         timeStartedMoving = Time.time;
 
         startPos = transform.position;
-        endPos = transform.position + Vector3.left * moveDistance;
+        //endPos = transform.position + Vector3.left * moveDistance;
+        endPos = new Vector3(0, transform.position.y, transform.position.z)+dest;
     }
 
-    void StartMoveRight()
+    /*void StartMoveRight()
     {
-        isMoving = true;
-        drill.PointRight();
+        State = state.moving;
+        //drill.PointRight();
         timeStartedMoving = Time.time;
 
         startPos = transform.position;
         endPos = transform.position + Vector3.right * moveDistance;
+    }*/
+
+
+        //looks left and if it can move will start the moving
+    void moveLeft()
+    {
+        //points left first then decides if it can move
+        drill.PointLeft();
+        if (pos != position.left && drill.left == null && State == state.idle)
+        //if its not in the left most position and there's no block in the way
+        {
+            //changes the state
+            if (pos == position.middle && drill.left == null)
+            {
+                pos = position.left;
+                StartMove(left);
+            }
+            else
+            {
+                pos = position.middle;
+                StartMove(middle); //moves
+            }
+        }
     }
 
-    //void moveLeft()
-    //{
-    //    //points left first then decides if it can move
-    //    drill.PointLeft();
-    //    if (pos != position.left && drill.left == null && State == state.idle)
-    //    //if its not in the left most position and there's no block in the way
-    //    {
-    //        //changes the state
-    //        if (pos == position.middle && drill.left == null)
-    //            pos = position.left;
-    //        else
-    //            pos = position.middle;
-    //        Move(); //moves
-    //    }
-    //}
+
+    //works the same as moveleft but in the other direction
+    void moveRight()
+    {
+        drill.PointRight();
+        if (pos != position.right && drill.Right == null && State == state.idle)
+        {
+            if (pos == position.middle)
+            {
+                pos = position.right;
+                StartMove(right);
+            }
+            else
+            { 
+                pos = position.middle;            
+                StartMove(middle);
+            }
+        }
+    }
 
 
-    ////works the same as moveleft but in the other direction
-    //void moveRight()
-    //{
-    //    drill.PointRight();
-    //    if (pos != position.right && drill.Right == null && State == state.idle)
-    //    {
-    //        if (pos == position.middle)
-    //            pos = position.right;
-    //        else
-    //            pos = position.middle;
-    //        Move();
-    //    }
-    //}
-
+    //placeholder for the child functions
     public void UsePowerup()
     {
         
     }
 
 
+    //finishes the move, sets state back to idle and puts the player at a specific x value
+    private void EndMove()
+    {
+        Vector3 destination = new Vector3(0, transform.position.y, transform.position.z);
+        //gets the y and z values so that it doesn't change them
 
-    //private void Move()
-    //{
-    //    Vector3 destination = new Vector3(0, transform.position.y, transform.position.z);
-    //    //gets the y and z values so that it doesn't change them
+        //it adds the left right or middle vector depending on the state which is (x,0,0) to destinations y and z values
+        switch (pos)
+        {
+            case position.left:
+                destination += left;
+                break;
+            case position.right:
+                destination += right;
+                break;
+            case position.middle:
+                destination += middle;
+                break;
+       }
+        transform.position = destination;   //puts the player at the appropriate position
+        drill.getTargets();                 //gets the drill to find the possible targets around it
+        State = state.idle;
+        //framesTilMove = 0;                  //resets the counter
 
-    //    //it adds the left right or middle vector depending on the state which is (x,0,0) to destinations y and z values
-    //    switch (pos)
-    //    {
-    //        case position.left:
-    //            destination += left;
-    //            break;
-    //        case position.right:
-    //            destination += right;
-    //            break;
-    //        case position.middle:
-    //            destination += middle;
-    //            break;
-    //    }
-    //    transform.position = destination;   //puts the player at the appropriate position
-    //    drill.getTargets();                 //gets the drill to find the possible targets around it
-    //    State = state.moving;               // changes the state to moving to add a delay
-    //    framesTilMove = 0;                  //resets the counter
-       
-    //}
+    }
 
     //if something below is destroyed the rig will fall. updates the state
     public void destroyedBelow()
@@ -271,6 +288,8 @@ public class Player : MonoBehaviour {
             drill.shielded = true;
     }
 
+
+    //if something falls on the target it will go to the space available to the left or right of it
     public void Shift()
     {
         
@@ -279,12 +298,12 @@ public class Player : MonoBehaviour {
             case position.left:
                
                 pos = position.middle;
-                //Move();
+                EndMove();
                 break;
             case position.right:
                 
                 pos = position.middle;
-                //Move();
+                EndMove();
                 break;
             case position.middle:
                
@@ -292,11 +311,13 @@ public class Player : MonoBehaviour {
                     pos = position.left;
                 else
                     pos = position.right;
-                //Move();
+                EndMove();
                 break;
         }
     }
 
+
+    //the dynamite powerup, attacks everything in a 9x9 square around the player
     public void DynamiteBlast()
     {
         
@@ -326,18 +347,19 @@ public class Player : MonoBehaviour {
         State = state.falling;
     }
     
-   public bool isBelow(Vector3 blockPos)
-    {
-        return true;
-    }
-
+    
+   
+    //pauses the game
     private void PauseGame()
     {
-        Time.timeScale = 0;
-    }
-    private void ContinueGame()
-    {
-        Time.timeScale = 1;
-    }
+        if(Time.timeScale==1)
+        {
+            Time.timeScale = 0;
+        }
+        else
+        {
+            Time.timeScale = 1;
+        }
+    } 
 
 }

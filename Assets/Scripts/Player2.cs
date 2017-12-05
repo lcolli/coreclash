@@ -17,8 +17,7 @@ public class Player2 : Player {
     private new void Update()
     {
         if (Input.GetKeyDown(usePU))
-        {
-           
+        {           
             UsePowerup();
         }
         base.Update();

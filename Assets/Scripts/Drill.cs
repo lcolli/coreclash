@@ -40,10 +40,11 @@ public class Drill : MonoBehaviour {
     public GameObject left, Right, Down, Up;        //the blocks in the specified direction
     public KeyCode drilluse=KeyCode.Space;          // the key that is used to operate the drill
     public bool overheated;                         //wheter or not the drill is overheated
-    public int overclockCount=0, overClockLimit=0;
-    float overclockDown=0f;
-    float drillDmgMem;
-    string pointing;
+    public int overclockCount=0, overClockLimit=0;  //the overclock mechanic, count is how many frames its been overclocked
+                                                    //and limit is maximum fixed frames
+    float overclockDown=0f;                         //the amount of time the player overheats after an overclock
+    float drillDmgMem;                              //place holder for the drill damage ramp
+    string pointing;                                //the direction the drill is pointing
 
 
 
@@ -110,7 +111,7 @@ public class Drill : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        getTargets();
+        getTargets();//figures out the blocks around the player
        
 
         //will attack when you release the spacebar
@@ -119,7 +120,7 @@ public class Drill : MonoBehaviour {
             if (target != null)
             {
                 
-                if (diamond)
+                if (diamond)//if the diamond drill is activated it will attack the target and the one behind it
                 {
                     
                     Vector3 start = new Vector3(transform.position.x,transform.position.y,transform.position.z);
@@ -164,6 +165,7 @@ public class Drill : MonoBehaviour {
 
     void FixedUpdate()
     {
+        //ends the overclock
         if(overclockCount>overClockLimit)
         {
             overClockLimit = 0;
@@ -173,7 +175,7 @@ public class Drill : MonoBehaviour {
             overclocked = false;
             drillDmgRamp = drillDmgMem;
         }
-
+        //if its overclocked will add 1 more frame tot he overclock count
         if (overclocked)
             overclockCount++;
 
@@ -265,17 +267,20 @@ public class Drill : MonoBehaviour {
         }
     }
        
-
+    //a method other objects can call to overheat this player
     public void OverheatLink(float overHeatTime)
     {
         StartCoroutine(overheat(overHeatTime));
     }
 
+    //starts the overclock, takes a time in frames for length and a float in seconds for how long it will overheat after
+    //will then add these values to the current limit and downtime
     public void Overclock(int time,float downtime)
     {
         overclockDown += downtime;
         overClockLimit += time;
-        drillDmgRamp *= overclockMult;
+        if(!overclocked)
+            drillDmgRamp *= overclockMult;
         overclocked = true;
     }
 

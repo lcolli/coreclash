@@ -87,7 +87,7 @@ public class Block : MonoBehaviour
             }
             else if(damage>=1)
             {
-                transformBlock(transformPrefab);
+                TransformBlock(transformPrefab);
             }
         }
         if (damage >= health)
@@ -99,6 +99,8 @@ public class Block : MonoBehaviour
         return false;
     }
 
+
+    //if there's sand above this block it will set it. Called from SandFall
     public void SetSand(GameObject sand)
     {
         this.sand =sand;
@@ -109,7 +111,7 @@ public class Block : MonoBehaviour
 
 
     //stone can turn to dirt if you don't do full damage
-    void transformBlock(GameObject transformPrefab)
+    void TransformBlock(GameObject transformPrefab)
     {
         transformPrefab.transform.position = transform.position;
         Destroy(this.gameObject);
@@ -120,10 +122,10 @@ public class Block : MonoBehaviour
     //the functions of the blocks depending on the type of this block
     public void blockFunction(Drill drill, string pointing)
     {
-        //if(sandAbove && pointing=="up")
-        //{
-        //    sand.GetComponent<SandFall>().PlayerBelow();
-        //}
+        if(sandAbove && pointing=="up")
+        {
+            sand.GetComponent<SandFall>().PlayerBelow();
+        }
 
         switch (this.tag)
         {

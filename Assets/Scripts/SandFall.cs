@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//this is the code to add gravity to the sand and has code to deal with the falling on the game board
+
 public class SandFall : MonoBehaviour {
 
 
-    GameObject below;
-    GameObject player;
-    public bool isRightTrack = true;
+    GameObject below;                   //the gameobject below this one
+    GameObject player;                  //the player object on this track
+    public bool isRightTrack = true;    //determines which track its on
 
     private void Start()
     {
+
+
+        //figures out which side of the track its on and assigns the player variable
         if(transform.position.x<0)
         {
             isRightTrack = false;
@@ -35,19 +40,20 @@ public class SandFall : MonoBehaviour {
     void Update ()
     {
         
-        if(FindBelow())
+        if(!FindBelow()) // returns true if there is nothing belowe the object
         {
-            Fall();
+            Fall(); 
         }
         	  	
 	}
    
-
+    //if there's a player below this object it will shift the player out of the way
     public void PlayerBelow()
     {
         player.GetComponent<Player>().Shift();
     }      
 
+    //will move to the position below this block
     private void Fall()
     {
         player.GetComponent<Player>().State = state.overheat;
@@ -56,6 +62,9 @@ public class SandFall : MonoBehaviour {
         player.GetComponent<Player>().State = state.idle;
     }    
 
+
+    //searches the space below it and returns false if there's nothing and true if there is a block. will also put a link
+    //to this object in the block if there is one
     private bool FindBelow()
     {
         
@@ -86,11 +95,12 @@ public class SandFall : MonoBehaviour {
         if (below != null)
             below.GetComponent<Block>().SetSand(this.gameObject);
 
-        return (below == null);           
+        return (below != null);           
 
 
     }
 
+    //destroys the link to this object that it created
     private void OnDestroy()
     {
         below.GetComponent<Block>().SetSand(null);
