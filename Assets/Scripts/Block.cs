@@ -120,10 +120,10 @@ public class Block : MonoBehaviour
     //the functions of the blocks depending on the type of this block
     public void blockFunction(Drill drill, string pointing)
     {
-        if(sandAbove && pointing=="up")
-        {
-            sand.GetComponent<SandFall>().PlayerBelow();
-        }
+        //if(sandAbove && pointing=="up")
+        //{
+        //    sand.GetComponent<SandFall>().PlayerBelow();
+        //}
 
         switch (this.tag)
         {

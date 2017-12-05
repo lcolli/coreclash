@@ -47,6 +47,16 @@ public class Player : MonoBehaviour {
     public bool playing;
     public Camera playerCam;
 
+    private float movementTime = 1f;
+    private float moveDistance = 2;
+
+    private bool isMoving;
+
+    private Vector3 startPos;
+    private Vector3 endPos;
+
+    private float timeStartedMoving;
+
     private void Start()
     {
         State = state.falling;
@@ -74,29 +84,81 @@ public class Player : MonoBehaviour {
 
 
         //overrides the movement counter if players press an input again
-        if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
-            framesTilMove = FramesBeforeMove;
+        //if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
+        //framesTilMove = FramesBeforeMove;
+        if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > left.x && !isMoving)
+        {
+            StartMoveLeft();
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow) && transform.position.x > left.x && !isMoving)
+        {
+            StartMoveRight();
+        }
 
        
 
         //if countdown isn't done it won't do anything but check until
-        if (State == state.moving)
-        {
-            if (framesTilMove >= FramesBeforeMove)
-                State = state.idle;
-        }
-        else if (State != state.overheat)
-        {
-            if (Input.GetKey(lookup))
-                drill.PointUp();
-            else if (Input.GetKey(moveleft))
-                moveLeft();
-            else if (Input.GetKey(moveright))
-                moveRight();
-            else
-                drill.PointDown();
+        //if (State == state.moving)
+        //{
+        //    if (framesTilMove >= FramesBeforeMove)
+        //        State = state.idle;
+        //}
+        //else if (State != state.overheat)
+        //{
+        //    if (Input.GetKey(lookup))
+        //        drill.PointUp();
+        //    else if (Input.GetKey(moveleft))
+        //        moveLeft();
+        //    else if (Input.GetKey(moveright))
+        //        moveRight();
+        //    else
+        //        drill.PointDown();
 
+        //}
+    }
+
+    public void FixedUpdate(){
+
+        //countdown until player can move again if holding down left or right
+        //will give a delay so players can stop at middle
+        //if (framesTilMove <= FramesBeforeMove)
+            //framesTilMove++;
+        
+        if (isMoving)
+        {
+            //finding the current percentage of the total movement time has been completed
+            float timeSinceStarted = Time.time - timeStartedMoving;
+            float percentageComplete = timeSinceStarted / movementTime;
+
+            //lerp
+            transform.position = Vector3.Lerp(startPos, endPos, percentageComplete);
+
+            //lerping ends
+            if (percentageComplete >= 1.0f)
+            {
+                isMoving = false;
+            }
         }
+    }
+
+    void StartMoveLeft(){
+        isMoving = true;
+        drill.PointLeft();
+        timeStartedMoving = Time.time;
+
+        startPos = transform.position;
+        endPos = transform.position + Vector3.left * moveDistance;
+    }
+
+    void StartMoveRight()
+    {
+        isMoving = true;
+        drill.PointRight();
+        timeStartedMoving = Time.time;
+
+        startPos = transform.position;
+        endPos = transform.position + Vector3.right * moveDistance;
     }
 
     void moveLeft()
@@ -249,14 +311,6 @@ public class Player : MonoBehaviour {
         }
         State = state.falling;
     }
-
-    public void FixedUpdate()
-    {
-        //countdown until player can move again if holding down left or right
-        //will give a delay so players can stop at middle
-        if (framesTilMove <= FramesBeforeMove)
-            framesTilMove++;
-    } 
     
    public bool isBelow(Vector3 blockPos)
     {
