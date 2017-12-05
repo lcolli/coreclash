@@ -47,8 +47,8 @@ public class Player : MonoBehaviour {
     public bool playing;
     public Camera playerCam;
 
-    private float movementTime = 1f;
-    private float moveDistance = 2;
+    private float movementTime = 1.0f;
+    private float moveDistance = 2.0f;
 
     private bool isMoving;
 
@@ -86,12 +86,12 @@ public class Player : MonoBehaviour {
         //overrides the movement counter if players press an input again
         //if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
         //framesTilMove = FramesBeforeMove;
-        if (Input.GetKey(KeyCode.LeftArrow) && transform.position.x > left.x && !isMoving)
+        if (Input.GetKey(moveleft) && (transform.position.x > left.x + 1) && !isMoving)
         {
             StartMoveLeft();
         }
 
-        if (Input.GetKey(KeyCode.RightArrow) && transform.position.x > left.x && !isMoving)
+        if (Input.GetKey(moveright) && (transform.position.x < right.x - 1) && !isMoving)
         {
             StartMoveRight();
         }
@@ -135,7 +135,10 @@ public class Player : MonoBehaviour {
             transform.position = Vector3.Lerp(startPos, endPos, percentageComplete);
 
             //lerping ends
-            if (percentageComplete >= 1.0f)
+            //if(transform.position.x >= endPos.x){
+            //    isMoving = false;
+            //}
+            if (percentageComplete > 1.0f)
             {
                 isMoving = false;
             }
@@ -161,37 +164,36 @@ public class Player : MonoBehaviour {
         endPos = transform.position + Vector3.right * moveDistance;
     }
 
-    void moveLeft()
-    {
-        //points left first then decides if it can move
-        drill.PointLeft();
-        if (pos != position.left && drill.left == null && State == state.idle)
-        //if its not in the left most position and there's no block in the way
-        {
-            //changes the state
-            if (pos == position.middle && drill.left == null)
-                pos = position.left;
-            else
-                pos = position.middle;
-            Move(); //moves 
-        }
-    }
+    //void moveLeft()
+    //{
+    //    //points left first then decides if it can move
+    //    drill.PointLeft();
+    //    if (pos != position.left && drill.left == null && State == state.idle)
+    //    //if its not in the left most position and there's no block in the way
+    //    {
+    //        //changes the state
+    //        if (pos == position.middle && drill.left == null)
+    //            pos = position.left;
+    //        else
+    //            pos = position.middle;
+    //        Move(); //moves
+    //    }
+    //}
 
 
-    //works the same as moveleft but in the other direction
-    void moveRight()
-    {
-
-        drill.PointRight();
-        if (pos != position.right && drill.Right == null && State == state.idle)
-        {
-            if (pos == position.middle)
-                pos = position.right;
-            else
-                pos = position.middle;
-            Move();
-        }
-    }
+    ////works the same as moveleft but in the other direction
+    //void moveRight()
+    //{
+    //    drill.PointRight();
+    //    if (pos != position.right && drill.Right == null && State == state.idle)
+    //    {
+    //        if (pos == position.middle)
+    //            pos = position.right;
+    //        else
+    //            pos = position.middle;
+    //        Move();
+    //    }
+    //}
 
     public void UsePowerup()
     {
@@ -200,30 +202,30 @@ public class Player : MonoBehaviour {
 
 
 
-    private void Move()
-    {
-        Vector3 destination = new Vector3(0, transform.position.y, transform.position.z);
-        //gets the y and z values so that it doesn't change them
+    //private void Move()
+    //{
+    //    Vector3 destination = new Vector3(0, transform.position.y, transform.position.z);
+    //    //gets the y and z values so that it doesn't change them
 
-        //it adds the left right or middle vector depending on the state which is (x,0,0) to destinations y and z values
-        switch (pos)
-        {
-            case position.left:
-                destination += left;
-                break;
-            case position.right:
-                destination += right;
-                break;
-            case position.middle:
-                destination += middle;
-                break;
-        }
-        transform.position = destination;   //puts the player at the appropriate position
-        drill.getTargets();                 //gets the drill to find the possible targets around it
-        State = state.moving;               // changes the state to moving to add a delay
-        framesTilMove = 0;                  //resets the counter
+    //    //it adds the left right or middle vector depending on the state which is (x,0,0) to destinations y and z values
+    //    switch (pos)
+    //    {
+    //        case position.left:
+    //            destination += left;
+    //            break;
+    //        case position.right:
+    //            destination += right;
+    //            break;
+    //        case position.middle:
+    //            destination += middle;
+    //            break;
+    //    }
+    //    transform.position = destination;   //puts the player at the appropriate position
+    //    drill.getTargets();                 //gets the drill to find the possible targets around it
+    //    State = state.moving;               // changes the state to moving to add a delay
+    //    framesTilMove = 0;                  //resets the counter
        
-    }
+    //}
 
     //if something below is destroyed the rig will fall. updates the state
     public void destroyedBelow()
@@ -265,12 +267,12 @@ public class Player : MonoBehaviour {
             case position.left:
                
                 pos = position.middle;
-                Move();
+                //Move();
                 break;
             case position.right:
                 
                 pos = position.middle;
-                Move();
+                //Move();
                 break;
             case position.middle:
                
@@ -278,7 +280,7 @@ public class Player : MonoBehaviour {
                     pos = position.left;
                 else
                     pos = position.right;
-                Move();
+                //Move();
                 break;
         }
     }
