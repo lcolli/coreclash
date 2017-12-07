@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum gamestate
 {
@@ -22,10 +23,13 @@ public class CoreClash : MonoBehaviour {
     public Vector3 p1Start, p2Start;
     public GameObject course;
     public Camera cam1,cam2;
+    public Image p1PUSprite, p2PUSprite;
+
 
     [Header ("Set Dynamically")]
     public gamestate State;
     public GameObject player1, player2;
+    
 
     // Use this for initialization
     void Start ()
@@ -43,7 +47,7 @@ public class CoreClash : MonoBehaviour {
 
     private void Countdown()
     {
-        player1
+        
         //time loops
         //display numbers
         //reactivate scripts
@@ -64,6 +68,8 @@ public class CoreClash : MonoBehaviour {
         player2 = Instantiate(player2GO);
         player1.transform.position = p1Start;
         player2.transform.position = p2Start;
+        player1.GetComponent<Powerup>().PowerupDisplay = p1PUSprite;
+        player2.GetComponent<Powerup>().PowerupDisplay = p2PUSprite;
     }
 
     

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Powerup : MonoBehaviour {
     [Header("Set in Inspector")]
@@ -11,7 +12,7 @@ public class Powerup : MonoBehaviour {
      string[] PUList = new string[] {"Diamond","Dynamite","EMP",
                                     "Grapple","Overclock","Shield" };
     public Sprite[] image;
-    public Sprite current;
+    public Image PowerupDisplay;
 
     [Header("Set Dynamically")]
     //the name of this powerup
@@ -38,6 +39,7 @@ public class Powerup : MonoBehaviour {
         int num = Random.Range(0,PUList.Length-1);
         
         Name = PUList[num];
+        PowerupDisplay.sprite = image[num];
         
 	}   
 
@@ -125,7 +127,7 @@ public class Powerup : MonoBehaviour {
 
     public void Reset()
     {
-        current = image[6];
+        PowerupDisplay.sprite = image[6];
         Name = "none";
     }
 

@@ -200,9 +200,6 @@ public class Drill : MonoBehaviour {
                 mr.material = drillState;
             }
         }
-        
-
-        
 
     }
 
@@ -212,12 +209,14 @@ public class Drill : MonoBehaviour {
         target = Down;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 0));
         pointing = "down";
+        HighlightTarget();
     }
     public void PointLeft()
     {
         target = left ;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, -90));
         pointing = "left";
+        HighlightTarget();
     }
 
     public void PointRight()
@@ -225,12 +224,14 @@ public class Drill : MonoBehaviour {
         target = Right;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 90));
         pointing = "right";
+        HighlightTarget();
     }
     public void PointUp()
     {
         target = Up;
         transform.SetPositionAndRotation(transform.position, Quaternion.Euler(0, 0, 180));
         pointing = "up";
+        HighlightTarget();
     }
 
 
@@ -302,6 +303,18 @@ public class Drill : MonoBehaviour {
             resetDrillState();
         }
         
+    }
+
+    void HighlightTarget()
+    {
+        if(target==null)
+        {
+            playerGO.GetComponent<Player>().HighlightTarget(new Vector3(0,0,-100),pointing,diamond);
+        }
+        else
+        {
+            playerGO.GetComponent<Player>().HighlightTarget(target.transform.position, pointing, diamond);
+        }
     }
 
     

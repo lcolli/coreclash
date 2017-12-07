@@ -18,6 +18,7 @@ TagManager:
   - Water
   - Rig
   - Course
+  - Targeter
   layers:
   - Default
   - TransparentFX

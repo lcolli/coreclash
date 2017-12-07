@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //used to control what the player is doing at the moment
@@ -46,6 +47,8 @@ public class Player : MonoBehaviour {
     public bool playing;
     public Camera playerCam;
     bool paused = false;
+    public GameObject target;
+    public GameObject diamondtarget;
 
     public float movementTime = .2f;
     //private float moveDistance = 2.0f;
@@ -78,7 +81,79 @@ public class Player : MonoBehaviour {
                 drill.drilluse = drilluse;
             }
         }
+        rigs = GameObject.FindGameObjectsWithTag("Targeter");
+        foreach (GameObject trig in rigs)
+        {
+            if (trig.transform.IsChildOf(this.gameObject.transform))
+            {
+                if (target == null)
+                    target = trig;
+                else
+                    diamondtarget = trig;
+                        
+            }
+        }
+        diamondtarget.GetComponent<Image>().enabled = false;
+        target.transform.position = transform.position + new Vector3(-.3f, -1.25f, -2);
 
+    }
+
+
+    //set targetpos z component to -100 if you don't have a target 
+    public void HighlightTarget(Vector3 targetPos,string pointing,bool isDiamond)
+    {
+        
+        if(targetPos.z!=-100)
+        {
+            target.GetComponent<Image>().enabled = true;
+            target.GetComponent<RectTransform>().position = targetPos;
+            if (isDiamond)
+            {
+                
+                diamondtarget.GetComponent<RectTransform>().position = targetPos;
+                if (pos == position.middle && (pointing == "left" || pointing=="right"))
+                {
+                    diamondtarget.GetComponent<Image>().enabled = false;
+                }
+                else
+                {
+                    diamondtarget.GetComponent<Image>().enabled = true;
+                }
+                
+
+                if(diamondtarget.GetComponent<Image>().enabled)
+                {
+                    Vector3 diamondpos = targetPos + new Vector3(0, 0, -1.5f);
+                    switch(pointing)
+                    {
+                        case "up":
+                            diamondpos += new Vector3(0, 2, 0);
+                            break;
+                        case "down":
+                            diamondpos += new Vector3(0, -2, 0);
+                            break;
+                        case "left":
+                            diamondpos += new Vector3(-2, 0, 0);
+                            break;
+                        case "right":
+                            diamondpos += new Vector3(2, 0, 0);
+                            break;
+                    }
+                    diamondtarget.GetComponent<RectTransform>().position = diamondpos;
+                }
+            }
+            else
+            {
+                diamondtarget.GetComponent<Image>().enabled = false;
+            }
+
+            target.transform.position = targetPos + new Vector3(0, 0, -1.5f);
+        }
+        else
+        {
+            target.GetComponent<Image>().enabled = false;
+            diamondtarget.GetComponent<Image>().enabled = false;
+        }
     }
 
     public void Update()

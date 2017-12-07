@@ -22,6 +22,7 @@ public class PlayingField : MonoBehaviour
         for(int i=0;i<zones.Length;i++)
         {
             placeZone(i);
+            
         }
         done = true;
     }

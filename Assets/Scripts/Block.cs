@@ -152,7 +152,10 @@ public class Block : MonoBehaviour
             case "Water":
                 //water stats
                 if (!drill.useShield())
+                {
+                    print("hit");
                     drill.OverheatLink(waterOverheatTime);
+                }
                 break;
             default:
                 break;
@@ -164,3 +167,4 @@ public class Block : MonoBehaviour
     
 
 }
+    
