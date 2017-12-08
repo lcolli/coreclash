@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 
 //used to control what the player is doing at the moment
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour {
     public KeyCode drilluse = KeyCode.Space;
     public KeyCode usePU = KeyCode.G;                   //powerup usage
     public KeyCode pause = KeyCode.P;                   //the pause button
+    
 
 
     [Header("Set Dynamically")]
@@ -57,11 +59,14 @@ public class Player : MonoBehaviour {
 
     private Vector3 startPos;
     private Vector3 endPos;
+    public CoreClash game;
 
     private float timeStartedMoving;
 
     private void Start()
     {
+        GameObject mainCam = GameObject.FindGameObjectWithTag("MainCamera");
+        game = mainCam.GetComponent<CoreClash>();
         State = state.falling;                  //is currently starting in the air
         pos = position.middle;                  //and in the middle
         //framesTilMove = 0;
@@ -95,6 +100,8 @@ public class Player : MonoBehaviour {
         }
         diamondtarget.GetComponent<Image>().enabled = false;
         target.transform.position = transform.position + new Vector3(-.3f, -1.25f, -2);
+        
+        drill.game = game;
 
     }
 
@@ -158,73 +165,85 @@ public class Player : MonoBehaviour {
 
     public void Update()
     {
-        if (Input.GetKeyDown(pause))
+        if (game.State == gamestate.playing)
         {
-            PauseGame();
+            if (Input.GetKeyDown(pause))
+            {
+                PauseGame();
+            }
+
+
+            //overrides the movement counter if players press an input again
+            //if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
+            //framesTilMove = FramesBeforeMove;
+            /*if (Input.GetKey(moveleft) && (transform.position.x > left.x + 1) && !isMoving)
+            {
+                StartMoveLeft();
+            }
+
+            if (Input.GetKey(moveright) && (transform.position.x < right.x - 1) && !isMoving)
+            {
+                StartMoveRight();
+            }*/
+
+
+
+
+
+            //if falling or idle you can change the direction of the drill but wil only move if idle
+            //defaults to the drill pointing down if nothing is pressed
+            if (State != state.overheat && State != state.moving)
+            {
+                if (Input.GetKey(lookup))
+                    drill.PointUp();
+                else if (Input.GetKey(moveleft))
+                    moveLeft();
+                else if (Input.GetKey(moveright))
+                    moveRight();
+                else
+                    drill.PointDown();
+
+            }
         }
-
-        
-        //overrides the movement counter if players press an input again
-        //if (Input.GetKeyDown(moveleft) || Input.GetKeyDown(moveright))
-        //framesTilMove = FramesBeforeMove;
-        /*if (Input.GetKey(moveleft) && (transform.position.x > left.x + 1) && !isMoving)
+        else if(game.State==gamestate.pause)
         {
-            StartMoveLeft();
-        }
-
-        if (Input.GetKey(moveright) && (transform.position.x < right.x - 1) && !isMoving)
-        {
-            StartMoveRight();
-        }*/
-
-
-
-       
-
-        //if falling or idle you can change the direction of the drill but wil only move if idle
-        //defaults to the drill pointing down if nothing is pressed
-        if (State != state.overheat && State!=state.moving)
-        {
-            if (Input.GetKey(lookup))
-                drill.PointUp();
-           else if (Input.GetKey(moveleft))
-                moveLeft();
-            else if (Input.GetKey(moveright))
-                moveRight();
-            else
-               drill.PointDown();
-
+            if (Input.GetKeyDown(pause))
+            {
+                PauseGame();
+            }
         }
     }
 
     public void FixedUpdate(){
-
-        //countdown until player can move again if holding down left or right
-        //will give a delay so players can stop at middle
-        //if (framesTilMove <= FramesBeforeMove)
-        //framesTilMove++;
-
-
-        //if the state is moving, will move to endpos over the set time in the beginning
-        if (!paused)
+        if (game.State == gamestate.playing)
         {
-            if (State == state.moving)
+            //countdown until player can move again if holding down left or right
+            //will give a delay so players can stop at middle
+            //if (framesTilMove <= FramesBeforeMove)
+            //framesTilMove++;
+
+
+            //if the state is moving, will move to endpos over the set time in the beginning
+            if (!paused)
             {
-                //finding the current percentage of the total movement time has been completed
-                float timeSinceStarted = Time.time - timeStartedMoving;
-                float percentageComplete = timeSinceStarted / movementTime;
-
-                //lerp
-                transform.position = Vector3.Lerp(startPos, endPos, percentageComplete);
-
-                //lerping ends
-                //if(transform.position.x >= endPos.x){
-                //    isMoving = false;
-                //}
-
-                if (timeSinceStarted >= movementTime)
+                if (State == state.moving)
                 {
-                    EndMove(); //this sets the x value to a specific x value;
+                    //finding the current percentage of the total movement time has been completed
+                    float timeSinceStarted = Time.time - timeStartedMoving;
+                    float percentageComplete = timeSinceStarted / movementTime;
+
+                    //lerp
+                    transform.position = Vector3.Lerp(startPos, endPos, percentageComplete);
+
+                    //lerping ends
+                    //if(transform.position.x >= endPos.x){
+                    //    isMoving = false;
+                    //}
+
+                    if (timeSinceStarted >= movementTime)
+                    {
+                        EndMove(); //this sets the x value to a specific x value;
+                    }
                 }
             }
         }
@@ -427,14 +446,7 @@ public class Player : MonoBehaviour {
     //pauses the game
     private void PauseGame()
     {
-        if(Time.timeScale==1)
-        {
-            Time.timeScale = 0;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
+        game.PauseGame();
     } 
 
 }

@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 399342571}
   - component: {fileID: 399342570}
   - component: {fileID: 399342574}
+  - component: {fileID: 399342575}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -419,9 +420,98 @@ MonoBehaviour:
   cam2: {fileID: 426469411}
   p1PUSprite: {fileID: 562746820}
   p2PUSprite: {fileID: 1188725038}
+  countdownImg: {fileID: 0}
+  mainTheme: {fileID: 0}
+  firstMainTheme: {fileID: 0}
+  countdownAudio:
+  - {fileID: 8300000, guid: 28dbe2b2dc9dc3447b3ed129fa57bb62, type: 3}
+  - {fileID: 8300000, guid: e0075325d43df854e84b1f98ac1d2071, type: 3}
+  cdSprites: []
+  musicVlmScale: 0
+  CntdwnVlmScale: 0
   State: 0
   player1: {fileID: 0}
   player2: {fileID: 0}
+--- !u!82 &399342575
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 399342569}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!20 &426469411 stripped
 Camera:
   m_PrefabParentObject: {fileID: 20879910372906488, guid: 316a2e9472f5b2a4990079e4d0859b19,
@@ -575,6 +665,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: countdownAudio.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4639800561398318, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -636,6 +731,16 @@ Prefab:
       propertyPath: p2PUSprite
       value: 
       objectReference: {fileID: 1188725038}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: countdownAudio.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 28dbe2b2dc9dc3447b3ed129fa57bb62, type: 3}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: countdownAudio.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: e0075325d43df854e84b1f98ac1d2071, type: 3}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 0}

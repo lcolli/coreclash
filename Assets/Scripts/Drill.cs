@@ -25,6 +25,7 @@ public class Drill : MonoBehaviour {
     public MeshRenderer rendCockpit;
     public Material drillState;
     public Material cockpitState;
+    
    
 
 
@@ -45,7 +46,7 @@ public class Drill : MonoBehaviour {
     float overclockDown=0f;                         //the amount of time the player overheats after an overclock
     float drillDmgMem;                              //place holder for the drill damage ramp
     string pointing;                                //the direction the drill is pointing
-
+    public CoreClash game;
 
 
 
@@ -111,93 +112,100 @@ public class Drill : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        getTargets();//figures out the blocks around the player
-       
+        if (game.State == gamestate.playing)
+        {
+            getTargets();//figures out the blocks around the player
 
-        //will attack when you release the spacebar
-        if (Input.GetKeyUp(drilluse) && !overheated)
-        {           
-            if (target != null)
+
+            //will attack when you release the spacebar
+            if (Input.GetKeyUp(drilluse) && !overheated)
             {
-                
-                if (diamond)//if the diamond drill is activated it will attack the target and the one behind it
+                if (target != null)
                 {
-                    
-                    Vector3 start = new Vector3(transform.position.x,transform.position.y,transform.position.z);
-                    Vector3 direction = target.transform.position;
-                    Vector3 length = (direction - start) * 2;
-                    Collider[] cols = Physics.OverlapCapsule(start, start + length,.1f); List<GameObject> gos = new List<GameObject>();
-                    foreach (Collider collide in cols)
-                    {
-                        if (collide.gameObject.layer == LayerMask.NameToLayer("Playing field"))
-                        {
-                            
-                            gos.Add(collide.gameObject);
-                        }
-                    }
 
-                    foreach (GameObject GO in gos)
+                    if (diamond)//if the diamond drill is activated it will attack the target and the one behind it
                     {
-                        if (GO.name != "Rig")
-                        {
 
-                           GO.GetComponent<Block>().attack(damage, this,pointing);
+                        Vector3 start = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+                        Vector3 direction = target.transform.position;
+                        Vector3 length = (direction - start) * 2;
+                        Collider[] cols = Physics.OverlapCapsule(start, start + length, .1f); List<GameObject> gos = new List<GameObject>();
+                        foreach (Collider collide in cols)
+                        {
+                            if (collide.gameObject.layer == LayerMask.NameToLayer("Playing field"))
+                            {
+
+                                gos.Add(collide.gameObject);
+                            }
                         }
+
+                        foreach (GameObject GO in gos)
+                        {
+                            if (GO.name != "Rig")
+                            {
+
+                                GO.GetComponent<Block>().attack(damage, this, pointing);
+                            }
+                        }
+                        diamond = false;
                     }
-                    diamond = false;
-                }
-                else if (target.GetComponent<Block>().attack(damage,this,pointing) && pointing=="down")
-                {    
-                        
+                    else if (target.GetComponent<Block>().attack(damage, this, pointing) && pointing == "down")
+                    {
+
                         playerGO.GetComponent<Player>().destroyedBelow();
-                                                           
-                   
+
+
+                    }
+                    getTargets();
+                    target = null;
                 }
-                getTargets();
-                target = null;
+
+                resetDrillState();
             }
-            
-            resetDrillState ();
         }
-        
                 
     }
 
     void FixedUpdate()
     {
-        //ends the overclock
-        if(overclockCount>overClockLimit)
+        if (game.State == gamestate.playing)
         {
-            overClockLimit = 0;
-            overclockCount = 0;
-            StartCoroutine(overheat(overclockDown));
-            overclockDown = 0;
-            overclocked = false;
-            drillDmgRamp = drillDmgMem;
-        }
-        //if its overclocked will add 1 more frame tot he overclock count
-        if (overclocked)
-            overclockCount++;
+            //ends the overclock
+            if (overclockCount > overClockLimit)
+            {
+                overClockLimit = 0;
+                overclockCount = 0;
+                StartCoroutine(overheat(overclockDown));
+                overclockDown = 0;
+                overclocked = false;
+                drillDmgRamp = drillDmgMem;
+            }
+            //if its overclocked will add 1 more frame tot he overclock count
+            if (overclocked)
+                overclockCount++;
 
-        //will charge as long as you're holding the correct button. increases the damage 
-        if(Input.GetKey(drilluse) && !overheated)
-        {
-            damage += drillDmgRamp;          
+            //will charge as long as you're holding the correct button. increases the damage 
+            if (Input.GetKey(drilluse) && !overheated)
+            {
+                damage += drillDmgRamp;
 
-            /*if (damage < 0.5f)
-                resetDrillState ();
-            else*/ if (damage > 0.5f && damage < 2f)
-                drillState.color = buildUp;
-            else if (damage > 1.25f && damage < 3f)
-                drillState.color = ideal;
-            else if (damage > 4f)
-                StartCoroutine(overheat(overheatTime));
+                /*if (damage < 0.5f)
+                    resetDrillState ();
+                else*/
+                if (damage > 0.5f && damage < 2f)
+                    drillState.color = buildUp;
+                else if (damage > 1.25f && damage < 3f)
+                    drillState.color = ideal;
+                else if (damage > 4f)
+                    StartCoroutine(overheat(overheatTime));
 
-            Material newMaterial = new Material (Shader.Find ("Specular"));
-            newMaterial.color = overHeatColor;
+                Material newMaterial = new Material(Shader.Find("Specular"));
+                newMaterial.color = overHeatColor;
 
-            foreach (MeshRenderer mr in rendDrill) {
-                mr.material = drillState;
+                foreach (MeshRenderer mr in rendDrill)
+                {
+                    mr.material = drillState;
+                }
             }
         }
 
@@ -290,8 +298,9 @@ public class Drill : MonoBehaviour {
         if (!overclocked)
         {
             S.overheated = true;
-            S.drillState.color = overHeatColor;
-            S.cockpitState.color = overHeatColor;
+            //S.drillState.color = overHeatColor;
+            //S.cockpitState.color = overHeatColor;
+            HighlightTarget();
             
            
             playerGO.GetComponent<Player>().State = state.overheat;
@@ -307,7 +316,7 @@ public class Drill : MonoBehaviour {
 
     void HighlightTarget()
     {
-        if(target==null)
+        if(target==null || overheated)
         {
             playerGO.GetComponent<Player>().HighlightTarget(new Vector3(0,0,-100),pointing,diamond);
         }
@@ -323,9 +332,10 @@ public class Drill : MonoBehaviour {
 
     //resets the drill back to 0 damage finds the new targets and changes its color back
     void resetDrillState(){
-        drillState.color = defaultDrillColor;
-        cockpitState.color = defaultCockpitColor;
+        //drillState.color = defaultDrillColor;
+        //cockpitState.color = defaultCockpitColor;
         damage = 0;
+        HighlightTarget();
         
     }
     

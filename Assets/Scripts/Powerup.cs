@@ -127,7 +127,7 @@ public class Powerup : MonoBehaviour {
 
     public void Reset()
     {
-        PowerupDisplay.sprite = image[6];
+        //PowerupDisplay.sprite = image[6];
         Name = "none";
     }
 
