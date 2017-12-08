@@ -77,15 +77,17 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
-    m_PVRFiltering: 0
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
     m_PVRFilteringMode: 1
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
     m_PVRFilteringGaussRadiusAO: 2
-    m_PVRFilteringAtrousColorSigma: 1
-    m_PVRFilteringAtrousNormalSigma: 1
-    m_PVRFilteringAtrousPositionSigma: 1
+    m_PVRFilteringAtrousPositionSigmaDirect: 0.5
+    m_PVRFilteringAtrousPositionSigmaIndirect: 2
+    m_PVRFilteringAtrousPositionSigmaAO: 1
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -107,6 +109,8 @@ NavMeshSettings:
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
+    debug:
+      m_Flags: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1 &36938761
 GameObject:
@@ -298,11 +302,12 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 211687248}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 573.5, y: 268, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1188725037}
   - {fileID: 562746819}
+  - {fileID: 598662352}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -384,7 +389,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
-  m_StereoMirrorMode: 0
 --- !u!4 &399342573
 Transform:
   m_ObjectHideFlags: 0
@@ -420,15 +424,18 @@ MonoBehaviour:
   cam2: {fileID: 426469411}
   p1PUSprite: {fileID: 562746820}
   p2PUSprite: {fileID: 1188725038}
-  countdownImg: {fileID: 0}
-  mainTheme: {fileID: 0}
-  firstMainTheme: {fileID: 0}
+  countdownImg: {fileID: 598662353}
+  mainTheme: {fileID: 8300000, guid: d096959cf9d33ca4baa61a127205dba5, type: 3}
   countdownAudio:
   - {fileID: 8300000, guid: 28dbe2b2dc9dc3447b3ed129fa57bb62, type: 3}
   - {fileID: 8300000, guid: e0075325d43df854e84b1f98ac1d2071, type: 3}
-  cdSprites: []
-  musicVlmScale: 0
-  CntdwnVlmScale: 0
+  cdSprites:
+  - {fileID: 21300000, guid: 3cb8bbf371414ee4da7fec4cafc1e725, type: 3}
+  - {fileID: 21300000, guid: 93d78d3411c55874d93192d0483d26c6, type: 3}
+  - {fileID: 21300000, guid: 3d1cee0f6eebde94288a905a8f5de04f, type: 3}
+  - {fileID: 21300000, guid: cb3040649c743674e982fadc0b506815, type: 3}
+  musicVlmScale: 0.635
+  CntdwnVlmScale: 0.2
   State: 0
   player1: {fileID: 0}
   player2: {fileID: 0}
@@ -462,20 +469,68 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0
+      time: 0.002
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: -500.20065
+      outSlope: -500.20065
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.004
+      value: 0.5
+      inSlope: -125.05016
+      outSlope: -125.05016
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.008
+      value: 0.25
+      inSlope: -31.26254
+      outSlope: -31.26254
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.016
+      value: 0.125
+      inSlope: -7.815635
+      outSlope: -7.815635
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.032
+      value: 0.0625
+      inSlope: -1.9539088
+      outSlope: -1.9539088
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.064
+      value: 0.03125
+      inSlope: -0.4884772
+      outSlope: -0.4884772
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.16593336
+      value: 0
+      inSlope: -0.1221193
+      outSlope: -0.1221193
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.256
+      value: 0.0078125
+      inSlope: -0.030529825
+      outSlope: -0.030529825
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 0.5223455
+      value: 0
+      inSlope: -0.0076324563
+      outSlope: -0.0076324563
       tangentMode: 0
     - serializedVersion: 2
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.002
+      inSlope: -0.002000801
+      outSlope: -0.002000801
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -499,7 +554,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -541,7 +596,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 562746818}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 503.5, y: 193, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 211687252}
@@ -585,6 +640,74 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 562746818}
+--- !u!1 &598662351
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 598662352}
+  - component: {fileID: 598662354}
+  - component: {fileID: 598662353}
+  m_Layer: 5
+  m_Name: CountDown
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &598662352
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 598662351}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 211687252}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 100}
+  m_SizeDelta: {x: 200, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &598662353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 598662351}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.94482756, g: 1, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &598662354
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 598662351}
 --- !u!20 &1090324615 stripped
 Camera:
   m_PrefabParentObject: {fileID: 20879910372906488, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
@@ -614,7 +737,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1188725036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -503.5, y: 193, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 211687252}
@@ -665,6 +788,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: cdSprites.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
         type: 2}
       propertyPath: countdownAudio.Array.size
@@ -741,6 +869,50 @@ Prefab:
       propertyPath: countdownAudio.Array.data[1]
       value: 
       objectReference: {fileID: 8300000, guid: e0075325d43df854e84b1f98ac1d2071, type: 3}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: cdSprites.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3cb8bbf371414ee4da7fec4cafc1e725,
+        type: 3}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: cdSprites.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 93d78d3411c55874d93192d0483d26c6,
+        type: 3}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: cdSprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 3d1cee0f6eebde94288a905a8f5de04f,
+        type: 3}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: cdSprites.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: cb3040649c743674e982fadc0b506815,
+        type: 3}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: countdownImg
+      value: 
+      objectReference: {fileID: 598662353}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: mainTheme
+      value: 
+      objectReference: {fileID: 8300000, guid: d096959cf9d33ca4baa61a127205dba5, type: 3}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: musicVlmScale
+      value: 0.635
+      objectReference: {fileID: 0}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: CntdwnVlmScale
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 0}

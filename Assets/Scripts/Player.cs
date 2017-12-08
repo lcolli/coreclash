@@ -36,6 +36,7 @@ public class Player : MonoBehaviour {
     public KeyCode drilluse = KeyCode.Space;
     public KeyCode usePU = KeyCode.G;                   //powerup usage
     public KeyCode pause = KeyCode.P;                   //the pause button
+    public float drillDmg;
     
 
 
@@ -102,6 +103,7 @@ public class Player : MonoBehaviour {
         target.transform.position = transform.position + new Vector3(-.3f, -1.25f, -2);
         
         drill.game = game;
+        drill.drillDmgRamp = drillDmg;
 
     }
 

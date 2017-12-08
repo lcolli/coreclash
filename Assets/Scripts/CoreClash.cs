@@ -25,11 +25,11 @@ public class CoreClash : MonoBehaviour {
     public GameObject course;
     public Camera cam1,cam2;
     public Image p1PUSprite, p2PUSprite,countdownImg;
-    public AudioClip mainTheme, firstMainTheme;
+    public AudioClip mainTheme;
     public AudioClip[] countdownAudio=new AudioClip[2];
     public Sprite[] cdSprites;
-    public float musicVlmScale=1;
-    public float CntdwnVlmScale=1;
+    public float musicVlmScale=.624f;
+    public float CntdwnVlmScale=.8f;
 
     [Header ("Set Dynamically")]
     public gamestate State;
@@ -42,9 +42,10 @@ public class CoreClash : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
-        source = GetComponent<AudioSource>();       
-        source.clip = firstMainTheme;
-        //source.PlayOneShot(firstMainTheme,musicVlmScale);
+        countdownImg.enabled = false;
+        source = GetComponent<AudioSource>();
+        source.loop = false;
+        
         State = gamestate.countdown;
 
         course.GetComponent<PlayingField>().GameStart();
@@ -55,39 +56,37 @@ public class CoreClash : MonoBehaviour {
     }
     public void FixedUpdate()
     {
-        if(!source.isPlaying)
+        if(!source.isPlaying && State==gamestate.playing)
         {
-            source.clip = mainTheme;
             source.volume = musicVlmScale;
+            source.clip = mainTheme;
             source.Play();
+            source.loop = true;
         }
     }
 
     public IEnumerator CountDown()
     {
         //3
-        //countdownImg.sprite = cdSprites[0];
-        source.PlayOneShot(countdownAudio[0], CntdwnVlmScale);
-        print("3");
+        countdownImg.sprite = cdSprites[0];
+        countdownImg.enabled = true;
+        source.PlayOneShot(countdownAudio[0], CntdwnVlmScale);       
         yield return new WaitForSeconds(1);
         //2
-        //countdownImg.sprite = cdSprites[1];
-        print("2");
+        countdownImg.sprite = cdSprites[1];
         source.PlayOneShot(countdownAudio[0], CntdwnVlmScale);
         yield return new WaitForSeconds(1);
-
         //1
-        //countdownImg.sprite = cdSprites[1];
-        print("1");
+        countdownImg.sprite = cdSprites[2];
         source.PlayOneShot(countdownAudio[0], CntdwnVlmScale);
         yield return new WaitForSeconds(1);
-        //go and fade
-        //countdownImg.sprite = cdSprites[3];
-        print("go");
+        //go 
+        countdownImg.sprite = cdSprites[3];
         source.PlayOneShot(countdownAudio[1], CntdwnVlmScale);
         State = gamestate.playing;
+       
         yield return new WaitForSeconds(.5f);
-        ///countdownImg.enabled = false;
+        countdownImg.enabled = false;
 
     }
     
