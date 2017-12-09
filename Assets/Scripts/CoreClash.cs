@@ -25,24 +25,53 @@ public class CoreClash : MonoBehaviour {
     public GameObject course;
     public Camera cam1,cam2;
     public Image p1PUSprite, p2PUSprite,countdownImg;
-    public AudioClip mainTheme;
+    public AudioClip mainTheme,victTheme;
     public AudioClip[] countdownAudio=new AudioClip[2];
     public Sprite[] cdSprites;
     public float musicVlmScale=.624f;
     public float CntdwnVlmScale=.8f;
     public Sprite[] victorySprites;
+    public GameObject menuOverlay;
+    public float zoomTime = 1.5f;
 
     [Header ("Set Dynamically")]
     public gamestate State;
     public GameObject player1, player2;
     private AudioSource source;
-    
+    private Image overlayIMG;
+    private OverlayFunctions overlayClass;
 
-
     
-    // Use this for initialization
-    void Start ()
+    private void Start()
     {
+        overlayIMG=menuOverlay.GetComponent<Image>();
+        overlayClass = menuOverlay.GetComponent<OverlayFunctions>();
+        State = gamestate.menu;
+        overlayClass.DisplayMenu(true);
+    }
+
+    //probably doesn't need to be here but just in case
+    private void Update()
+    {
+        switch(State)
+        {
+            case gamestate.menu:                
+                break;
+            case gamestate.playing:
+                break;
+            case gamestate.pause:
+                break;
+            case gamestate.victory:
+                break;
+            case gamestate.countdown:
+                break;
+        }
+    }
+
+    // Use this for initialization
+    public void GameStart ()
+    {
+        overlayClass.DisplayMenu(false);
         countdownImg.enabled = false;
         source = GetComponent<AudioSource>();
         source.loop = false;
@@ -54,17 +83,7 @@ public class CoreClash : MonoBehaviour {
         setCameras();
         StartCoroutine(CountDown());
 
-    }
-    public void FixedUpdate()
-    {
-        if(!source.isPlaying && State==gamestate.playing)
-        {
-            source.volume = musicVlmScale;
-            source.clip = mainTheme;
-            source.Play();
-            source.loop = true;
-        }
-    }
+    }    
 
     public IEnumerator CountDown()
     {
@@ -88,6 +107,10 @@ public class CoreClash : MonoBehaviour {
        
         yield return new WaitForSeconds(.5f);
         countdownImg.enabled = false;
+        source.volume = musicVlmScale;
+        source.clip = mainTheme;
+        source.Play();
+        source.loop = true;
 
     }
     
@@ -120,11 +143,15 @@ public class CoreClash : MonoBehaviour {
         {
             Time.timeScale = 0;
             State = gamestate.pause;
+            //pull up pause menu
+            overlayClass.DisplayPause(true);
         }
         else
         {
             Time.timeScale = 1;
             State = gamestate.playing;
+            //put away pause menu
+            overlayClass.DisplayPause(false);
         }
     }
 
@@ -132,7 +159,8 @@ public class CoreClash : MonoBehaviour {
     {
         State = gamestate.victory;
         Time.timeScale = 0;
-        Camera winningCam = null;
+        Camera winningCam = null,losingCam=null;
+        
         switch(winningPlayer)
         {
             case 0:
@@ -140,28 +168,44 @@ public class CoreClash : MonoBehaviour {
                 break;
             case 1:
                 winningCam = cam1;
+                losingCam = cam2;
+                
                 break;
             case 2:
                 winningCam = cam2;
+                losingCam = cam2;
+                
                 break;               
         }
 
-        PlayerVictory(victorySprites[winningPlayer], winningCam);
+        PlayerVictory(victorySprites[winningPlayer], winningCam,losingCam);
     }
 
+
+    //not reachable as of right now
     private void Draw()
     {
 
     }
 
 
-    private void PlayerVictory(Sprite winner,Camera winningCam)
+    private void PlayerVictory(Sprite winner, Camera winningCam, Camera losingCam)
     {
-        winningCam.rect.Set(0, 0, 1, 1);
-        countdownImg.sprite = winner;
-        countdownImg.enabled = true;
-        //zoom in on winner 
+        source.Stop();
+        source.clip = victTheme;
+        source.Play();
+        player1.GetComponent<Player>().source.Stop();
+        player2.GetComponent<Player>().source.Stop();
+        source.loop = true;
+        losingCam.rect = new Rect(0, 0, 0, 0);
+        winningCam.rect = new Rect(0, 0, 1, 1);
+        cam1.orthographicSize = 2;
+        p1PUSprite.enabled = false;
+        p2PUSprite.enabled = false;
+        overlayClass.DisplayVictory(true,winner);
+        //victory overlay
     }
+
 
     
 }

@@ -6,6 +6,10 @@ public class FollowCam : MonoBehaviour {
 
 
     public Vector3 destination;
+    
+    
+   
+    
 
     private void Start()
     {
@@ -19,6 +23,12 @@ public class FollowCam : MonoBehaviour {
 
     private void FixedUpdate()
     {
-       transform.position = Vector3.Lerp(transform.position, destination , .02f);
+        
+       
+            transform.position = Vector3.Lerp(transform.position, destination, .02f);
+            
+        
     } 
+
+   
 }
