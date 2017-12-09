@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Player1 : Player {
 
     public Player1 S;
+    
 
 
     private new void Update()

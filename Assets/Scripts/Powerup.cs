@@ -11,6 +11,8 @@ public class Powerup : MonoBehaviour {
     //the list of powerups
      string[] PUList = new string[] {"Diamond","Dynamite","EMP",
                                     "Grapple","Overclock","Shield" };
+    AudioClip[] PUAudios;
+
     public Sprite[] image;
     public Image PowerupDisplay;
 
@@ -19,6 +21,7 @@ public class Powerup : MonoBehaviour {
     public string Name="none";
     public Player1 p1;
     public Player2 p2;
+    private AudioClip currentAudio;
 
     public void Start()
     {
@@ -40,6 +43,7 @@ public class Powerup : MonoBehaviour {
         
         Name = PUList[num];
         PowerupDisplay.sprite = image[num];
+        currentAudio = PUAudios[num];
         
 	}   
 
@@ -83,6 +87,7 @@ public class Powerup : MonoBehaviour {
                 player.drill.shielded = false;
                 break;
         }
+        player.source.PlayOneShot(currentAudio,1);
     }   
 
     public void use(Player2 player)
@@ -123,12 +128,14 @@ public class Powerup : MonoBehaviour {
                 Reset();
                 break;
         }
+        player.source.PlayOneShot(currentAudio, 1);
     }
 
     public void Reset()
     {
         //PowerupDisplay.sprite = image[6];
         Name = "none";
+        currentAudio = null;
     }
 
 

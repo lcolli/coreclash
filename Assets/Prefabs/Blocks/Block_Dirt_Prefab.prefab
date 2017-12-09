@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 65220647793134466}
   - component: {fileID: 23808984239342906}
   - component: {fileID: 114761759223333804}
-  - component: {fileID: 54095842537008360}
   m_Layer: 8
   m_Name: Block_Dirt_Prefab
   m_TagString: Dirt
@@ -54,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1736849229682790}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: -32, z: 0}
+  m_LocalPosition: {x: 7, y: -20, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4693903028076962}
@@ -115,21 +114,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1736849229682790}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54095842537008360
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1736849229682790}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 120
-  m_CollisionDetection: 1
 --- !u!65 &65220647793134466
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -170,4 +154,6 @@ MonoBehaviour:
   transformPrefab: {fileID: 0}
   GOverclockTime: 250
   DOverclockTime: 450
+  breakSound: {fileID: 8300000, guid: bdfb9eef38e895e46955205dbe3ec62a, type: 3}
+  breakVolume: 1
   health: 0

@@ -37,6 +37,8 @@ public class Player : MonoBehaviour {
     public KeyCode usePU = KeyCode.G;                   //powerup usage
     public KeyCode pause = KeyCode.P;                   //the pause button
     public float drillDmg;
+    public AudioClip engineStart, engineIdle,overheatSound;
+    public float maxPitchChange=1;
     
 
 
@@ -52,6 +54,9 @@ public class Player : MonoBehaviour {
     bool paused = false;
     public GameObject target;
     public GameObject diamondtarget;
+    public AudioSource source;
+    public float engineVolume=.35f;
+    private bool dynamite;
 
     public float movementTime = .2f;
     //private float moveDistance = 2.0f;
@@ -66,15 +71,19 @@ public class Player : MonoBehaviour {
 
     private void Start()
     {
+        
         GameObject mainCam = GameObject.FindGameObjectWithTag("MainCamera");
         game = mainCam.GetComponent<CoreClash>();
         State = state.falling;                  //is currently starting in the air
         pos = position.middle;                  //and in the middle
         //framesTilMove = 0;
         powerup = this.GetComponent<Powerup>();
-
+        source = GetComponent<AudioSource>();
         Time.timeScale = 1;
-
+        source.volume = engineVolume;       
+        source.pitch = 1;       
+        source.loop = true;
+        StartCoroutine(EngineStarting());
 
         //this is going to find the drill that is a child of this player
         GameObject[] rigs = GameObject.FindGameObjectsWithTag("Rig");
@@ -416,7 +425,7 @@ public class Player : MonoBehaviour {
     //the dynamite powerup, attacks everything in a 9x9 square around the player
     public void DynamiteBlast()
     {
-        
+        dynamite = true;
         Vector3 half = new Vector3(1.5f, 1.5f, 0.1f);
         Vector3 centeroffset = new Vector3(0f, .5f, 0f);
 
@@ -441,6 +450,7 @@ public class Player : MonoBehaviour {
             }
         }
         State = state.falling;
+        dynamite = false;
     }
     
     
@@ -450,5 +460,45 @@ public class Player : MonoBehaviour {
     {
         game.PauseGame();
     } 
+
+    public void Revving(float correction)
+    {      
+            source.pitch = (maxPitchChange-1)*correction+1;
+        
+    }
+    public void overheat(bool overheating)
+    {
+        if(overheating)
+        {
+            State = state.overheat;
+            source.Stop();
+            source.clip=overheatSound;
+            source.Play();
+            
+        }
+        else
+        {
+            State = state.idle;
+            StartCoroutine(EngineStarting());
+        }
+    }
+
+    public void playSound(AudioClip sound, float volume)
+    {
+        if(!dynamite)
+            source.PlayOneShot(sound, volume);
+    }
+    
+    public IEnumerator EngineStarting()
+    {
+        source.PlayOneShot(engineStart, .5f);
+        
+        yield return new WaitForSeconds(engineStart.length);
+        if (State != state.overheat)
+        {
+            source.clip = engineIdle;        
+            source.Play();
+        }
+    }
 
 }

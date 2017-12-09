@@ -152,4 +152,8 @@ MonoBehaviour:
   waterOverheatTime: 3
   lavaOverheatTime: 5
   transformPrefab: {fileID: 0}
+  GOverclockTime: 250
+  DOverclockTime: 450
+  breakSound: {fileID: 8300000, guid: 224f4a86f40e8044f8a1625248e763a4, type: 3}
+  breakVolume: 1
   health: 0

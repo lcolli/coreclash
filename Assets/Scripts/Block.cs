@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Block : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class Block : MonoBehaviour
     public GameObject transformPrefab;
     public int GOverclockTime = 250;
     public int DOverclockTime = 450;
+    //public AudioSource source;
+    public AudioClip breakSound;
+    public float breakVolume;
     
 
     [Header("Set Dynamically")]
@@ -20,6 +24,7 @@ public class Block : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //source = GetComponent<AudioSource>();
         health = 1;
         //takes the name of the game object and applies its functions and stats
         switch (this.tag)
@@ -82,6 +87,7 @@ public class Block : MonoBehaviour
             if (damage >= 2)
             {
                 blockFunction(drill,pointing);
+                drill.playerGO.GetComponent<Player>().playSound(breakSound, breakVolume);
                 Destroy(this.gameObject);
                 return true;
             }
@@ -93,6 +99,8 @@ public class Block : MonoBehaviour
         if (damage >= health)
         {
             blockFunction(drill,pointing);
+            print("play Sound");
+            drill.playerGO.GetComponent<Player>().playSound(breakSound, breakVolume);
             Destroy(this.gameObject);            
             return true;
         }

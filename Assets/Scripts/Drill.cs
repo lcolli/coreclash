@@ -187,16 +187,16 @@ public class Drill : MonoBehaviour {
             //will charge as long as you're holding the correct button. increases the damage 
             if (Input.GetKey(drilluse) && !overheated)
             {
+                
+                    
                 damage += drillDmgRamp;
+                playerGO.GetComponent<Player>().Revving(damage/overheatdmg);
 
                 /*if (damage < 0.5f)
                     resetDrillState ();
                 else*/
-                if (damage > 0.5f && damage < 2f)
-                    drillState.color = buildUp;
-                else if (damage > 1.25f && damage < 3f)
-                    drillState.color = ideal;
-                else if (damage > 4f)
+
+                if (damage > overheatdmg)
                     StartCoroutine(overheat(overheatTime));
 
                 Material newMaterial = new Material(Shader.Find("Specular"));
@@ -293,6 +293,8 @@ public class Drill : MonoBehaviour {
         overclocked = true;
     }
 
+   
+
     //the enumerator function overheats the drill then waits until the overheat is done then goes back to idle
     public IEnumerator overheat(float overheatTime){
         if (!overclocked)
@@ -301,13 +303,13 @@ public class Drill : MonoBehaviour {
             //S.drillState.color = overHeatColor;
             //S.cockpitState.color = overHeatColor;
             HighlightTarget();
-            
-           
-            playerGO.GetComponent<Player>().State = state.overheat;
+
+
+            playerGO.GetComponent<Player>().overheat(true);
 
             yield return new WaitForSeconds(overheatTime);
-            
-            playerGO.GetComponent<Player>().State = state.idle;
+
+            playerGO.GetComponent<Player>().overheat(false);
             S.overheated = false;
             resetDrillState();
         }
@@ -336,7 +338,8 @@ public class Drill : MonoBehaviour {
         //cockpitState.color = defaultCockpitColor;
         damage = 0;
         HighlightTarget();
-        
+        playerGO.GetComponent<Player>().Revving(0);
+
     }
     
 }

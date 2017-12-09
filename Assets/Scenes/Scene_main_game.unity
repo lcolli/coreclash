@@ -434,7 +434,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 93d78d3411c55874d93192d0483d26c6, type: 3}
   - {fileID: 21300000, guid: 3d1cee0f6eebde94288a905a8f5de04f, type: 3}
   - {fileID: 21300000, guid: cb3040649c743674e982fadc0b506815, type: 3}
-  musicVlmScale: 0.635
+  musicVlmScale: 0.35
   CntdwnVlmScale: 0.2
   State: 0
   player1: {fileID: 0}
@@ -906,7 +906,7 @@ Prefab:
     - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
         type: 2}
       propertyPath: musicVlmScale
-      value: 0.635
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
         type: 2}
