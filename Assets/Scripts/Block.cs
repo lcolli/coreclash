@@ -99,7 +99,6 @@ public class Block : MonoBehaviour
         if (damage >= health)
         {
             blockFunction(drill,pointing);
-            print("play Sound");
             drill.playerGO.GetComponent<Player>().playSound(breakSound, breakVolume);
             Destroy(this.gameObject);            
             return true;

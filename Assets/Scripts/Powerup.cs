@@ -11,7 +11,7 @@ public class Powerup : MonoBehaviour {
     //the list of powerups
      string[] PUList = new string[] {"Diamond","Dynamite","EMP",
                                     "Grapple","Overclock","Shield" };
-    AudioClip[] PUAudios;
+    public AudioClip[] PUAudios;
 
     public Sprite[] image;
     public Image PowerupDisplay;
@@ -33,8 +33,8 @@ public class Powerup : MonoBehaviour {
                 p1 = pl.GetComponent<Player1>();
             else if (pl.name == "Player 2")
                 p2 = pl.GetComponent<Player2>();
-
         }
+        Reset();
     }
     //picks a random power up from the list
     public void getPowerup()
@@ -50,7 +50,8 @@ public class Powerup : MonoBehaviour {
     //uses the function based on the power up, this is if player1 uses it
     public void use(Player1 player)
     {
-       
+        if (currentAudio != null)
+            player.source.PlayOneShot(currentAudio, 1);
         switch (Name)
         {
             case "Diamond":
@@ -71,7 +72,9 @@ public class Powerup : MonoBehaviour {
                 if (!p2.drill.useShield())
                 {
                     Name = p2.powerup.Name;
-                    p2.powerup.Name = "none";
+                    currentAudio = p2.powerup.currentAudio;
+                    PowerupDisplay.sprite = p2.powerup.PowerupDisplay.sprite;
+                    p2.powerup.Reset();
                 }
                 else
                 {
@@ -87,11 +90,13 @@ public class Powerup : MonoBehaviour {
                 player.drill.shielded = false;
                 break;
         }
-        player.source.PlayOneShot(currentAudio,1);
+        
     }   
 
     public void use(Player2 player)
     {
+        if(currentAudio!=null)
+            player.source.PlayOneShot(currentAudio, 1);
         switch (Name)
         {
             case "Diamond":
@@ -111,7 +116,9 @@ public class Powerup : MonoBehaviour {
                 if (!p1.drill.useShield())
                 {
                     Name = p1.powerup.Name;
-                    p1.powerup.Name = "none";
+                    currentAudio = p1.powerup.currentAudio;
+                    PowerupDisplay.sprite = p1.powerup.PowerupDisplay.sprite;                    
+                    p1.powerup.Reset();
                 }
                 else
                 {
@@ -128,14 +135,14 @@ public class Powerup : MonoBehaviour {
                 Reset();
                 break;
         }
-        player.source.PlayOneShot(currentAudio, 1);
+       
     }
 
     public void Reset()
     {
-        //PowerupDisplay.sprite = image[6];
+        PowerupDisplay.sprite = image[6];
         Name = "none";
-        currentAudio = null;
+        currentAudio = PUAudios[6];
     }
 
 

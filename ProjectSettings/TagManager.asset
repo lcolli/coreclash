@@ -19,6 +19,7 @@ TagManager:
   - Rig
   - Course
   - Targeter
+  - Goal
   layers:
   - Default
   - TransparentFX
@@ -30,7 +31,7 @@ TagManager:
   - 
   - Playing field
   - Physics only
-  - 
+  - Victory
   - 
   - 
   - 

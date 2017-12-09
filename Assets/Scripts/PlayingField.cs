@@ -8,13 +8,14 @@ public class PlayingField : MonoBehaviour
     [Header("Set in Inspector")]
     public float maxHeight;
     public float minHeight, leftAnchor;
-    public GameObject dirt, stone, metal, magma, water, treasure, gold, diamond,sand;
+    public GameObject dirt, stone, metal, magma, water, treasure, gold, diamond,sand,victory;
     public Zone[] zones;
 
     [Header("SetDynaimcally")]
     
     int level;
     public bool done = false;
+    private float lastLine;
 
 
     public void GameStart()
@@ -24,6 +25,12 @@ public class PlayingField : MonoBehaviour
             placeZone(i);
             
         }
+        Vector3 VictoryLine = new Vector3(7, lastLine - 2);
+        Vector3 mirror = new Vector3(-7, lastLine - 2);
+        GameObject victoryLeft = Instantiate(victory, this.gameObject.transform);
+        GameObject victoryRight = Instantiate(victory, this.gameObject.transform);
+        victoryRight.transform.position =VictoryLine ;
+        victoryLeft.transform.position = mirror;
         done = true;
     }
 
@@ -90,9 +97,10 @@ public class PlayingField : MonoBehaviour
                 blockR.transform.position = placement;
                 blockL.transform.position = mirror;
                 zoneBlocks.RemoveAt(rand);
+                lastLine = y;
             }
         }
-
+        
     }
 }
 

@@ -164,6 +164,7 @@ MonoBehaviour:
   gold: {fileID: 1613035919268692, guid: d9cb2a21866a68746882c7cb599ecdba, type: 2}
   diamond: {fileID: 1042225631363600, guid: 800fe5baae4ddb943a02b388cd531b47, type: 2}
   sand: {fileID: 1846101104710034, guid: 8ee1f7e4e4bb3c44186fd3be02ea1d81, type: 2}
+  victory: {fileID: 1248617116793492, guid: 7ea0477f67749a944a3f9b6d10d6cbcc, type: 2}
   zones:
   - numDirt: 3
     numStone: 0
@@ -415,7 +416,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad6fd03abe407346b27752ff5e7fe14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1GO: {fileID: 1315106516962202, guid: cce40682ddea71b4a8085a628960d46b, type: 2}
+  player1GO: {fileID: 1964508116689204, guid: 7cb75621eb03ba6449ef7f983726071d, type: 2}
   player2GO: {fileID: 1080761310061020, guid: 21e4f671e258a3644b29cbd7a55ddb1b, type: 2}
   p1Start: {x: 7.3, y: 1.5, z: 0}
   p2Start: {x: -6.7, y: 1.5, z: 0}
@@ -436,6 +437,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: cb3040649c743674e982fadc0b506815, type: 3}
   musicVlmScale: 0.35
   CntdwnVlmScale: 0.2
+  victorySprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   State: 0
   player1: {fileID: 0}
   player2: {fileID: 0}
@@ -798,6 +803,11 @@ Prefab:
       propertyPath: countdownAudio.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: victorySprites.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4639800561398318, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -913,6 +923,12 @@ Prefab:
       propertyPath: CntdwnVlmScale
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
+        type: 2}
+      propertyPath: player1GO
+      value: 
+      objectReference: {fileID: 1964508116689204, guid: 7cb75621eb03ba6449ef7f983726071d,
+        type: 2}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 0}

@@ -30,6 +30,7 @@ public class CoreClash : MonoBehaviour {
     public Sprite[] cdSprites;
     public float musicVlmScale=.624f;
     public float CntdwnVlmScale=.8f;
+    public Sprite[] victorySprites;
 
     [Header ("Set Dynamically")]
     public gamestate State;
@@ -125,6 +126,41 @@ public class CoreClash : MonoBehaviour {
             Time.timeScale = 1;
             State = gamestate.playing;
         }
+    }
+
+    public void Victory(int winningPlayer)
+    {
+        State = gamestate.victory;
+        Time.timeScale = 0;
+        Camera winningCam = null;
+        switch(winningPlayer)
+        {
+            case 0:
+                Draw();                
+                break;
+            case 1:
+                winningCam = cam1;
+                break;
+            case 2:
+                winningCam = cam2;
+                break;               
+        }
+
+        PlayerVictory(victorySprites[winningPlayer], winningCam);
+    }
+
+    private void Draw()
+    {
+
+    }
+
+
+    private void PlayerVictory(Sprite winner,Camera winningCam)
+    {
+        winningCam.rect.Set(0, 0, 1, 1);
+        countdownImg.sprite = winner;
+        countdownImg.enabled = true;
+        //zoom in on winner 
     }
 
     
