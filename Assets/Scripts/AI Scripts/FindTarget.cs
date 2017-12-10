@@ -23,7 +23,13 @@ public class FindTarget : StateMachineBehaviour {
             possibleTargets[i] = null;
         }
         List<GameObject> UnsortedTargets = new List<GameObject>();
-        NPC=GameObject.FindGameObjectWithTag("AI");
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach (GameObject player in players)
+        {
+            if (player.name == "AI Player")
+                NPC = player;
+        }
         float x = -7, z = 0;
         float y = Mathf.Floor(NPC.transform.position.y);
         Vector3 center = new Vector3(x, y, z);

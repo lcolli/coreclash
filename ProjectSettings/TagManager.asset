@@ -20,6 +20,7 @@ TagManager:
   - Course
   - Targeter
   - Goal
+  - AI
   layers:
   - Default
   - TransparentFX

@@ -48,6 +48,7 @@ public class CoreClash : MonoBehaviour {
         overlayIMG=menuOverlay.GetComponent<Image>();
         overlayClass = menuOverlay.GetComponent<OverlayFunctions>();
         State = gamestate.menu;
+        overlayClass.thisImage = menuOverlay.GetComponent<Image>();
         overlayClass.DisplayMenu(true);
     }
 
