@@ -373,6 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1GO: {fileID: 1964508116689204, guid: 7cb75621eb03ba6449ef7f983726071d, type: 2}
   player2GO: {fileID: 1080761310061020, guid: 21e4f671e258a3644b29cbd7a55ddb1b, type: 2}
+  AIGO: {fileID: 0}
   p1Start: {x: 7.3, y: 1.5, z: 0}
   p2Start: {x: -6.7, y: 1.5, z: 0}
   course: {fileID: 36938761}

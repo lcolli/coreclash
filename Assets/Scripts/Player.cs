@@ -69,7 +69,7 @@ public class Player : MonoBehaviour {
 
     private float timeStartedMoving;
 
-    private void Start()
+    public void Start()
     {
         
         GameObject mainCam = GameObject.FindGameObjectWithTag("MainCamera");

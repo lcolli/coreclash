@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114425021257256162}
   m_Layer: 10
   m_Name: VictoryLine
-  m_TagString: Untagged
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

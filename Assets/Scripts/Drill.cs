@@ -73,7 +73,7 @@ public class Drill : MonoBehaviour {
 
 
     
-    void Start ()
+     void Start ()
     {
            //finds the player object this drill is attached to    
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -111,7 +111,7 @@ public class Drill : MonoBehaviour {
     
 	
 	// Update is called once per frame
-	void Update () {
+	public void Update () {
         if (game.State == gamestate.playing)
         {
             getTargets();//figures out the blocks around the player

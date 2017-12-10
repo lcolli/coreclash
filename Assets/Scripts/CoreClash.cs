@@ -20,7 +20,7 @@ public class CoreClash : MonoBehaviour {
 
     [Header("Set in Inspector")]
     public GameObject player1GO;
-    public GameObject player2GO;
+    public GameObject player2GO,AIGO;
     public Vector3 p1Start, p2Start;
     public GameObject course;
     public Camera cam1,cam2;
@@ -40,6 +40,7 @@ public class CoreClash : MonoBehaviour {
     private AudioSource source;
     private Image overlayIMG;
     private OverlayFunctions overlayClass;
+    
 
     
     private void Start()
@@ -79,7 +80,7 @@ public class CoreClash : MonoBehaviour {
         State = gamestate.countdown;
 
         course.GetComponent<PlayingField>().GameStart();
-        CreatePlayers();
+        CreatePlayers(false);
         setCameras();
         StartCoroutine(CountDown());
 
@@ -127,13 +128,16 @@ public class CoreClash : MonoBehaviour {
     }
 
 
-    public void CreatePlayers()
+    public void CreatePlayers(bool vsAI)
     {
         player1=Instantiate(player1GO);
-        player2 = Instantiate(player2GO);
         player1.transform.position = p1Start;
-        player2.transform.position = p2Start;
         player1.GetComponent<Powerup>().PowerupDisplay = p1PUSprite;
+        if (vsAI)
+            player2 = Instantiate(AIGO);
+        else
+            player2 = Instantiate(player2GO);        
+        player2.transform.position = p2Start;        
         player2.GetComponent<Powerup>().PowerupDisplay = p2PUSprite;  
 
     }
