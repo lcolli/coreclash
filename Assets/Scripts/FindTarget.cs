@@ -7,17 +7,18 @@ public class FindTarget : StateMachineBehaviour {
     GameObject[] possibleTargets=new GameObject[12];
     private float upperY, sameY, middleY, bottomY;
     private float leftX=-9, midX=-7, rightX=-5;
-    GameObject NPC;
-    bool nearBottom;
+    GameObject NPC,goal;
+    
     int[] priorities=new int[12];
     private Animator anim;
+    private AIPlayer AI;
     
     
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
         
-        nearBottom = false;
+        
         for(int i=0; i<12;i++)
         {
             possibleTargets[i] = null;
@@ -30,34 +31,32 @@ public class FindTarget : StateMachineBehaviour {
             if (player.name == "AI Player")
                 NPC = player;
         }
+        AI = NPC.GetComponent<AIPlayer>();
         float x = -7, z = 0;
         float y = Mathf.Floor(NPC.transform.position.y);
         Vector3 center = new Vector3(x, y, z);
-        Vector3 half =new Vector3 (2, 4, .5f);
+        Vector3 half =new Vector3 (2, 3, .5f);
         Collider[] surroundings = Physics.OverlapBox(center, half,new Quaternion(0,0,0,0));
         foreach(Collider col in surroundings)
         {
             if (col.gameObject.tag == "Goal")
-                nearBottom = true;
+                goal = col.gameObject;
             if(col.gameObject.layer == LayerMask.NameToLayer("Playing field"))
             {
+               
                 UnsortedTargets.Add(col.gameObject);
             }
         }
-        if (nearBottom)
-        {
-
-        }
-        else
-        {
+        AI.ResetPos();
             center += new Vector3(.1f, .5f, 0);
             sameY = y + 1;
             upperY = sameY + 2;
             middleY = sameY - 2;
             bottomY = middleY - 2;
-
+            
             foreach (GameObject GO in UnsortedTargets)
             {
+           
                 Vector3 GOPos = GO.transform.position;
                 if (IsSpot(GOPos, upperY, leftX))
                     possibleTargets[0] = GO;
@@ -84,44 +83,20 @@ public class FindTarget : StateMachineBehaviour {
                 else if (IsSpot(GOPos, bottomY, rightX))
                     possibleTargets[11] = GO;
             }
-
+            AI.SetTargets(possibleTargets);
             for(int i=0;i<12;i++)
             {
                 priorities[i] = FindPriority(possibleTargets[i]);
             }
 
-            int targetNumber = ParsePriorities();
+        if (goal != null)
+            AI.SetTarget(goal);
+        else
+            AI.SetTarget(ParsePriorities());
 
             //state transitions
-            switch(targetNumber)
-            {
-                case 0:
-                    
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    break;
-                case 9:
-                    break;
-                case 10:
-                    break;
-                case 11:
-                    break;
-            }
-        }
+            
+        
     }
 
     /*
@@ -150,9 +125,12 @@ public class FindTarget : StateMachineBehaviour {
         int highest = 0;
         for (int i = 0; i<4; i++)
         {
-            priorities[i*3 + 0] -= i;
-            priorities[i*3 + 1] -= 1;
-            priorities[i*3 + 2] -= 1;
+            
+                priorities[i*3+0] += i;
+                priorities[i*3+1] += i;
+                priorities[i*3+2] += i;
+
+                       
             switch (NPC.GetComponent<Player>().pos)
             { case (position.left):
                     priorities[i*3 + 1] -= 1;
@@ -182,26 +160,24 @@ public class FindTarget : StateMachineBehaviour {
 
     int FindPriority(GameObject GO)
     {
-        int priority=0;
-        if (GO == null)
-            priority = -100;
-        else
+        int priority=-100;            
+        if(GO!=null)
             switch (GO.tag)
             {
                 case "Dirt":
-                    priority=4;
-                    break;
-
-                case "Diamond":
-                    priority = 6;                
-                    break;
-
-                case "Gold":                
                     priority=6;
                     break;
 
+                case "Diamond":
+                    priority = 11;                
+                    break;
+
+                case "Gold":                
+                    priority=10;
+                    break;
+
                 case "Magma":
-                    priority = -4;
+                    priority = -7;
                     break;
 
                 case "Metal":
@@ -209,20 +185,20 @@ public class FindTarget : StateMachineBehaviour {
                     break;
 
                 case "Sand":
-                    priority = 4;
+                    priority = 6;
                     break;
 
                 case "Stone":
-                    priority = 3;
+                    priority = 4;
                     break;
 
                 case "Treasure":
                     //treasure stats
-                   priority= 5;
+                   priority= 8;
                     break;
 
                 case "Water":
-                    priority = -3;
+                    priority = -5;
                     break;
 
                 default:
@@ -232,9 +208,10 @@ public class FindTarget : StateMachineBehaviour {
         return priority;
     }
 
-    bool IsSpot(Vector3 target,float x,float y)
+    bool IsSpot(Vector3 target,float y,float x)
     {
-        if (target.x>x-.4f && target.x<x+.5f && target.y > y - .4f && target.y < y)
+        
+        if (target.x==x && target.y > y - .4f && target.y < y+.4f)
             return true;
         else
             return false;

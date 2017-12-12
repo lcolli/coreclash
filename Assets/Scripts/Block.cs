@@ -17,7 +17,7 @@ public class Block : MonoBehaviour
     
 
     [Header("Set Dynamically")]
-    public int health;              //the ammount of damage a block can take before it breaks
+    public float health;              //the ammount of damage a block can take before it breaks
     GameObject sand;
     bool sandAbove = false;
 
@@ -86,6 +86,7 @@ public class Block : MonoBehaviour
         {
             if (damage >= 2)
             {
+                print("Stone Break");
                 blockFunction(drill,pointing);
                 drill.playerGO.GetComponent<Player>().playSound(breakSound, breakVolume);
                 Destroy(this.gameObject);
@@ -96,8 +97,9 @@ public class Block : MonoBehaviour
                 TransformBlock(transformPrefab);
             }
         }
-        if (damage >= health)
+        else if (damage >= health)
         {
+            print(drill.name);
             blockFunction(drill,pointing);
             drill.playerGO.GetComponent<Player>().playSound(breakSound, breakVolume);
             Destroy(this.gameObject);            

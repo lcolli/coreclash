@@ -21,18 +21,25 @@ public class Powerup : MonoBehaviour {
     public string Name="none";
     public Player1 p1;
     public Player2 p2;
+    public AIPlayer AI;
+    
     private AudioClip currentAudio;
+    private bool vsAI;
 
     public void Start()
     {
         GameObject[] players =GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject pl in players)
         {
-            
+
             if (pl.name == "Player 1")
                 p1 = pl.GetComponent<Player1>();
             else if (pl.name == "Player 2")
                 p2 = pl.GetComponent<Player2>();
+            else if (p1.name == "AI Player")
+                AI = p1.GetComponent<AIPlayer>();
+
+                
         }
         Reset();
     }
@@ -64,12 +71,27 @@ public class Powerup : MonoBehaviour {
                 Reset();
                 break;
             case "EMP":
-                if(!p2.drill.useShield())
-                  StartCoroutine(p2.drill.overheat(empoverheat));
+                if (vsAI)
+                {
+                    if (!AI.drill.useShield())
+                        StartCoroutine(AI.drill.overheat(empoverheat));
+                }
+                else
+                {
+                    if (!p2.drill.useShield())
+                        StartCoroutine(p2.drill.overheat(empoverheat));
+                }
                 Reset();
                 break;
             case "Grapple":
-                if (!p2.drill.useShield())
+                if(vsAI && !AI.drill.useShield())
+                {
+                    Name = AI.powerup.Name;
+                    currentAudio = AI.powerup.currentAudio;
+                    PowerupDisplay.sprite = AI.powerup.PowerupDisplay.sprite;
+                    AI.powerup.Reset();
+                }
+                else if (!p2.drill.useShield())
                 {
                     Name = p2.powerup.Name;
                     currentAudio = p2.powerup.currentAudio;
@@ -136,6 +158,51 @@ public class Powerup : MonoBehaviour {
                 break;
         }
        
+    }
+
+    public void use(AIPlayer player)
+    {
+        if (currentAudio != null)
+            player.source.PlayOneShot(currentAudio, 1);
+        switch (Name)
+        {
+            case "Diamond":
+                player.drill.diamond = true;
+                Reset();
+                break;
+            case "Dynamite":
+                player.DynamiteBlast();
+                Reset();
+                break;
+            case "EMP":
+                if (!p1.drill.useShield())
+                    StartCoroutine(p1.drill.overheat(empoverheat));
+                Reset();
+                break;
+            case "Grapple":
+                if (!p1.drill.useShield())
+                {
+                    Name = p1.powerup.Name;
+                    currentAudio = p1.powerup.currentAudio;
+                    PowerupDisplay.sprite = p1.powerup.PowerupDisplay.sprite;
+                    p1.powerup.Reset();
+                }
+                else
+                {
+                    Reset();
+
+                }
+                break;
+            case "Overclock":
+                player.drill.Overclock(overclockTime, overclockdowntime);
+                Reset();
+                break;
+            case "Shield":
+                player.drill.shielded = false;
+                Reset();
+                break;
+        }
+
     }
 
     public void Reset()

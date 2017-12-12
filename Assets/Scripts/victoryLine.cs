@@ -15,14 +15,17 @@ public class victoryLine : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject.name);
+        
+
         if(other.gameObject.name=="Player 1")
         {
             game.Victory(1);
         }
-        else if(other.gameObject.name=="Player 2")
+        else 
         {
             game.Victory(2);
         }
+        
+        
     }
 }

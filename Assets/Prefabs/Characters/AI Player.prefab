@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 4195101760295180}
   - component: {fileID: 65695964197195818}
   m_Layer: 10
-  m_Name: Player 1
+  m_Name: AI Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -429,6 +429,7 @@ GameObject:
   - component: {fileID: 114864201999090266}
   - component: {fileID: 82966921413391598}
   - component: {fileID: 114758884568633316}
+  - component: {fileID: 95648963370960238}
   m_Layer: 9
   m_Name: AI Player
   m_TagString: Player
@@ -1952,7 +1953,7 @@ AudioSource:
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
-  Pan2D: 1
+  Pan2D: -1
   rolloffMode: 0
   BypassEffects: 0
   BypassListenerEffects: 0
@@ -2011,6 +2012,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!95 &95648963370960238
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1824557151330272}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d42e589b576cf64459157b924bbd95ea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114204690773563564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2079,7 +2097,12 @@ MonoBehaviour:
   overheated: 0
   overclockCount: 0
   overClockLimit: 0
+  overclockDown: 0
+  drillDmgMem: 0
+  pointing: 
   game: {fileID: 0}
+  release: 0
+  holding: 0
 --- !u!114 &114485649852358612
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2112,16 +2135,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a393dd348a459a43b8c7e5b49ee8195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  left: {x: 5.3, y: 0, z: 0}
-  right: {x: 9.3, y: 0, z: 0}
-  middle: {x: 7.3, y: 0, z: 0}
+  left: {x: -8.7, y: 0, z: 0}
+  right: {x: -4.7, y: 0, z: 0}
+  middle: {x: -6.7, y: 0, z: 0}
   moveleft: 276
   moveright: 275
   lookup: 273
   drilluse: 32
   usePU: 103
   pause: 112
-  drillDmg: 0
+  drillDmg: 0.04
   engineStart: {fileID: 8300000, guid: 2223d6a04416af14d8f52b9cd40d892a, type: 3}
   engineIdle: {fileID: 8300000, guid: c107dd1b3d5d0a24ca16974f909f89c3, type: 3}
   overheatSound: {fileID: 8300000, guid: 88c1149898297904ab3ebf485b87d3e0, type: 3}
@@ -2138,6 +2161,23 @@ MonoBehaviour:
   engineVolume: 0.35
   movementTime: 0.2
   game: {fileID: 0}
+  targets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  path: 
+  currentPos: 0
+  AIdrill: {fileID: 0}
+  victoryBlock: 0
 --- !u!114 &114843721015595940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2188,6 +2228,7 @@ MonoBehaviour:
   Name: none
   p1: {fileID: 0}
   p2: {fileID: 0}
+  AI: {fileID: 0}
 --- !u!114 &114998419170132740
 MonoBehaviour:
   m_ObjectHideFlags: 1
