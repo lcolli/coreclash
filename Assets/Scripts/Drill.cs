@@ -90,7 +90,8 @@ public class Drill : MonoBehaviour {
                 
             }
         }
-
+        GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
+        game = cam.GetComponent<CoreClash>();
         resetDrillState();
         S = this;
         shielded = false;

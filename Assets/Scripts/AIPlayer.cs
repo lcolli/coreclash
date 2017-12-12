@@ -14,9 +14,15 @@ public class AIPlayer : Player {
     public AIDrill AIdrill;
     public bool victoryBlock;
 
+    private void Awake()
+    {
+        this.gameObject.name = "AI Player";
+        //S = this;
+    }
+
     new void Start()
     {
-        this.name = "AI Player";
+        //this.name = "AI Player";
         victoryBlock = false;
         base.Start();
         GameObject[] rigs = GameObject.FindGameObjectsWithTag("Rig");
@@ -24,7 +30,7 @@ public class AIPlayer : Player {
         {
             if (trig.transform.IsChildOf(this.gameObject.transform))
             {
-                
+                print(trig.name);
                 AIdrill = trig.GetComponent<AIDrill>();
                 AIdrill.drilluse = drilluse;
             }
@@ -152,6 +158,7 @@ public class AIPlayer : Player {
     public void SetTarget(GameObject goal)
     {
         victoryBlock = true;
+        anim.SetTrigger("Target Found");
         //set victory block = to true
     }
 

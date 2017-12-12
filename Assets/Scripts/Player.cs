@@ -92,7 +92,7 @@ public class Player : MonoBehaviour {
         {
             if (trig.transform.IsChildOf(this.gameObject.transform))
             {
-               
+                
                 drill = trig.GetComponent<Drill>();
                 drill.drilluse = drilluse;
             }

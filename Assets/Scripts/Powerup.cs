@@ -31,7 +31,7 @@ public class Powerup : MonoBehaviour {
         GameObject[] players =GameObject.FindGameObjectsWithTag("Player");
         foreach(GameObject pl in players)
         {
-
+            print(pl.name);
             if (pl.name == "Player 1")
                 p1 = pl.GetComponent<Player1>();
             else if (pl.name == "Player 2")
