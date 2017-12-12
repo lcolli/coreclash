@@ -1,0 +1,219 @@
+fileFormatVersion: 2
+guid: 7ebabdc55c55e234883ed5ce84be2dac
+timeCreated: 1513048648
+licenseType: Free
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: directionalLight1
+    100004: P2_Arm_Bar_Left
+    100006: P2_Arm_Bar_Right
+    100008: P2_Arm_Cap
+    100010: P2_Arm_Wheel
+    100012: P2_Body_AC_Unit
+    100014: P2_Body_Bumper
+    100016: P2_Body_Cabin
+    100018: P2_Body_Main
+    100020: P2_Drill_Bit
+    100022: P2_Drill_Bot
+    100024: P2_Drill_Can
+    100026: P2_Drill_Mid
+    100028: P2_Drill_Mounting_Brace
+    100030: P2_Drill_Top
+    100032: P2_GRP_ALL
+    100034: P2_GRP_ARM_MOUNT_DRILL
+    100036: P2_GRP_DRILL
+    100038: P2_GRP_MOUNT_DRILL
+    100040: P2_Pipe1
+    100042: P2_Pipe2
+    100044: P2_Pipe3
+    100046: P2_Pipe4
+    100048: P2_Pipe5
+    100050: P2_Pipe6
+    100052: P2_Wheel_Left
+    100054: P2_Wheel_Mid
+    100056: P2_Wheel_Right
+    400000: //RootNode
+    400002: directionalLight1
+    400004: P2_Arm_Bar_Left
+    400006: P2_Arm_Bar_Right
+    400008: P2_Arm_Cap
+    400010: P2_Arm_Wheel
+    400012: P2_Body_AC_Unit
+    400014: P2_Body_Bumper
+    400016: P2_Body_Cabin
+    400018: P2_Body_Main
+    400020: P2_Drill_Bit
+    400022: P2_Drill_Bot
+    400024: P2_Drill_Can
+    400026: P2_Drill_Mid
+    400028: P2_Drill_Mounting_Brace
+    400030: P2_Drill_Top
+    400032: P2_GRP_ALL
+    400034: P2_GRP_ARM_MOUNT_DRILL
+    400036: P2_GRP_DRILL
+    400038: P2_GRP_MOUNT_DRILL
+    400040: P2_Pipe1
+    400042: P2_Pipe2
+    400044: P2_Pipe3
+    400046: P2_Pipe4
+    400048: P2_Pipe5
+    400050: P2_Pipe6
+    400052: P2_Wheel_Left
+    400054: P2_Wheel_Mid
+    400056: P2_Wheel_Right
+    2300000: P2_Arm_Bar_Left
+    2300002: P2_Arm_Bar_Right
+    2300004: P2_Arm_Cap
+    2300006: P2_Arm_Wheel
+    2300008: P2_Body_AC_Unit
+    2300010: P2_Body_Bumper
+    2300012: P2_Body_Cabin
+    2300014: P2_Body_Main
+    2300016: P2_Drill_Bit
+    2300018: P2_Drill_Bot
+    2300020: P2_Drill_Can
+    2300022: P2_Drill_Mid
+    2300024: P2_Drill_Mounting_Brace
+    2300026: P2_Drill_Top
+    2300028: P2_Pipe1
+    2300030: P2_Pipe2
+    2300032: P2_Pipe3
+    2300034: P2_Pipe4
+    2300036: P2_Pipe5
+    2300038: P2_Pipe6
+    2300040: P2_Wheel_Left
+    2300042: P2_Wheel_Mid
+    2300044: P2_Wheel_Right
+    3300000: P2_Arm_Bar_Left
+    3300002: P2_Arm_Bar_Right
+    3300004: P2_Arm_Cap
+    3300006: P2_Arm_Wheel
+    3300008: P2_Body_AC_Unit
+    3300010: P2_Body_Bumper
+    3300012: P2_Body_Cabin
+    3300014: P2_Body_Main
+    3300016: P2_Drill_Bit
+    3300018: P2_Drill_Bot
+    3300020: P2_Drill_Can
+    3300022: P2_Drill_Mid
+    3300024: P2_Drill_Mounting_Brace
+    3300026: P2_Drill_Top
+    3300028: P2_Pipe1
+    3300030: P2_Pipe2
+    3300032: P2_Pipe3
+    3300034: P2_Pipe4
+    3300036: P2_Pipe5
+    3300038: P2_Pipe6
+    3300040: P2_Wheel_Left
+    3300042: P2_Wheel_Mid
+    3300044: P2_Wheel_Right
+    4300000: P2_Drill_Bit
+    4300002: P2_Drill_Bot
+    4300004: P2_Drill_Mid
+    4300006: P2_Drill_Can
+    4300008: P2_Drill_Top
+    4300010: P2_Drill_Mounting_Brace
+    4300012: P2_Arm_Bar_Right
+    4300014: P2_Arm_Bar_Left
+    4300016: P2_Arm_Wheel
+    4300018: P2_Arm_Cap
+    4300020: P2_Body_Main
+    4300022: P2_Body_Cabin
+    4300024: P2_Body_AC_Unit
+    4300026: P2_Body_Bumper
+    4300028: P2_Pipe6
+    4300030: P2_Pipe5
+    4300032: P2_Pipe4
+    4300034: P2_Pipe3
+    4300036: P2_Pipe2
+    4300038: P2_Pipe1
+    4300040: P2_Wheel_Left
+    4300042: P2_Wheel_Mid
+    4300044: P2_Wheel_Right
+    9500000: //RootNode
+    10800000: directionalLight1
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: P2_Shader
+    second: {fileID: 2100000, guid: f98ca911b10f0e943a53487c52872a95, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
