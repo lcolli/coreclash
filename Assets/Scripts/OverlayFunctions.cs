@@ -7,7 +7,7 @@ public class OverlayFunctions : MonoBehaviour {
 
     private CoreClash game;
     public Sprite menuOverlay,pauseOverlay,victoryOverlay;
-    private Image thisImage;
+    public Image thisImage;
 
 
     private void Start()
@@ -32,6 +32,7 @@ public class OverlayFunctions : MonoBehaviour {
 
     public void DisplayMenu(bool isShown)
     {
+        //print(thisImage.name);
         thisImage.sprite = menuOverlay;
         thisImage.enabled = isShown;
         //place buttons

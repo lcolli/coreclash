@@ -45,9 +45,11 @@ public class CoreClash : MonoBehaviour {
     
     private void Start()
     {
+        
         overlayIMG=menuOverlay.GetComponent<Image>();
         overlayClass = menuOverlay.GetComponent<OverlayFunctions>();
         State = gamestate.menu;
+        overlayClass.thisImage = menuOverlay.GetComponent<Image>();
         overlayClass.DisplayMenu(true);
     }
 
@@ -80,7 +82,7 @@ public class CoreClash : MonoBehaviour {
         State = gamestate.countdown;
 
         course.GetComponent<PlayingField>().GameStart();
-        CreatePlayers(false);
+        CreatePlayers(true);
         setCameras();
         StartCoroutine(CountDown());
 
@@ -105,6 +107,8 @@ public class CoreClash : MonoBehaviour {
         countdownImg.sprite = cdSprites[3];
         source.PlayOneShot(countdownAudio[1], CntdwnVlmScale);
         State = gamestate.playing;
+        if (player2.name == "AI Player")
+            player2.GetComponent<Animator>().SetBool("isPlaying",true);
        
         yield return new WaitForSeconds(.5f);
         countdownImg.enabled = false;
@@ -123,7 +127,8 @@ public class CoreClash : MonoBehaviour {
     {
         
         player1.GetComponent<Player1>().playerCam = cam1;
-        player2.GetComponent<Player2>().playerCam = cam2;
+        
+        player2.GetComponent<Player>().playerCam = cam2;
         
     }
 
@@ -164,8 +169,12 @@ public class CoreClash : MonoBehaviour {
         State = gamestate.victory;
         Time.timeScale = 0;
         Camera winningCam = null,losingCam=null;
-        
-        switch(winningPlayer)
+        if (player2.name == "AI Player")
+        {
+            player2.GetComponent<Animator>().SetBool("isPlaying", false);
+        }
+
+        switch (winningPlayer)
         {
             case 0:
                 Draw();                
@@ -173,12 +182,20 @@ public class CoreClash : MonoBehaviour {
             case 1:
                 winningCam = cam1;
                 losingCam = cam2;
-                
+                if (player2.name == "AI Player")
+                {
+                    player2.GetComponent<Animator>().SetTrigger("Victory");
+                }
+
                 break;
             case 2:
                 winningCam = cam2;
                 losingCam = cam2;
-                
+                if (player2.name == "AI Player")
+                {
+                    player2.GetComponent<Animator>().SetTrigger("Defeat");
+                }
+
                 break;               
         }
 
@@ -207,6 +224,7 @@ public class CoreClash : MonoBehaviour {
         p1PUSprite.enabled = false;
         p2PUSprite.enabled = false;
         overlayClass.DisplayVictory(true,winner);
+        
         //victory overlay
     }
 

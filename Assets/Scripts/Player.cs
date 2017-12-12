@@ -66,6 +66,7 @@ public class Player : MonoBehaviour {
     private Vector3 startPos;
     private Vector3 endPos;
     public CoreClash game;
+    
 
     private float timeStartedMoving;
 
@@ -91,7 +92,7 @@ public class Player : MonoBehaviour {
         {
             if (trig.transform.IsChildOf(this.gameObject.transform))
             {
-
+               
                 drill = trig.GetComponent<Drill>();
                 drill.drilluse = drilluse;
             }
@@ -263,7 +264,7 @@ public class Player : MonoBehaviour {
 
 
     //sets the start position the end position and starts the moving state
-    void StartMove(Vector3 dest)
+    public void StartMove(Vector3 dest)
     {
         State = state.moving;
        //drill.PointLeft();
@@ -286,7 +287,7 @@ public class Player : MonoBehaviour {
 
 
         //looks left and if it can move will start the moving
-    void moveLeft()
+    public void moveLeft()
     {
         //points left first then decides if it can move
         drill.PointLeft();
@@ -309,7 +310,7 @@ public class Player : MonoBehaviour {
 
 
     //works the same as moveleft but in the other direction
-    void moveRight()
+    public void moveRight()
     {
         drill.PointRight();
         if (pos != position.right && drill.Right == null && State == state.idle)

@@ -43,9 +43,9 @@ public class Drill : MonoBehaviour {
     public bool overheated;                         //wheter or not the drill is overheated
     public int overclockCount=0, overClockLimit=0;  //the overclock mechanic, count is how many frames its been overclocked
                                                     //and limit is maximum fixed frames
-    float overclockDown=0f;                         //the amount of time the player overheats after an overclock
-    float drillDmgMem;                              //place holder for the drill damage ramp
-    string pointing;                                //the direction the drill is pointing
+    public float overclockDown=0f;                         //the amount of time the player overheats after an overclock
+    public float drillDmgMem;                              //place holder for the drill damage ramp
+    public string pointing;                         //the direction the drill is pointing
     public CoreClash game;
 
 
@@ -73,7 +73,7 @@ public class Drill : MonoBehaviour {
 
 
     
-     void Start ()
+    public void Start ()
     {
            //finds the player object this drill is attached to    
         GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
@@ -333,7 +333,7 @@ public class Drill : MonoBehaviour {
    
 
     //resets the drill back to 0 damage finds the new targets and changes its color back
-    void resetDrillState(){
+    public void resetDrillState(){
         //drillState.color = defaultDrillColor;
         //cockpitState.color = defaultCockpitColor;
         damage = 0;
