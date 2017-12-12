@@ -108,10 +108,10 @@ public class GoToTarget : StateMachineBehaviour {
                
                 float dmg = AI.drill.damage;
                
-                if (CheckForRelease(dmg) && !drill.overheated)
+                if (dmg >= nextBlock.health && !drill.overheated)
                 {
-                    
 
+                    bool sandAbove = nextBlock.sandAbove;
                     if (drill.diamond)//if the diamond drill is activated it will attack the target and the one behind it
                     {
 
@@ -138,7 +138,7 @@ public class GoToTarget : StateMachineBehaviour {
                         }
                         drill.diamond = false;
                     }
-                    else if (targetBelow && nextBlock.attack(dmg, AI.drill, AI.drill.pointing))
+                    else if (nextBlock.attack(dmg, AI.drill, AI.drill.pointing)&& targetBelow)
                     {
                         AI.GetComponent<Player>().destroyedBelow();
                         targetBelow = false;
@@ -147,7 +147,10 @@ public class GoToTarget : StateMachineBehaviour {
                         //getNextBlock();
 
                     }
-
+                    if(sandAbove)
+                    {
+                        AI.ForgetTarget();
+                    }
                     //AI.PrintString(dmg.ToString());
                     drill.holding = false;
                     ready2Attack = false;

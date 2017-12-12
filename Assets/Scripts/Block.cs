@@ -19,7 +19,7 @@ public class Block : MonoBehaviour
     [Header("Set Dynamically")]
     public float health;              //the ammount of damage a block can take before it breaks
     GameObject sand;
-    bool sandAbove = false;
+    public bool sandAbove = false;
 
     // Use this for initialization
     void Start()
@@ -82,11 +82,12 @@ public class Block : MonoBehaviour
     //takes the damage from the drill and destroys this gameobject if the damage is more than health
     public bool attack(float damage, Drill drill,string pointing)
     {
+       
         if (this.tag=="Stone")
         {
             if (damage >= 2)
             {
-                print("Stone Break");
+                //print("Stone Break");
                 blockFunction(drill,pointing);
                 drill.playerGO.GetComponent<Player>().playSound(breakSound, breakVolume);
                 Destroy(this.gameObject);
@@ -99,7 +100,7 @@ public class Block : MonoBehaviour
         }
         else if (damage >= health)
         {
-            print(drill.name);
+            
             blockFunction(drill,pointing);
             drill.playerGO.GetComponent<Player>().playSound(breakSound, breakVolume);
             Destroy(this.gameObject);            
@@ -131,6 +132,7 @@ public class Block : MonoBehaviour
     //the functions of the blocks depending on the type of this block
     public void blockFunction(Drill drill, string pointing)
     {
+        //print("in block function");
         if(sandAbove && pointing=="up")
         {
             sand.GetComponent<SandFall>().PlayerBelow();
