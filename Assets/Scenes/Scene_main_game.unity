@@ -43,7 +43,7 @@ RenderSettings:
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 11
-  m_GIWorkflowMode: 0
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -86,7 +86,8 @@ LightmapSettings:
     m_PVRFilteringAtrousColorSigma: 1
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000002, guid: 43d6ab235ce43484e8ab8a9f9757b7a4,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -11377,9 +11378,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ad6fd03abe407346b27752ff5e7fe14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1GO: {fileID: 1469566673765420, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-  player2GO: {fileID: 1716928668521912, guid: a72b92bb377d63b4b89d4daf31cafe78, type: 2}
-  AIGO: {fileID: 1595543898613464, guid: bdef62e918b86a64fb1bc56bec763472, type: 2}
+  player1GO: {fileID: 1964508116689204, guid: 7cb75621eb03ba6449ef7f983726071d, type: 2}
+  player2GO: {fileID: 1080761310061020, guid: 21e4f671e258a3644b29cbd7a55ddb1b, type: 2}
+  AIGO: {fileID: 1824557151330272, guid: 37ebc4c3945f5ab4b8dac48429f2ae4c, type: 2}
   p1Start: {x: 7.3, y: 1.5, z: 0}
   p2Start: {x: -6.7, y: 1.5, z: 0}
   course: {fileID: 36938761}
@@ -11684,48 +11685,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 598662351}
---- !u!1001 &858346677
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4554191600199792, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554191600199792, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554191600199792, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554191600199792, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554191600199792, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554191600199792, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554191600199792, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4554191600199792, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-      propertyPath: m_RootOrder
-      value: 10
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 780858615bb93c6479aa0c9a2ef29533, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &903473677
 GameObject:
   m_ObjectHideFlags: 0
@@ -11973,7 +11932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -12229,7 +12188,7 @@ Prefab:
         type: 2}
       propertyPath: player1GO
       value: 
-      objectReference: {fileID: 1469566673765420, guid: 780858615bb93c6479aa0c9a2ef29533,
+      objectReference: {fileID: 1964508116689204, guid: 7cb75621eb03ba6449ef7f983726071d,
         type: 2}
     - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
         type: 2}
@@ -12249,13 +12208,13 @@ Prefab:
         type: 2}
       propertyPath: AIGO
       value: 
-      objectReference: {fileID: 1595543898613464, guid: bdef62e918b86a64fb1bc56bec763472,
+      objectReference: {fileID: 1824557151330272, guid: 37ebc4c3945f5ab4b8dac48429f2ae4c,
         type: 2}
     - target: {fileID: 114291870882728090, guid: e86fe5aaaea0f8148b1e66bd36fbbfc1,
         type: 2}
       propertyPath: player2GO
       value: 
-      objectReference: {fileID: 1716928668521912, guid: a72b92bb377d63b4b89d4daf31cafe78,
+      objectReference: {fileID: 1080761310061020, guid: 21e4f671e258a3644b29cbd7a55ddb1b,
         type: 2}
     m_RemovedComponents:
     - {fileID: 0}
@@ -13596,7 +13555,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

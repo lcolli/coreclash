@@ -2173,13 +2173,13 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fe614d3768aa0b643a7df617809d0b9e, type: 3}
   - {fileID: 8300000, guid: 5073a0a05987766478d703fd45207ece, type: 3}
   image:
-  - {fileID: 21300000, guid: e47c5475681ff7d47bd34fb3d31ae1de, type: 3}
+  - {fileID: 21300000, guid: 7b8488152e06b014fad756780d417bf2, type: 3}
+  - {fileID: 21300000, guid: 501522af505a7c2489b45bee6ea81f2a, type: 3}
+  - {fileID: 21300000, guid: fc5266675e720584499b9ee4f0df52c4, type: 3}
+  - {fileID: 21300000, guid: 4ad19c59ec753714d9c5a74ea1f440a8, type: 3}
+  - {fileID: 21300000, guid: 37a9c93d14b83a041a27f5e62b8fce06, type: 3}
+  - {fileID: 21300000, guid: 96a824890625d8046a68f0e1ef009abd, type: 3}
   - {fileID: 21300000, guid: 6c698d94d2286364095792b95d48b9e2, type: 3}
-  - {fileID: 21300000, guid: e47c5475681ff7d47bd34fb3d31ae1de, type: 3}
-  - {fileID: 21300000, guid: 6c698d94d2286364095792b95d48b9e2, type: 3}
-  - {fileID: 21300000, guid: e47c5475681ff7d47bd34fb3d31ae1de, type: 3}
-  - {fileID: 21300000, guid: 6c698d94d2286364095792b95d48b9e2, type: 3}
-  - {fileID: 21300000, guid: e47c5475681ff7d47bd34fb3d31ae1de, type: 3}
   PowerupDisplay: {fileID: 0}
   Name: none
   p1: {fileID: 0}

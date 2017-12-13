@@ -7,8 +7,10 @@ public class DamageBar : MonoBehaviour
 {
 
     public GameObject bar;
+    public GameObject backgroundbar;
     public int player;
     public Material barMat;
+    public Material backMat;
     public KeyCode key;
 
     private Player playerScript;
@@ -16,50 +18,75 @@ public class DamageBar : MonoBehaviour
     private bool active;
     private float dmg;
     private Vector3 tempScale;
+    private Drill drill;
+    float maxLength=4f;
 
     public void Start()
     {
+
+        
+
         if (player == 1)
             playerScript = GetComponent<Player1>();
         else if (player == 2)
             playerScript = GetComponent<Player2>();
 
-        bar = Instantiate(bar) as GameObject;
+        drill = playerScript.drill;
+
+        bar = Instantiate(bar,this.gameObject.transform) as GameObject;
+        backgroundbar = Instantiate(backgroundbar, this.gameObject.transform) as GameObject;
         bar.GetComponent<MeshRenderer>().material = barMat;
-        bar.transform.localScale = new Vector3(0, 0.2f, 1);
+        backgroundbar.GetComponent<MeshRenderer>().material = backMat;
+        backgroundbar.transform.localPosition = new Vector3(-1.13f, -7, -6);
+        backgroundbar.transform.localScale = new Vector3(0, .4f, .4f);
+        bar.transform.localPosition = new Vector3(-1.13f, -8, -6);
+        bar.transform.localScale = new Vector3(0, .2f, .2f);
+        backMat.color = Color.white;
     }
 
     void Update()
     {
 
-        bar.transform.position = new Vector3(transform.position.x - 0.4f, transform.position.y + 2, -2);
-
-        if (Input.GetKey(key) && tempScale.x < 1.5f && playerScript.State == state.idle)
+        
+        tempScale = new Vector3(0, .5f, .5f);   
+        
+        if (drill.damage > 0)
+        {
+            float x;
+            if (drill.damage < 3)
+            {
+                 x = (drill.damage / 3) * maxLength;
+            }
+            else
+            {
+                x= maxLength;
+            }
+            
+            tempScale.x += x;///3*maxLength;
+            bar.transform.localScale = tempScale;
+            
+        }
+        /*else if (drill.damage >= 0 && playerScript.State != state.overheat)
         {
             tempScale = bar.transform.localScale;
-            tempScale.x += Time.deltaTime * barSpeed;
+            tempScale.x -= drill.damage * barSpeed;
             bar.transform.localScale = tempScale;
-        }
-        else if (tempScale.x >= 0 && playerScript.State != state.overheat)
-        {
-            tempScale = bar.transform.localScale;
-            tempScale.x -= Time.deltaTime * barSpeed;
-            bar.transform.localScale = tempScale;
-        }
+        }*/
 
-        if (tempScale.x < 0)
+        if (drill.damage==0)
         {
-            tempScale.x = 0;
+            tempScale.x = .1f;
             bar.transform.localScale = tempScale;
         }
+        backgroundbar.transform.localScale = tempScale + new Vector3(.2f, .2f, .2f);
 
-        if (tempScale.x >= 0.175f && tempScale.x < 0.35f)
+        if (drill.damage >=1 && drill.damage < 2)
             barMat.color = Color.green;
-        else if (tempScale.x >= 0.35f && tempScale.x < 0.525f)
+        else if (drill.damage >= 2 && drill.damage < 3)
             barMat.color = Color.yellow;
-        else if (tempScale.x >= 0.525f && tempScale.x < 0.7f)
+        else if (drill.damage >= 3 && drill.damage < 4)
             barMat.color = Color.red;
-        else if (tempScale.x >= 0.7f)
+        else if (drill.overheated)
             barMat.color = Color.black;
         else
             barMat.color = Color.blue;

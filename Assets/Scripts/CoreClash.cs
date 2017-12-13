@@ -72,7 +72,7 @@ public class CoreClash : MonoBehaviour {
     }
 
     // Use this for initialization
-    public void GameStart ()
+    public void GameStart (bool vsAI)
     {
         overlayClass.DisplayMenu(false);
         countdownImg.enabled = false;
@@ -82,7 +82,7 @@ public class CoreClash : MonoBehaviour {
         State = gamestate.countdown;
 
         course.GetComponent<PlayingField>().GameStart();
-        CreatePlayers(true);
+        CreatePlayers(vsAI);
         setCameras();
         StartCoroutine(CountDown());
 

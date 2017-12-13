@@ -25,7 +25,7 @@ public class OverlayFunctions : MonoBehaviour {
         {
             if(Input.anyKeyDown)
             {
-                game.GameStart();
+                game.GameStart(true);
             }
         }
     }

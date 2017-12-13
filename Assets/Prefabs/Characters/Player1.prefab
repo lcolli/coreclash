@@ -2071,8 +2071,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bar: {fileID: 1849881396970078, guid: b83583ad9872c4be9b38e9d2af08c314, type: 2}
+  backgroundbar: {fileID: 1849881396970078, guid: b83583ad9872c4be9b38e9d2af08c314,
+    type: 2}
   player: 1
   barMat: {fileID: 2100000, guid: fb9e9533fa3c44e8a84732650e891c93, type: 2}
+  backMat: {fileID: 2100000, guid: dc3f51e7ea7b79248a0afe7fc2787c0e, type: 2}
   key: 32
 --- !u!114 &114121774803409020
 MonoBehaviour:
